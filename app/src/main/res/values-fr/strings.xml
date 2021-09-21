@@ -14,4 +14,5 @@
     <string name="alert_message">\"VOULEZ-vous quitter \"</string>
     <string name="alert_positive_btn">Oui</string>
     <string name="alert_negative_btn">Non</string>
+
 </resources>
