@@ -1,3 +1,7 @@
+<!--Naveen Kumar N01355935 Section-RNA -->
+<!--Sukhmanpreet Kaur N01355022 Section-RNA -->
+<!--Gaganajeet Hanny N01350705 Section-RNA -->
+
 <resources>
     <string name="app_name">smartHomeAutomation</string>
     <string name="navigation_drawer_open">Ouvrir le tiroir de navigation</string>
@@ -6,7 +10,6 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">En-tête de navigation</string>
     <string name="action_settings">Paramètres</string>
-
     <string name="menu_home">Domicile</string>
     <string name="menu_gallery">Galerie</string>
     <string name="menu_slideshow">Diaporama</string>
