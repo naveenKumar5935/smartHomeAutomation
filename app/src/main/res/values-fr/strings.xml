@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">smartHomeAutomation</string>
+    <string name="navigation_drawer_open">Ouvrir le tiroir de navigation</string>
+    <string name="navigation_drawer_close">Fermer le tiroir de navigation</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">En-tête de navigation</string>
+    <string name="action_settings">Paramètres</string>
+
+    <string name="menu_home">Domicile</string>
+    <string name="menu_gallery">Galerie</string>
+    <string name="menu_slideshow">Diaporama</string>
+    <string name="alert_title">Alerte</string>
+    <string name="alert_message">\"VOULEZ-vous quitter \"</string>
+    <string name="alert_positive_btn">Oui</string>
+    <string name="alert_negative_btn">Non</string>
+
+
+</resources>
