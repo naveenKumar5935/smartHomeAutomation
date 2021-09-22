@@ -1,3 +1,4 @@
+//James Ricci N00411900
 package ca.theautomators.it.smarthomeautomation.ui.slideshow;
 
 import android.os.Bundle;

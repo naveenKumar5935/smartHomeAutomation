@@ -1,9 +1,9 @@
 <!--Naveen Kumar N01355935 Section-RNA -->
 <!--Sukhmanpreet Kaur N01355022 Section-RNA -->
 <!--Gaganajeet Hanny N01350705 Section-RNA -->
-
+<!--James Ricci N00411900-->
 <resources>
-    <string name="app_name">smartHomeAutomation</string>
+    <string name="app_name">Smart Home Automation</string>
     <string name="navigation_drawer_open">Ouvrir le tiroir de navigation</string>
     <string name="navigation_drawer_close">Fermer le tiroir de navigation</string>
     <string name="nav_header_title">Android Studio</string>
