@@ -1,5 +1,10 @@
-//James Ricci N00411900
-package ca.theautomators.it.smarthomeautomation.ui.home;
+/*
+ Naveen Kumar N01355935 Section-RNA
+ Gaganajeet Hanny N01350705 Section-RNA
+ Sukhmanpreet Kaur N01355022 Section-RNA
+ James Ricci N00411900 Section-RNA
+ */
+package ca.theautomators.it.smarthomeautomation.ui.livingroom;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,20 +13,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import ca.theautomators.it.smarthomeautomation.R;
 
-public class HomeFragment extends Fragment {
+public class LivingRoomFragment extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
+        View root = inflater.inflate(R.layout.fragment_livingroom, container, false);
+        final TextView textView = root.findViewById(R.id.text_livingroom);
         return root;
     }
 }
