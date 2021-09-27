@@ -40,4 +40,9 @@
     <string name="landing_fragment">Landing Fragment</string>
     <string name="living_room_fragment">Living Room Fragment</string>
     <string name="settings_fragment">Settings Fragment</string>
+    <string name="main_drawer_t1">Home</string>
+    <string name="main_drawer_t2">Bedroom</string>
+    <string name="main_drawer_t3">Living Room</string>
+    <string name="main_drawer_t4">Kitchen</string>
+    <string name="nav_settings">Settings</string>
 </resources>

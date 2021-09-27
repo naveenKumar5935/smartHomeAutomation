@@ -18,5 +18,30 @@
     <string name="alert_positive_btn">Oui</string>
     <string name="alert_negative_btn">Non</string>
 
+    <string name="hello_blank_fragment">Bonjour vide fragment</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">messages</string>
+    <string name="sync_header">Synchroniser</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Votre signature</string>
+    <string name="reply_title">Action de réponse par défaut</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Synchroniser les e-mails périodiquement</string>
+    <string name="attachment_title">Télécharger jointes entrantes</string>
+    <string name="attachment_summary_on">Télécharger automatiquement les pièces jointes des e-mails entrants
+    </string>
+    <string name="attachment_summary_off">Ne téléchargez les pièces jointes que sur demande manuelle</string>
+    <string name="bedroom_fragment">Chambre Fragment</string>
+    <string name="kitchen_fragment">Cuisine Fragment</string>
+    <string name="landing_fragment">Atterrissage Fragment</string>
+    <string name="living_room_fragment">Salon Fragment</string>
+    <string name="settings_fragment">Paramètres Fragment</string>
+    <string name="main_drawer_t1">Chambre</string>
+    <string name="main_drawer_t2">Cuisine</string>
+    <string name="main_drawer_t3">Atterrissage</string>
+    <string name="main_drawer_t4">Salon</string>
+    <string name="nav_settings">Paramètres</string>
 
 </resources>

@@ -7,22 +7,22 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Home" />
+            android:title="@string/main_drawer_t1" />
         <item
             android:id="@+id/nav_bedroom"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Bedroom" />
+            android:title="@string/main_drawer_t2" />
         <item
             android:id="@+id/nav_livingroom"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Living Room" />
+            android:title="@string/main_drawer_t3" />
         <item
             android:id="@+id/nav_kitchen"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Kitchen" />
+            android:title="@string/main_drawer_t4" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Settings" />
+            android:title="@string/nav_settings" />
     </group>
 </menu>
