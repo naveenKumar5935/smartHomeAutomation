@@ -51,4 +51,6 @@
     <string name="register_access_hint">Access Code</string>
     <string name="login_button_text">Log In</string>
     <string name="signup_btn_text">Sign Up</string>
+    <string name="setting_button_txt">Log Out</string>
+    <string name="setting_switch_mode">Landscape Mode:</string>
 </resources>
