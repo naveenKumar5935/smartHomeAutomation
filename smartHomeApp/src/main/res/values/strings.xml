@@ -53,4 +53,10 @@
     <string name="signup_btn_text">Sign Up</string>
     <string name="setting_button_txt">Log Out</string>
     <string name="setting_switch_mode">Landscape Mode:</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 </resources>
