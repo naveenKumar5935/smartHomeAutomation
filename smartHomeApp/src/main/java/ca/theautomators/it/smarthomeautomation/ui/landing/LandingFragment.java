@@ -23,12 +23,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment;
 
 public class LandingFragment extends Fragment {
 
     private String kitchenData, bedroomData, livingRoomData;
+    View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class LandingFragment extends Fragment {
         livingRoomData = "\n\n\nMotion: Negative\nDoor: Closed\nRFID: Active\nLights: ON";
         //**************************************************************************
 
-        View root = inflater.inflate(R.layout.fragment_landing, container, false);
+        root = inflater.inflate(R.layout.fragment_landing, container, false);
 
         Button kitchenButton = (Button) root.findViewById(R.id.button_kitchen);
         setButtonData(kitchenButton, kitchenData);
@@ -50,13 +52,14 @@ public class LandingFragment extends Fragment {
         Button livingRoomButton = (Button) root.findViewById(R.id.button_living_room);
         setButtonData(livingRoomButton, livingRoomData);
 
-//        kitchenButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//            }
-//        });
+        //TODO Add fragment switching functionality
+        kitchenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
 
 
         return root;
