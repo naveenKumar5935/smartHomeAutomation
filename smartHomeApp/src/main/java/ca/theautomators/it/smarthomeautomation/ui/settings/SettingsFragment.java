@@ -19,15 +19,21 @@ import androidx.fragment.app.Fragment;
 
 
 import ca.theautomators.it.smarthomeautomation.R;
+import ca.theautomators.it.smarthomeautomation.databinding.FragmentSettingsBinding;
 
 
 public class SettingsFragment extends Fragment {
 
+    FragmentSettingsBinding binding;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        binding = FragmentSettingsBinding.inflate(inflater,container,false);
+        View root = binding.getRoot();
       //  final TextView textView = root.findViewById(R.id.text_settings);
+
+
 
 
 
