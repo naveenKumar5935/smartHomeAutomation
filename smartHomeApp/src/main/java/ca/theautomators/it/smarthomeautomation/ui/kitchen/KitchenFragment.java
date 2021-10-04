@@ -19,11 +19,15 @@ import ca.theautomators.it.smarthomeautomation.R;
 
 public class KitchenFragment extends Fragment {
 
+    private String kitchenData;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_kitchen, container, false);
-        final TextView textView = root.findViewById(R.id.text_kitchen);
+        kitchenData = kitchenData = "Smoke: Negative\nLights: ON";
+
+        TextView dataText = root.findViewById(R.id.kitchen_data);
+        dataText.setText(kitchenData);
         return root;
     }
 }

@@ -8,6 +8,7 @@ package ca.theautomators.it.smarthomeautomation;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -21,7 +22,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+import ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment;
+
+public class MainActivity extends AppCompatActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -81,4 +84,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 }

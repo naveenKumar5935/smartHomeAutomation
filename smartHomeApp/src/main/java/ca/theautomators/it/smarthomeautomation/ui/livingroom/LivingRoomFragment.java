@@ -19,11 +19,15 @@ import ca.theautomators.it.smarthomeautomation.R;
 
 public class LivingRoomFragment extends Fragment {
 
+    private String livingRoomData;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_livingroom, container, false);
-        final TextView textView = root.findViewById(R.id.text_livingroom);
+        livingRoomData = livingRoomData = "Motion: Negative\nDoor: Closed\nRFID: Active\nLights: ON";
+
+        TextView dataText = root.findViewById(R.id.living_room_data);
+        dataText.setText(livingRoomData);
         return root;
     }
 }
