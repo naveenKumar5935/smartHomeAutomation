@@ -23,8 +23,8 @@
         android:layout_width="280dp"
         android:layout_height="67dp"
         android:layout_marginTop="24dp"
-        android:text="Add access card"
-        android:textSize="21sp"
+        android:text="Manage access card"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +41,20 @@
         app:layout_constraintHorizontal_bias="0.564"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoutButton2" />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="280dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:text="Dark Mode"
+        android:textSize="21sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.564"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch1" />
+
+    
 
 
 
