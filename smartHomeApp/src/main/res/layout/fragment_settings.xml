@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/settingFragLayout"
     tools:context=".ui.settings.SettingsFragment">
 
 
@@ -30,6 +31,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoutButton" />
 
+    <Button
+        android:id="@+id/chooseBackgroundBtn"
+        android:layout_width="280dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="24dp"
+        android:text="Choose Image"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoutButton2" />
+
     <Switch
         android:id="@+id/switch1"
         android:layout_width="280dp"
@@ -40,7 +53,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.564"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoutButton2" />
+        app:layout_constraintTop_toBottomOf="@+id/chooseBackgroundBtn" />
 
     <Switch
         android:id="@+id/switch2"
@@ -54,9 +67,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch1" />
 
-    
-
-
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/settingProfileImg"
+        android:layout_width="165dp"
+        android:layout_height="157dp"
+        android:layout_marginTop="34dp"
+        android:src="@drawable/avatar"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
