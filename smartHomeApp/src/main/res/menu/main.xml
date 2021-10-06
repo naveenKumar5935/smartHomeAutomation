@@ -5,25 +5,21 @@
         android:id="@+id/fragment1"
         android:orderInCategory="100"
         android:title="@string/fragment1"
-        android:icon="@drawable/ic_fragment1"
         app:showAsAction="never" />
     <item
         android:id="@+id/fragment2"
         android:orderInCategory="100"
         android:title="@string/fragment2"
-        android:icon="@drawable/ic_fragment2"
         app:showAsAction="never" />
     <item
         android:id="@+id/fragment3"
         android:orderInCategory="100"
         android:title="@string/fragment3"
-        android:icon="@drawable/ic_fragment3"
         app:showAsAction="never" />
     <item
         android:id="@+id/fragment4"
         android:orderInCategory="100"
         android:title="@string/fragment4"
-        android:icon="@drawable/ic_fragment4"
         app:showAsAction="never" />
 
 </menu>
