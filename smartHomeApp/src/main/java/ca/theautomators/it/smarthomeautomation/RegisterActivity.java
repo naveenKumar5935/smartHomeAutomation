@@ -34,10 +34,10 @@ public class RegisterActivity extends AppCompatActivity {
                 userPassword = binding.registerPasswordTb.getText().toString();
                 accessCode = binding.registerAccessTb.getText().toString();
                 if(!accessCode.matches("123456")){
-                    Toast.makeText(getApplicationContext(),"access code invalid",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.register_toast1,Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"Signup success",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.signup_success,Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
