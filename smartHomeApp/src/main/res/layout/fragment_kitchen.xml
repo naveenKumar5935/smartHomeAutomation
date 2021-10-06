@@ -33,27 +33,68 @@
         android:lineSpacingMultiplier="2"
         android:padding="10dp"
         android:textSize="15sp" />
+
     <Switch
         android:id="@+id/light_switch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lights"
-        android:textSize="21sp"
+        android:layout_width="177dp"
+        android:layout_height="38dp"
+
         android:layout_above="@+id/slider_title"
-        android:layout_marginTop="40dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="67dp"
+        android:textSize="21sp" />
+
     <TextView
         android:id="@+id/slider_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/slider"
-        android:text="Colour Value"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="57dp"
         android:gravity="left"
-        android:textSize="17sp"
-        android:layout_marginTop="10dp"/>
+        android:text="Brightness Value"
+        android:textSize="17sp" />
+
     <com.google.android.material.slider.Slider
         android:id="@+id/slider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:labelBehavior="withinBounds"
-        android:layout_alignParentBottom="true"/>
+        android:layout_width="wrap_content"
+        android:layout_height="103dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="6dp"
+        app:labelBehavior="withinBounds" />
+
+    <ImageView
+        android:id="@+id/lights_on"
+        android:layout_width="103dp"
+        android:layout_height="104dp"
+        android:layout_above="@+id/slider_title"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="31dp"
+        android:src="@drawable/lights_on" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="56dp"
+        android:layout_height="58dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="45dp"
+        android:src="@drawable/full_brightness" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="67dp"
+        android:layout_height="54dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="296dp"
+        android:layout_marginBottom="45dp"
+        android:src="@drawable/low_brightness" />
+
 </RelativeLayout>
