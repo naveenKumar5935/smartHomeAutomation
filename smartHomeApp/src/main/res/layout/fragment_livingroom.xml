@@ -33,51 +33,108 @@
         android:lineSpacingMultiplier="2"
         android:padding="10dp"
         android:textSize="15sp" />
+
     <Switch
         android:id="@+id/door_switch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Door"
-        android:textSize="21sp"
+        android:layout_width="125dp"
+        android:layout_height="49dp"
         android:layout_above="@+id/RFID_switch"
-        android:layout_marginTop="40dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="43dp"
+        android:textSize="21sp" />
+
     <Switch
         android:id="@+id/RFID_switch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="RFID Lock"
-        android:textSize="21sp"
+        android:layout_width="126dp"
+        android:layout_height="48dp"
         android:layout_above="@+id/motion_switch"
-        android:layout_marginTop="40dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="40dp"
+        android:textSize="21sp" />
+
     <Switch
         android:id="@+id/motion_switch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Motion Detector"
-        android:textSize="21sp"
+        android:layout_width="136dp"
+        android:layout_height="46dp"
         android:layout_above="@+id/light_switch"
-        android:layout_marginTop="40dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="3dp"
+        android:textSize="21sp" />
+
     <Switch
         android:id="@+id/light_switch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lights"
-        android:textSize="21sp"
+        android:layout_width="140dp"
+        android:layout_height="49dp"
         android:layout_above="@+id/slider_title"
-        android:layout_marginTop="40dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="18dp"
+
+        android:textSize="21sp" />
+
     <TextView
         android:id="@+id/slider_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/slider"
-        android:text="Colour Value"
+        android:text="@string/colour_value_livingroom"
         android:gravity="left"
         android:textSize="17sp"
         android:layout_marginTop="10dp"/>
+
     <com.google.android.material.slider.Slider
         android:id="@+id/slider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:labelBehavior="withinBounds"
-        android:layout_alignParentBottom="true"/>
+        android:layout_width="402dp"
+        android:layout_height="70dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        app:labelBehavior="withinBounds" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="164dp"
+        android:layout_height="85dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="61dp"
+        android:layout_marginBottom="390dp"
+        android:layout_toStartOf="@+id/door_switch"
+        android:src="@drawable/door" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="178dp"
+        android:layout_height="91dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="37dp"
+        android:layout_marginBottom="289dp"
+        android:layout_toStartOf="@+id/RFID_switch"
+        android:src="@drawable/rfid" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="120dp"
+        android:layout_height="71dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="435dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="216dp"
+        android:layout_toStartOf="@+id/motion_switch"
+        android:src="@drawable/motion_detection" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="95dp"
+        android:layout_height="78dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="128dp"
+        android:layout_toStartOf="@+id/light_switch"
+        android:src="@drawable/lights_on" />
 </RelativeLayout>

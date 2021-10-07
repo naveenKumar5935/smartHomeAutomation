@@ -11,29 +11,33 @@
         android:id="@+id/top_button_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="58dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="20dp">
 
         <Button
             android:id="@+id/button_kitchen"
-            android:text="@string/kitchen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:height="150dp"
-            android:width="150dp"/>
+            android:width="150dp"
+            android:text="@string/kitchen" />
 
         <Button
             android:id="@+id/button_bedroom"
-            android:text="@string/bedroom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:height="150dp"
-            android:width="150dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:layout_margin="10dp"/>
+            android:width="150dp"
+            android:height="150dp"
+            android:text="@string/bedroom" />
 
     </LinearLayout>
 

@@ -66,8 +66,4 @@
     <string name="bedroom_sensor_readings">Bedroom Sensor Readings</string>
     <string name="kitchen_sensor_readings">Kitchen Sensor Readings</string>
     <string name="living_room_sensor_readings">Living Room Sensor Readings</string>
-    <string name="fragment1">fragment1</string>
-    <string name="fragment2">fragment2</string>
-    <string name="fragment3">fragment3</string>
-    <string name="fragment4">fragment4</string>
 </resources>
