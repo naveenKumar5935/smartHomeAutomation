@@ -43,5 +43,10 @@
     <string name="main_drawer_t3">Atterrissage</string>
     <string name="main_drawer_t4">Salon</string>
     <string name="nav_settings">Paramètres</string>
+    <string name="fragment1">fragment1</string>
+    <string name="fragment2">fragment2</string>
+    <string name="fragment3">fragment3</string>
+    <string name="fragment4">fragment4</string>
+
 
 </resources>
