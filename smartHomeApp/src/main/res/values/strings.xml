@@ -54,10 +54,8 @@
     <string name="setting_button_txt">Log Out</string>
     <string name="setting_switch_mode">Landscape Mode:</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
+
+
     <string name="hello_world">Hello Square World!</string>
     <string name="kitchen">Kitchen</string>
     <string name="bedroom">Bedroom</string>
@@ -66,4 +64,9 @@
     <string name="bedroom_sensor_readings">Bedroom Sensor Readings</string>
     <string name="kitchen_sensor_readings">Kitchen Sensor Readings</string>
     <string name="living_room_sensor_readings">Living Room Sensor Readings</string>
+    <string name="brightness_value">Brightness Value</string>
+    <string name="colour_value">Colour Value</string>
+    <string name="colour_value_livingroom">Colour Value</string>
+    <string name="register_toast1">access code invalid</string>
+    <string name="signup_success">Signup success</string>
 </resources>

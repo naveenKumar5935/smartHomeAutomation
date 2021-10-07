@@ -43,5 +43,8 @@
     <string name="main_drawer_t3">Atterrissage</string>
     <string name="main_drawer_t4">Salon</string>
     <string name="nav_settings">Paramètres</string>
+    <string name="brightness_value">Brightness Value</string>
+    <string name="colour_value">Colour Value</string>
+    <string name="colour_value_livingroom">Colour Value</string>
 
 </resources>
