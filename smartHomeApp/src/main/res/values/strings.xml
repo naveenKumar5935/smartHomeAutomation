@@ -69,4 +69,8 @@
     <string name="colour_value_livingroom">Colour Value</string>
     <string name="register_toast1">access code invalid</string>
     <string name="signup_success">Signup success</string>
+    <string name="fragment2">item2</string>
+    <string name="fragment1">item1</string>
+    <string name="fragment3">item3</string>
+    <string name="fragment4">item4</string>
 </resources>
