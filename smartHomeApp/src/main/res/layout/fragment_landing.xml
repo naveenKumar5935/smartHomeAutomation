@@ -13,13 +13,14 @@
         android:layout_width="171dp"
         android:layout_height="159dp"
         android:src="@drawable/splash"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"/>
 
     <LinearLayout
         android:id="@+id/top_button_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="200dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="20dp">
