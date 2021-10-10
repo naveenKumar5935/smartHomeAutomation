@@ -13,6 +13,14 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
     </style>
+    
+    <style name="ButtonText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="ScreenBackground">
+        <item name="android:background">@drawable/screen_background</item>
+    </style>
 
     <style name="Theme.SmartHomeAutomation.NoActionBar">
         <item name="windowActionBar">false</item>
