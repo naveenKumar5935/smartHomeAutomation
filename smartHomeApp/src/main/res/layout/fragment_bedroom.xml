@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/horizontal_line"
         android:gravity="left"
-        android:lineSpacingMultiplier="2"
+        android:lineSpacingMultiplier="1.5"
         android:padding="10dp"
         android:textSize="15sp" />
 

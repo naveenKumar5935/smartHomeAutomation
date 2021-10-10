@@ -15,8 +15,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import org.w3c.dom.Text;
-
 import ca.theautomators.it.smarthomeautomation.R;
 
 public class BedroomFragment extends Fragment {
@@ -32,7 +30,7 @@ public class BedroomFragment extends Fragment {
         }
 
         View root = inflater.inflate(R.layout.fragment_bedroom, container, false);
-        bedroomData = "Temp: 21 degrees C\nHumidity: 30%\nLights: ON";
+        bedroomData = getString(R.string.bedroom_data);
 
         TextView dataText = (TextView) root.findViewById(R.id.bedroom_data);
         dataText.setText(bedroomData);

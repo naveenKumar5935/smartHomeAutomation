@@ -31,9 +31,9 @@ public class LandingFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         //Temp dummy data***********************************************************
-        kitchenData = "\n\n\nSmoke: Negative\nLights: ON";
-        bedroomData = "\n\n\nTemp: 21 degrees C\nHumidity: 30%\nLights: ON";
-        livingRoomData = "\n\n\nMotion: Negative\nDoor: Closed\nRFID: Active\nLights: ON";
+        kitchenData = getString(R.string.kitchen_data);
+        bedroomData = getString(R.string.bedroom_data);
+        livingRoomData = getString(R.string.living_room_data);
         //**************************************************************************
 
         root = inflater.inflate(R.layout.fragment_landing, container, false);
@@ -89,10 +89,10 @@ public class LandingFragment extends Fragment {
 
         CharSequence buttonTitle = button.getText();
         int start = buttonTitle.length();
-        int end = start + data.length();
+        int end = start + data.length() + 2;
 
         SpannableStringBuilder span = new SpannableStringBuilder(buttonTitle);
-        span.insert(buttonTitle.length(), data);
+        span.insert(buttonTitle.length(), "\n\n" + data);
         span.setSpan(new RelativeSizeSpan(0.6f), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         button.setText(span);
     }

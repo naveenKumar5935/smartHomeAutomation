@@ -100,28 +100,28 @@ public class MainActivity extends AppCompatActivity{
 
             case 1:
                 MenuItem navKitchen = menu.findItem(R.id.nav_kitchen);
-                toolbarText.setTitle("Kitchen");
+                toolbarText.setTitle(getString(R.string.kitchen));
                 navKitchen.setChecked(true);
                 getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, new KitchenFragment(),
                         null).setReorderingAllowed(true).commit();
                 break;
             case 2:
                 MenuItem navBedroom = menu.findItem(R.id.nav_bedroom);
-                toolbarText.setTitle("Bedroom");
+                toolbarText.setTitle(getString(R.string.bedroom));
                 navBedroom.setChecked(true);
                 getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, new BedroomFragment(),
                         null).setReorderingAllowed(true).commit();
                 break;
             case 3:
                 MenuItem navLivingRoom = menu.findItem(R.id.nav_livingroom);
-                toolbarText.setTitle("Bedroom");
+                toolbarText.setTitle(getString(R.string.living_room));
                 navLivingRoom.setChecked(true);
                 getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, new LivingRoomFragment(),
                         null).setReorderingAllowed(true).commit();
                 break;
             case 4:
                 MenuItem navSettings = menu.findItem(R.id.nav_settings);
-                toolbarText.setTitle("Bedroom");
+                toolbarText.setTitle(getString(R.string.settings));
                 navSettings.setChecked(true);
                 getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, new SettingsFragment(),
                         null).setReorderingAllowed(true).commit();

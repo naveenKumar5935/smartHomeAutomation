@@ -30,7 +30,7 @@ public class LivingRoomFragment extends Fragment {
         }
 
         View root = inflater.inflate(R.layout.fragment_livingroom, container, false);
-        livingRoomData = livingRoomData = "Motion: Negative\nDoor: Closed\nRFID: Active\nLights: ON";
+        livingRoomData = getString(R.string.living_room_data);
 
         TextView dataText = root.findViewById(R.id.living_room_data);
         dataText.setText(livingRoomData);

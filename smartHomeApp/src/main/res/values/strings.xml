@@ -69,4 +69,7 @@
     <string name="colour_value_livingroom">Colour Value</string>
     <string name="register_toast1">access code invalid</string>
     <string name="signup_success">Signup success</string>
+    <string name="kitchen_data">Smoke: Negative\nLights: ON</string>
+    <string name="bedroom_data">Temp: 21 degrees C\nHumidity: 30%\nLights: ON</string>
+    <string name="living_room_data">Motion: Negative\nDoor: Closed\nRFID: Active\nLights: ON</string>
 </resources>

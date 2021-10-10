@@ -29,7 +29,7 @@ public class KitchenFragment extends Fragment {
         }
 
         View root = inflater.inflate(R.layout.fragment_kitchen, container, false);
-        kitchenData = kitchenData = "Smoke: Negative\nLights: ON";
+        kitchenData = getString(R.string.kitchen_data);
 
         TextView dataText = root.findViewById(R.id.kitchen_data);
         dataText.setText(kitchenData);
