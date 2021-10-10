@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity{
         });
         alert.show();
 
-
     }
 
 }

@@ -4,10 +4,17 @@
 
     <item
         app:showAsAction="ifRoom"
+        android:id="@+id/search"
+        android:title="Search"
+        android:icon="@drawable/search" />
+    <item
+        app:showAsAction="always"
         android:id="@+id/menutab"
         android:title=""
         android:icon="@drawable/menutab">
+
         <menu>
+
     <item
         android:id="@+id/History"
         android:icon="@drawable/history"
@@ -27,6 +34,12 @@
         android:id="@+id/Aboutus"
         android:icon="@drawable/aboutus"
         android:title="@string/about_us"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        android:visible="true"
         app:showAsAction="never" />
 
         </menu>
