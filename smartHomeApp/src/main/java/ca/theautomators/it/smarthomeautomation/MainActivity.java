@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,6 +25,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import ca.theautomators.it.smarthomeautomation.ui.bedroom.BedroomFragment;
 import ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment;
+import ca.theautomators.it.smarthomeautomation.ui.landing.LandingFragment;
 import ca.theautomators.it.smarthomeautomation.ui.livingroom.LivingRoomFragment;
 import ca.theautomators.it.smarthomeautomation.ui.settings.SettingsFragment;
 
@@ -90,43 +92,39 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    public void fragmentControl(int item){
+    private void loadFragment(int id, String title, Fragment fragment){
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
         Toolbar toolbarText = findViewById(R.id.toolbar);
+        MenuItem navLoad = menu.findItem(id);
 
-        switch(item){
+        toolbarText.setTitle(title);
+        navLoad.setChecked(true);
 
-            case 1:
-                MenuItem navKitchen = menu.findItem(R.id.nav_kitchen);
-                toolbarText.setTitle(getString(R.string.kitchen));
-                navKitchen.setChecked(true);
-                getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, new KitchenFragment(),
-                        null).setReorderingAllowed(true).commit();
-                break;
-            case 2:
-                MenuItem navBedroom = menu.findItem(R.id.nav_bedroom);
-                toolbarText.setTitle(getString(R.string.bedroom));
-                navBedroom.setChecked(true);
-                getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, new BedroomFragment(),
-                        null).setReorderingAllowed(true).commit();
-                break;
-            case 3:
-                MenuItem navLivingRoom = menu.findItem(R.id.nav_livingroom);
-                toolbarText.setTitle(getString(R.string.living_room));
-                navLivingRoom.setChecked(true);
-                getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, new LivingRoomFragment(),
-                        null).setReorderingAllowed(true).commit();
-                break;
-            case 4:
-                MenuItem navSettings = menu.findItem(R.id.nav_settings);
-                toolbarText.setTitle(getString(R.string.settings));
-                navSettings.setChecked(true);
-                getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, new SettingsFragment(),
-                        null).setReorderingAllowed(true).commit();
-                break;
+        getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, fragment,
+                null).setReorderingAllowed(true).commit();
 
+    }
+
+    public void fragmentSwitch(int id){
+
+        switch(id){
+
+            case R.id.nav_kitchen:
+                loadFragment(id, getString(R.string.kitchen), new KitchenFragment());
+                break;
+            case R.id.nav_bedroom:
+                loadFragment(id, getString(R.string.bedroom), new BedroomFragment());
+                break;
+            case R.id.nav_livingroom:
+                loadFragment(id, getString(R.string.living_room), new LivingRoomFragment());
+                break;
+            case R.id.nav_settings:
+                loadFragment(id, getString(R.string.settings), new SettingsFragment());
+                break;
+            case R.id.nav_home:
+                loadFragment(id, getString(R.string.home), new LandingFragment());
         }
     }
 

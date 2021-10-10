@@ -72,4 +72,5 @@
     <string name="kitchen_data">Smoke: Negative\nLights: ON</string>
     <string name="bedroom_data">Temp: 21 degrees C\nHumidity: 30%\nLights: ON</string>
     <string name="living_room_data">Motion: Negative\nDoor: Closed\nRFID: Active\nLights: ON</string>
+    <string name="home">Home</string>
 </resources>

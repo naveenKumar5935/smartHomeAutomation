@@ -53,7 +53,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ((MainActivity)getActivity()).fragmentControl(1);
+                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_kitchen);
             }
         });
 
@@ -61,7 +61,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ((MainActivity)getActivity()).fragmentControl(2);
+                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_bedroom);
             }
         });
 
@@ -69,7 +69,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ((MainActivity)getActivity()).fragmentControl(3);
+                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_livingroom);
             }
         });
 
@@ -77,7 +77,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ((MainActivity)getActivity()).fragmentControl(4);
+                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_settings);
             }
         });
 
