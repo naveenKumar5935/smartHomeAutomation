@@ -7,23 +7,16 @@
 package ca.theautomators.it.smarthomeautomation.ui.settings;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 
 import com.google.android.material.snackbar.Snackbar;
 import com.karumi.dexter.Dexter;
@@ -33,10 +26,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
-import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.databinding.FragmentSettingsBinding;
 
 
@@ -83,6 +72,12 @@ public class SettingsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        if(container != null){
+
+            container.removeAllViews();
+        }
+
         binding = FragmentSettingsBinding.inflate(inflater,container,false);
         View root = binding.getRoot();
         view = root;

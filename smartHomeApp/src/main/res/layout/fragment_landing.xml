@@ -6,7 +6,8 @@
     android:layout_height="fill_parent"
     tools:context=".ui.landing.LandingFragment"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:id="@+id/landing_layout">
 
 
     <ImageView

@@ -8,21 +8,24 @@ package ca.theautomators.it.smarthomeautomation;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
-import com.google.android.material.navigation.NavigationView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.navigation.NavigationView;
+
+import ca.theautomators.it.smarthomeautomation.ui.bedroom.BedroomFragment;
 import ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment;
+import ca.theautomators.it.smarthomeautomation.ui.livingroom.LivingRoomFragment;
+import ca.theautomators.it.smarthomeautomation.ui.settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity{
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-//        setTheme(R.style.ThemeOverlay_AppCompat_Dark);
+
     }
 
     @Override
@@ -85,6 +88,46 @@ public class MainActivity extends AppCompatActivity{
         alert.show();
 
 
+    }
+
+    public void fragmentControl(int item){
+
+        NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        Toolbar toolbarText = findViewById(R.id.toolbar);
+
+        switch(item){
+
+            case 1:
+                MenuItem navKitchen = menu.findItem(R.id.nav_kitchen);
+                toolbarText.setTitle("Kitchen");
+                navKitchen.setChecked(true);
+                getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, new KitchenFragment(),
+                        null).setReorderingAllowed(true).commit();
+                break;
+            case 2:
+                MenuItem navBedroom = menu.findItem(R.id.nav_bedroom);
+                toolbarText.setTitle("Bedroom");
+                navBedroom.setChecked(true);
+                getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, new BedroomFragment(),
+                        null).setReorderingAllowed(true).commit();
+                break;
+            case 3:
+                MenuItem navLivingRoom = menu.findItem(R.id.nav_livingroom);
+                toolbarText.setTitle("Bedroom");
+                navLivingRoom.setChecked(true);
+                getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, new LivingRoomFragment(),
+                        null).setReorderingAllowed(true).commit();
+                break;
+            case 4:
+                MenuItem navSettings = menu.findItem(R.id.nav_settings);
+                toolbarText.setTitle("Bedroom");
+                navSettings.setChecked(true);
+                getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, new SettingsFragment(),
+                        null).setReorderingAllowed(true).commit();
+                break;
+
+        }
     }
 
 }

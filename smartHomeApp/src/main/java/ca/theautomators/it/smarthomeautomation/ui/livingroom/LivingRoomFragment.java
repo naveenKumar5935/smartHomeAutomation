@@ -23,6 +23,12 @@ public class LivingRoomFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        if(container != null){
+
+            container.removeAllViews();
+        }
+
         View root = inflater.inflate(R.layout.fragment_livingroom, container, false);
         livingRoomData = livingRoomData = "Motion: Negative\nDoor: Closed\nRFID: Active\nLights: ON";
 

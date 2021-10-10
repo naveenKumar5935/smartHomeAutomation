@@ -25,6 +25,12 @@ public class BedroomFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        if(container != null){
+
+            container.removeAllViews();
+        }
+
         View root = inflater.inflate(R.layout.fragment_bedroom, container, false);
         bedroomData = "Temp: 21 degrees C\nHumidity: 30%\nLights: ON";
 
