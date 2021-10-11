@@ -7,7 +7,8 @@
     tools:context=".ui.landing.LandingFragment"
     android:orientation="vertical"
     android:gravity="center"
-    android:id="@+id/landing_layout">
+    android:id="@+id/landing_layout"
+    style="@style/ScreenBackground">
 
 
     <ImageView
@@ -26,7 +27,7 @@
         android:orientation="horizontal"
         android:padding="20dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_kitchen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,9 +35,11 @@
             android:layout_weight="1"
             android:width="150dp"
             android:height="150dp"
-            android:text="@string/kitchen" />
+            android:text="@string/kitchen"
+            android:background="@drawable/ripple"
+            style="@style/ButtonText"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_bedroom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +47,9 @@
             android:layout_weight="1"
             android:width="150dp"
             android:height="150dp"
-            android:text="@string/bedroom" />
+            android:text="@string/bedroom"
+            android:background="@drawable/ripple"
+            style="@style/ButtonText"/>
 
     </LinearLayout>
 
@@ -56,7 +61,7 @@
         android:padding="20dp"
         android:gravity="center"
         android:layout_below="@id/top_button_row">
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_living_room"
             android:text="@string/living_room"
             android:layout_width="wrap_content"
@@ -64,8 +69,10 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:height="150dp"
-            android:width="150dp"/>
-        <Button
+            android:width="150dp"
+            android:background="@drawable/ripple"
+            style="@style/ButtonText"/>
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_settings"
             android:text="@string/settings"
             android:layout_width="wrap_content"
@@ -73,7 +80,9 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:height="150dp"
-            android:width="150dp"/>
+            android:width="150dp"
+            android:background="@drawable/ripple"
+            style="@style/ButtonText"/>
     </LinearLayout>
 
 </RelativeLayout>
