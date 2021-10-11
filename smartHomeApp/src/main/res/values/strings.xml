@@ -73,4 +73,12 @@
     <string name="bedroom_data">Temp: 21 degrees C\nHumidity: 30%\nLights: ON</string>
     <string name="living_room_data">Motion: Negative\nDoor: Closed\nRFID: Active\nLights: ON</string>
     <string name="home">Home</string>
+    <string name="fragment2">Recent Tabs</string>
+    <string name="fragment1">History</string>
+    <string name="fragment3">item3</string>
+    <string name="fragment4">About us</string>
+    <string name="recent_tabs">Recent Tabs</string>
+    <string name="history">History</string>
+    <string name="feedback">Feedback</string>
+    <string name="about_us">About Us</string>
 </resources>

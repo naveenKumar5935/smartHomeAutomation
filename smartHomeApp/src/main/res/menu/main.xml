@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        app:showAsAction="ifRoom"
+        android:id="@+id/search"
+        android:title="Search"
+        android:icon="@drawable/search" />
+    <item
+        app:showAsAction="always"
+        android:id="@+id/menutab"
+        android:title=""
+        android:icon="@drawable/menutab">
+
+        <menu>
+
+    <item
+        android:id="@+id/History"
+        android:icon="@drawable/history"
+        android:title="@string/history"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/RecentTabs"
+        android:icon="@drawable/recenttabs"
+        android:title="@string/recent_tabs"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/item3"
+        android:icon="@drawable/feedback"
+        android:title="@string/feedback"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/Aboutus"
+        android:icon="@drawable/aboutus"
+        android:title="@string/about_us"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        android:visible="true"
+        app:showAsAction="never" />
+
+        </menu>
+
+    </item>
+
 </menu>

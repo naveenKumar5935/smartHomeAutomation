@@ -6,6 +6,7 @@
  */
 package ca.theautomators.it.smarthomeautomation.ui.bedroom;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,4 +37,5 @@ public class BedroomFragment extends Fragment {
         dataText.setText(bedroomData);
         return root;
     }
+
 }

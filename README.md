@@ -4,7 +4,7 @@
 Naveen Kumar (N01355935)
 James Ricci (N00411900)
 Gaganajeet Hanny (N01350705)
-Sukhmanpreet Kaur (N01355022
+Sukhmanpreet Kaur (N01355022)
 
 ## APP INFORMATION
 System includes android app with 5 sensors:

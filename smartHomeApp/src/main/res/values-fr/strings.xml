@@ -46,5 +46,13 @@
     <string name="brightness_value">Brightness Value</string>
     <string name="colour_value">Colour Value</string>
     <string name="colour_value_livingroom">Colour Value</string>
+    <string name="fragment2">item2</string>
+    <string name="fragment1">item1</string>
+    <string name="fragment3">item3</string>
+    <string name="fragment4">item4</string>
+    <string name="recent_tabs">Recent Tabs</string>
+    <string name="history">History</string>
+    <string name="feedback">Feedback</string>
+    <string name="about_us">About Us</string>
 
 </resources>

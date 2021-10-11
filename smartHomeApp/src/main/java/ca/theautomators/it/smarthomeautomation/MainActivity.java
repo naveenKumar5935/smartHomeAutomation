@@ -8,26 +8,23 @@ package ca.theautomators.it.smarthomeautomation;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MenuInflater;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
+import com.google.android.material.navigation.NavigationView;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.navigation.NavigationView;
-
-import ca.theautomators.it.smarthomeautomation.ui.bedroom.BedroomFragment;
 import ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment;
-import ca.theautomators.it.smarthomeautomation.ui.landing.LandingFragment;
-import ca.theautomators.it.smarthomeautomation.ui.livingroom.LivingRoomFragment;
-import ca.theautomators.it.smarthomeautomation.ui.settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity{
 

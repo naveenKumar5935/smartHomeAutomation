@@ -1,5 +1,6 @@
 package ca.theautomators.it.smarthomeautomation;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+
         handler=new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -27,4 +29,5 @@ public class SplashScreenActivity extends Activity {
         },3000);
 
     }
+
 }
