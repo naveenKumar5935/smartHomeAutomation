@@ -23,8 +23,13 @@ public class KitchenFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if(container != null){
+
+            container.removeAllViews();
+        }
+
         View root = inflater.inflate(R.layout.fragment_kitchen, container, false);
-        kitchenData = kitchenData = "Smoke: Negative\nLights: ON";
+        kitchenData = getString(R.string.kitchen_data);
 
         TextView dataText = root.findViewById(R.id.kitchen_data);
         dataText.setText(kitchenData);

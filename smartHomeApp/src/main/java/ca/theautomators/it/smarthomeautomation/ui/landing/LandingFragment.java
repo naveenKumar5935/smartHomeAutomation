@@ -7,25 +7,20 @@
 
 package ca.theautomators.it.smarthomeautomation.ui.landing;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
-import ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment;
 
 public class LandingFragment extends Fragment {
 
@@ -36,9 +31,9 @@ public class LandingFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         //Temp dummy data***********************************************************
-        kitchenData = "\n\n\nSmoke: Negative\nLights: ON";
-        bedroomData = "\n\n\nTemp: 21 degrees C\nHumidity: 30%\nLights: ON";
-        livingRoomData = "\n\n\nMotion: Negative\nDoor: Closed\nRFID: Active\nLights: ON";
+        kitchenData = getString(R.string.kitchen_data);
+        bedroomData = getString(R.string.bedroom_data);
+        livingRoomData = getString(R.string.living_room_data);
         //**************************************************************************
 
         root = inflater.inflate(R.layout.fragment_landing, container, false);
@@ -52,12 +47,37 @@ public class LandingFragment extends Fragment {
         Button livingRoomButton = (Button) root.findViewById(R.id.button_living_room);
         setButtonData(livingRoomButton, livingRoomData);
 
-        //TODO Add fragment switching functionality
+        Button settingsButton = (Button) root.findViewById(R.id.button_settings);
+
         kitchenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_kitchen);
+            }
+        });
 
+        bedroomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_bedroom);
+            }
+        });
+
+        livingRoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_livingroom);
+            }
+        });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_settings);
             }
         });
 
@@ -69,10 +89,10 @@ public class LandingFragment extends Fragment {
 
         CharSequence buttonTitle = button.getText();
         int start = buttonTitle.length();
-        int end = start + data.length();
+        int end = start + data.length() + 2;
 
         SpannableStringBuilder span = new SpannableStringBuilder(buttonTitle);
-        span.insert(buttonTitle.length(), data);
+        span.insert(buttonTitle.length(), "\n\n" + data);
         span.setSpan(new RelativeSizeSpan(0.6f), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         button.setText(span);
     }
