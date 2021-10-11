@@ -54,5 +54,14 @@
     <string name="history">History</string>
     <string name="feedback">Feedback</string>
     <string name="about_us">About Us</string>
+    <string name="History">history</string>
+    <string name="Recent_tabs">recent_tabs</string>
+    <string name="Feedback">feedback</string>
+    <string name="About_us">about_us</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_search">Search</string>
+    <string name="bedroom_data" />
+    <string name="kitchen_data" />
+    <string name="living_room_data" />
 
 </resources>
