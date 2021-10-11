@@ -54,7 +54,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_password_tb" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerButton"
         android:layout_width="147dp"
         android:layout_height="52dp"
@@ -62,7 +62,8 @@
         android:text="@string/signup_btn_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_access_tb" />
+        app:layout_constraintTop_toBottomOf="@+id/register_access_tb"
+        style="@style/ButtonText"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

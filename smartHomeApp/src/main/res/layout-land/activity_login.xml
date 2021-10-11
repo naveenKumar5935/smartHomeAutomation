@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_email_tb" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginButton"
         android:layout_width="147dp"
         android:layout_height="52dp"
@@ -51,7 +51,8 @@
         android:text="@string/login_button_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_password_tb" />
+        app:layout_constraintTop_toBottomOf="@+id/login_password_tb"
+        style="@style/ButtonText"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

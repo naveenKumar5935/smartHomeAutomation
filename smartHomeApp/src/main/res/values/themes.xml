@@ -16,6 +16,11 @@
     
     <style name="ButtonText" parent="@android:style/TextAppearance">
         <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@drawable/ripple</item>
+    </style>
+    
+    <style name="SwitchColour" >
+        <item name="colorControlActivated">@color/green_200</item>
     </style>
 
     <style name="ScreenBackground">
