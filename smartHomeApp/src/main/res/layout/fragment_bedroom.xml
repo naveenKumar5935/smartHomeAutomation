@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.bedroom.BedroomFragment"
-    android:padding="10dp">
+    android:padding="10dp"
+    style="@style/ScreenBackground">
 
     <TextView
         android:id="@+id/bedroom_data_title"
@@ -32,7 +33,7 @@
         android:gravity="left"
         android:lineSpacingMultiplier="1.5"
         android:padding="10dp"
-        android:textSize="15sp" />
+        android:textSize="15sp"/>
 
     <Switch
         android:id="@+id/light_switch"
@@ -43,7 +44,8 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="77dp"
-        android:textSize="21sp" />
+        android:textSize="21sp"
+        android:theme="@style/SwitchColour"/>
 
     <TextView
         android:id="@+id/slider_title"
@@ -69,5 +71,6 @@
         android:layout_marginEnd="104dp"
         android:layout_marginBottom="46dp"
         android:layout_toStartOf="@+id/light_switch"
-        android:src="@drawable/lights_on" />
+        android:src="@drawable/lights_on_nobg"
+        />
 </RelativeLayout>

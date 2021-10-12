@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/settingFragLayout"
-    tools:context=".ui.settings.SettingsFragment">
+    tools:context=".ui.settings.SettingsFragment"
+    style="@style/ScreenBackground">
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/logoutButton"
         android:layout_width="280dp"
         android:layout_height="67dp"
@@ -17,9 +18,10 @@
         android:textSize="21sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/ButtonText"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/logoutButton2"
         android:layout_width="280dp"
         android:layout_height="67dp"
@@ -29,9 +31,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoutButton" />
+        app:layout_constraintTop_toBottomOf="@+id/logoutButton"
+        style="@style/ButtonText"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/chooseBackgroundBtn"
         android:layout_width="280dp"
         android:layout_height="67dp"
@@ -41,7 +44,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoutButton2" />
+        app:layout_constraintTop_toBottomOf="@+id/logoutButton2"
+        style="@style/ButtonText"/>
 
     <Switch
         android:id="@+id/switch1"
@@ -53,7 +57,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.564"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chooseBackgroundBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/chooseBackgroundBtn"
+        android:theme="@style/SwitchColour"/>
 
     <Switch
         android:id="@+id/switch2"
@@ -65,7 +70,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.564"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" />
+        app:layout_constraintTop_toBottomOf="@+id/switch1"
+        android:theme="@style/SwitchColour"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/settingProfileImg"

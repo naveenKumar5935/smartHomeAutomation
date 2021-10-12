@@ -14,9 +14,17 @@
     <ImageView
         android:layout_width="171dp"
         android:layout_height="159dp"
-        android:src="@drawable/splash"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"/>
+        android:backgroundTint="#00FFFF"
+        android:src="@drawable/splash_nobg" />
+    <ImageView
+        android:layout_width="171dp"
+        android:layout_height="163dp"
+        android:src="@drawable/splash_nobg"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/logo_bg"/>
 
     <LinearLayout
         android:id="@+id/top_button_row"
@@ -36,7 +44,6 @@
             android:width="150dp"
             android:height="150dp"
             android:text="@string/kitchen"
-            android:background="@drawable/ripple"
             style="@style/ButtonText"/>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -48,7 +55,6 @@
             android:width="150dp"
             android:height="150dp"
             android:text="@string/bedroom"
-            android:background="@drawable/ripple"
             style="@style/ButtonText"/>
 
     </LinearLayout>
@@ -70,7 +76,6 @@
             android:layout_weight="1"
             android:height="150dp"
             android:width="150dp"
-            android:background="@drawable/ripple"
             style="@style/ButtonText"/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_settings"
@@ -81,7 +86,6 @@
             android:layout_weight="1"
             android:height="150dp"
             android:width="150dp"
-            android:background="@drawable/ripple"
             style="@style/ButtonText"/>
     </LinearLayout>
 
