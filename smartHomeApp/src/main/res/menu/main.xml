@@ -7,6 +7,13 @@
         android:id="@+id/search"
         android:title="Search"
         android:icon="@drawable/search" />
+
+    <item
+        android:id="@+id/History"
+        android:title="@string/history"
+        android:icon="@drawable/ic_baseline_history_24"
+        app:showAsAction="always" />
+
     <item
         app:showAsAction="always"
         android:id="@+id/menutab"
@@ -15,10 +22,7 @@
 
         <menu>
 
-    <item
-        android:id="@+id/History"
-        android:title="@string/history"
-        app:showAsAction="never" />
+
     <item
         android:id="@+id/RecentTabs"
         android:title="@string/recent_tabs"
