@@ -26,6 +26,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.databinding.FragmentSettingsBinding;
 
 
@@ -41,13 +42,13 @@ public class SettingsFragment extends Fragment {
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                        Snackbar.make(view,"permission granted",Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(view, R.string.permission_granted,Snackbar.LENGTH_LONG).show();
                         chooseImage();
                     }
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                        Snackbar.make(view,"permission denied",Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(view, R.string.permission_denied,Snackbar.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -98,10 +99,14 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Uri uri = data.getData();
 
-        if(uri!=null){
+        if(requestCode == 1 && resultCode == 45 && data != null){
+            Uri uri = data.getData();
+
             binding.settingProfileImg.setImageURI(uri);
         }
+
+
+
     }
 }

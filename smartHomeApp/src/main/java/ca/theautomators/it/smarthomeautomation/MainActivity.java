@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,7 +25,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import ca.theautomators.it.smarthomeautomation.ui.bedroom.BedroomFragment;
 import ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment;
+import ca.theautomators.it.smarthomeautomation.ui.landing.LandingFragment;
+import ca.theautomators.it.smarthomeautomation.ui.livingroom.LivingRoomFragment;
+import ca.theautomators.it.smarthomeautomation.ui.settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity{
 
