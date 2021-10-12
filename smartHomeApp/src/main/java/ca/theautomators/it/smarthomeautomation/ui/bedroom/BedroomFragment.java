@@ -6,11 +6,11 @@
  */
 package ca.theautomators.it.smarthomeautomation.ui.bedroom;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +35,12 @@ public class BedroomFragment extends Fragment {
 
         TextView dataText = (TextView) root.findViewById(R.id.bedroom_data);
         dataText.setText(bedroomData);
+
+        ImageView lightBulb = (ImageView) root.findViewById(R.id.light_icon);
+
+//        lightBulb.
+
+
         return root;
     }
 
