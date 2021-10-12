@@ -1,3 +1,10 @@
+/*
+ Naveen Kumar N01355935 Section-RNA
+ Gaganajeet Hanny N01350705 Section-RNA
+ Sukhmanpreet Kaur N01355022 Section-RNA
+ James Ricci N00411900 Section-RNA
+ */
+
 package ca.theautomators.it.smarthomeautomation;
 
 import android.app.ActionBar;
