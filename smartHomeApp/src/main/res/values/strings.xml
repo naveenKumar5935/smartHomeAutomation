@@ -52,7 +52,7 @@
     <string name="login_button_text">Log In</string>
     <string name="signup_btn_text">Sign Up</string>
     <string name="setting_button_txt">Log Out</string>
-    <string name="setting_switch_mode">Landscape Mode:</string>
+    <string name="setting_switch_mode">Lock Portrait View</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
 
 
@@ -83,4 +83,7 @@
     <string name="about_us">About Us</string>
     <string name="permission_granted">permission granted</string>
     <string name="permission_denied">permission denied</string>
+    <string name="manage_access_card">Manage access card</string>
+    <string name="choose_image">Choose Image</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>

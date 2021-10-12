@@ -10,6 +10,10 @@
             android:icon="@drawable/home"
             android:title="@string/main_drawer_t1" />
         <item
+            android:id="@+id/nav_kitchen"
+            android:icon="@drawable/kitchen"
+            android:title="@string/main_drawer_t4" />
+        <item
             android:id="@+id/nav_bedroom"
             android:icon="@drawable/bedroom"
             android:title="@string/main_drawer_t2" />
@@ -17,10 +21,7 @@
             android:id="@+id/nav_livingroom"
             android:icon="@drawable/living_room"
             android:title="@string/main_drawer_t3" />
-        <item
-            android:id="@+id/nav_kitchen"
-            android:icon="@drawable/kitchen"
-            android:title="@string/main_drawer_t4" />
+
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/settings"
