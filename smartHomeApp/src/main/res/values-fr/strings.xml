@@ -32,6 +32,7 @@
     <string name="attachment_title">Télécharger jointes entrantes</string>
     <string name="attachment_summary_on">Télécharger automatiquement les pièces jointes des e-mails entrants
     </string>
+
     <string name="attachment_summary_off">Ne téléchargez les pièces jointes que sur demande manuelle</string>
     <string name="bedroom_fragment">Chambre Fragment</string>
     <string name="kitchen_fragment">Cuisine Fragment</string>
@@ -43,16 +44,43 @@
     <string name="main_drawer_t3">Atterrissage</string>
     <string name="main_drawer_t4">Salon</string>
     <string name="nav_settings">Paramètres</string>
-    <string name="brightness_value">Brightness Value</string>
-    <string name="colour_value">Colour Value</string>
-    <string name="colour_value_livingroom">Colour Value</string>
-    <string name="fragment2">item2</string>
-    <string name="fragment1">item1</string>
-    <string name="fragment3">item3</string>
-    <string name="fragment4">item4</string>
+
+    <string name="setup_fragment">Fragment de configuration</string>
+    <string name="email_hint">E-mail</string>
+    <string name="password_hint">Mot de passe</string>
+    <string name="register_access_hint">Code daccess</string>
+    <string name="login_button_text">Connexion</string>
+    <string name="signup_btn_text">Sinscrire</string>
+    <string name="setting_button_txt">Se déconnecter</string>
+    <string name="setting_switch_mode">Mode paysage</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+
+    <string name="hello_world">Bonjour Square World !</string>
+    <string name="kitchen">Cuisine</string>
+    <string name="bedroom">Chambre</string>
+    <string name="living_room">Salon</string>
+    <string name="settings">Paramètres</string>
+    <string name="bedroom_sensor_readings">Lectures du capteur de chambre à coucher</string>
+    <string name="kitchen_sensor_readings">Lectures des capteurs de cuisine</string>
+    <string name="living_room_sensor_readings">Lectures des capteurs du salon</string>
+    <string name="brightness_value">Valeur de luminosité</string>
+    <string name="colour_value">Valeur de couleur</string>
+    <string name="colour_value_livingroom">Valeur de couleur</string>
+    <string name="register_toast1">code daccès invalide</string>
+    <string name="signup_success">Inscription réussie</string>
+    <string name="kitchen_data">Fumée : Négative\nLumières : ON</string>
+    <string name="bedroom_data">Température : 21 degrés C\Humidité : 30 %\Lumières : ON</string>
+    <string name="living_room_data">Mouvement : Négatif\Porte : Fermée\RFID : Active\Lumières : ON</string>
+    <string name="home">Accueil</string>
+    <string name="fragment2">Onglets récents</string>
+    <string name="fragment1">Histoire</string>
+    <string name="fragment3">élément3</string>
+    <string name="fragment4">À propos de nous</string>
     <string name="recent_tabs">Recent Tabs</string>
-    <string name="history">History</string>
-    <string name="feedback">Feedback</string>
-    <string name="about_us">About Us</string>
+    <string name="history">Onglets récents</string>
+    <string name="feedback">Retour dinformation</string>
+    <string name="about_us">À propos de nous</string>
+    <string name="permission_granted">permission accordée</string>
+    <string name="permission_denied">permission refusée</string>
 
 </resources>

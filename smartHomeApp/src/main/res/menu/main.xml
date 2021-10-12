@@ -17,22 +17,18 @@
 
     <item
         android:id="@+id/History"
-        android:icon="@drawable/history"
         android:title="@string/history"
         app:showAsAction="never" />
     <item
         android:id="@+id/RecentTabs"
-        android:icon="@drawable/recenttabs"
         android:title="@string/recent_tabs"
         app:showAsAction="never" />
     <item
-        android:id="@+id/item3"
-        android:icon="@drawable/feedback"
+        android:id="@+id/feedback3"
         android:title="@string/feedback"
         app:showAsAction="never" />
     <item
         android:id="@+id/Aboutus"
-        android:icon="@drawable/aboutus"
         android:title="@string/about_us"
         app:showAsAction="never" />
 
