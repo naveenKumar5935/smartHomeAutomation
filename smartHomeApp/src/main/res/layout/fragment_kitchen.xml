@@ -71,7 +71,7 @@
         app:labelBehavior="withinBounds" />
 
     <ImageView
-        android:id="@+id/lights_on"
+        android:id="@+id/lights_icon"
         android:layout_width="@dimen/icon_width"
         android:layout_height="@dimen/icon_height"
         android:layout_above="@+id/slider_title"
