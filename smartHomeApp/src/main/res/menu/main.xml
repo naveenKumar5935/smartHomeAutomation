@@ -12,7 +12,7 @@
         android:id="@+id/History"
         android:title="@string/history"
         android:icon="@drawable/ic_baseline_history_24"
-        app:showAsAction="always" />
+        app:showAsAction="always|withText" />
 
     <item
         app:showAsAction="always"
