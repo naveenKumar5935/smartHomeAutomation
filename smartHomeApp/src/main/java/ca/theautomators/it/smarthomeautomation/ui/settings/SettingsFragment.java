@@ -29,6 +29,8 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.databinding.FragmentSettingsBinding;
 
+import static android.app.Activity.RESULT_OK;
+
 
 public class SettingsFragment extends Fragment {
 
@@ -100,7 +102,7 @@ public class SettingsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 1 && resultCode == 45 && data != null){
+        if(requestCode == 45 && resultCode == RESULT_OK && data != null){
             Uri uri = data.getData();
 
             binding.settingProfileImg.setImageURI(uri);
