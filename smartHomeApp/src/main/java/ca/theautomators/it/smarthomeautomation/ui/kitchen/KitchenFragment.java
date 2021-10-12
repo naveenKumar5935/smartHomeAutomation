@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +36,22 @@ public class KitchenFragment extends Fragment {
 
         TextView dataText = root.findViewById(R.id.kitchen_data);
         dataText.setText(kitchenData);
+
+        ImageView lightBulb = (ImageView) root.findViewById(R.id.lights_icon);
+
+        Switch lightSwitch = (Switch) root.findViewById(R.id.light_switch);
+
+        lightSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    lightBulb.setImageResource(R.drawable.lights_on_nobg);
+                }
+                else{
+                    lightBulb.setImageResource(R.drawable.lights_off_nobg);
+                }
+            }
+        });
         return root;
     }
 }

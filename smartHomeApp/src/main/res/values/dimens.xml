@@ -17,4 +17,34 @@
     inner_frame_layout_padding (below variable) on round screens.
     -->
     <dimen name="inner_frame_layout_padding">5dp</dimen>
+    <dimen name="switch_width">125dp</dimen>
+    <dimen name="switch_height">49dp</dimen>
+    <dimen name="switch_margin_end">56dp</dimen>
+    <dimen name="switch_margin_top">18dp</dimen>
+    <dimen name="switch_margin_bottom">18dp</dimen>
+    <dimen name="slider_height">103dp</dimen>
+    <dimen name="slider_margin">6dp</dimen>
+    <dimen name="icon_width">164dp</dimen>
+    <dimen name="icon_height">85dp</dimen>
+    <dimen name="icon_padding">5dp</dimen>
+    <dimen name="slider_text_size">17sp</dimen>
+    <dimen name="data_padding">10dp</dimen>
+    <dimen name="data_text_size">15sp</dimen>
+    <dimen name="line_height">2dp</dimen>
+    <dimen name="fragment_title_text_size">20sp</dimen>
+    <dimen name="fragment_title_padding">10dp</dimen>
+    <dimen name="fragment_padding">10dp</dimen>
+    <dimen name="slider_text_margin_bottom">20dp</dimen>
+    <dimen name="slider_icon_width">67dp</dimen>
+    <dimen name="slider_icon_height">58dp</dimen>
+    <dimen name="slider_icon_marginEnd">25dp</dimen>
+    <dimen name="slider_icon_margin_bottom">45dp</dimen>
+    <dimen name="slider_icon_marginStart">38dp</dimen>
+    <dimen name="slider_icon2_marginEnd">296dp</dimen>
+    <dimen name="settings_button_width">280dp</dimen>
+    <dimen name="settings_button_height">67dp</dimen>
+    <dimen name="settings_button_marginTop">24dp</dimen>
+    <dimen name="button_text_large">21sp</dimen>
+    <dimen name="button_text_medium">18sp</dimen>
+    <dimen name="settings_margin_top">39dp</dimen>
 </resources>
