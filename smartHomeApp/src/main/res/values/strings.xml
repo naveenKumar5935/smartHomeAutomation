@@ -86,4 +86,6 @@
     <string name="manage_access_card">Manage access card</string>
     <string name="choose_image">Choose Image</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="search">Search</string>
+    <string name="logout">Logout</string>
 </resources>

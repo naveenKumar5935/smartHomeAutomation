@@ -82,5 +82,7 @@
     <string name="about_us">À propos de nous</string>
     <string name="permission_granted">permission accordée</string>
     <string name="permission_denied">permission refusée</string>
+    <string name="search">recherche</string>
+    <string name="logout">déconnexion</string>
 
 </resources>
