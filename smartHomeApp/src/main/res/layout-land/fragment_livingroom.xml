@@ -9,7 +9,7 @@
     style="@style/ScreenBackground">
 
     <Switch
-        android:id="@+id/motion_switch2"
+        android:id="@+id/light_switch"
         android:layout_width="94dp"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
@@ -20,10 +20,10 @@
         android:theme="@style/SwitchColour" />
 
     <Switch
-        android:id="@+id/RFID_switch2"
+        android:id="@+id/motion_switch"
         android:layout_width="99dp"
         android:layout_height="41dp"
-        android:layout_above="@+id/motion_switch"
+        android:layout_above="@+id/light_switch"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="38dp"
         android:layout_marginBottom="20dp"
@@ -58,10 +58,10 @@
         android:textSize="15sp" />
 
     <Switch
-        android:id="@+id/RFID_switch"
+        android:id="@+id/door_switch"
         android:layout_width="112dp"
         android:layout_height="51dp"
-        android:layout_above="@+id/motion_switch"
+        android:layout_above="@+id/RFID_switch"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="286dp"
         android:layout_marginBottom="16dp"
@@ -69,7 +69,7 @@
         android:theme="@style/SwitchColour" />
 
     <Switch
-        android:id="@+id/motion_switch"
+        android:id="@+id/RFID_switch"
         android:layout_width="116dp"
         android:layout_height="38dp"
         android:layout_alignParentEnd="true"
@@ -100,42 +100,42 @@
         app:labelBehavior="withinBounds" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/door_icon"
         android:layout_width="69dp"
         android:layout_height="53dp"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="189dp"
-        android:layout_toStartOf="@+id/RFID_switch"
+        android:layout_toStartOf="@+id/door_switch"
         android:src="@drawable/door_closed_nobg" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/rfid_icon"
         android:layout_width="62dp"
         android:layout_height="52dp"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="136dp"
-        android:layout_toStartOf="@+id/motion_switch"
+        android:layout_toStartOf="@+id/RFID_switch"
         android:src="@drawable/rfid_nobg" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/motion_icon"
         android:layout_width="69dp"
         android:layout_height="51dp"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="189dp"
-        android:layout_toStartOf="@+id/RFID_switch2"
+        android:layout_toStartOf="@+id/motion_switch"
         android:src="@drawable/motion_detection_nobg" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/light_icon"
         android:layout_width="53dp"
         android:layout_height="54dp"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="26dp"
         android:layout_marginBottom="133dp"
-        android:layout_toStartOf="@+id/motion_switch2"
-        android:src="@drawable/lights_on_nobg" />
+        android:layout_toStartOf="@+id/light_switch"
+        android:src="@drawable/lights_off_nobg" />
 </RelativeLayout>

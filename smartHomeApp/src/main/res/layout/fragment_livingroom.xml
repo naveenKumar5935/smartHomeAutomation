@@ -105,9 +105,9 @@
         android:id="@+id/door_icon"
         android:layout_width="@dimen/icon_width"
         android:layout_height="@dimen/icon_height"
-        android:padding="@dimen/icon_padding"
         android:layout_above="@+id/rfid_icon"
         android:layout_toLeftOf="@+id/door_switch"
+        android:padding="@dimen/icon_padding"
         android:src="@drawable/door_closed_nobg" />
 
     <ImageView
@@ -116,7 +116,7 @@
         android:layout_height="@dimen/icon_height"
         android:padding="@dimen/icon_padding"
         android:layout_above="@+id/motion_icon"
-        android:layout_toLeftOf="@+id/RFID_switch"
+        android:layout_toLeftOf="@+id/door_switch"
         android:src="@drawable/rfid_nobg" />
 
     <ImageView
@@ -125,7 +125,7 @@
         android:layout_height="@dimen/icon_height"
         android:padding="@dimen/icon_padding"
         android:layout_above="@+id/light_icon"
-        android:layout_toLeftOf="@+id/motion_switch"
+        android:layout_toLeftOf="@+id/RFID_switch"
         android:src="@drawable/motion_detection_nobg" />
 
     <ImageView
