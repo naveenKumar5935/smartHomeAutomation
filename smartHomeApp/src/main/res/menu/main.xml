@@ -12,6 +12,7 @@
         android:id="@+id/History"
         android:title="@string/history"
         app:showAsAction="always"
+        android:icon="@drawable/history"
         android:actionLayout="@layout/toolbar_layout"/>
 
     <item
