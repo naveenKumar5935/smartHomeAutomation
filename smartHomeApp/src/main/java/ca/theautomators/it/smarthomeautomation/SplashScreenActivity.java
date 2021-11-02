@@ -29,7 +29,7 @@ public class SplashScreenActivity extends Activity {
             public void run() {
 //                Intent intent=new Intent(SplashScreenActivity.this,RegisterActivity.class);
                 //TODO Replace this intent with register activity before handing in
-                Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                Intent intent = new Intent(SplashScreenActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finish();
             }
