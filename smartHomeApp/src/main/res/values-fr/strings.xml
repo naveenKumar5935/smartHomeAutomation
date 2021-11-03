@@ -84,5 +84,9 @@
     <string name="permission_denied">permission refusée</string>
     <string name="search">recherche</string>
     <string name="logout">déconnexion</string>
+    <string name="legal">legal</string>
+    <string name="review">Review</string>
+    <string name="help">Help</string>
+    <string name="exit">Exit</string>
 
 </resources>
