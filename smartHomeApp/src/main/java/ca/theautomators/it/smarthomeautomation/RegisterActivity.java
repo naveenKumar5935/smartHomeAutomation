@@ -46,17 +46,28 @@ public class RegisterActivity extends AppCompatActivity {
         loginBtn = findViewById(R.id.registerLoginBtn);
         auth = FirebaseAuth.getInstance();
 
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String getemail = email.getText().toString();
-
+                String getemail = email.getText().toString().trim();
+                String getpass = password.getText().toString().trim();
                 if (!getemail.contains("@") || !getemail.contains(".")){
                     email.setError("Please type correct email");
                     return;
-
                 }
-                String getpass = password.getText().toString();
+                if(getpass.length()<8){
+                    password.setError("Minimum length should be 8");
+                    return;
+                }
+
                 String getaccess = accessCode.getText().toString();
                 PasswordEncryption passwordEncryption = new PasswordEncryption(getpass);
                 String encryptedPassword = passwordEncryption.getHashedPassword();

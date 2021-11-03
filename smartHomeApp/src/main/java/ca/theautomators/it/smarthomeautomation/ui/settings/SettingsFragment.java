@@ -13,12 +13,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -26,8 +28,10 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import ca.theautomators.it.smarthomeautomation.LoginActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.databinding.FragmentSettingsBinding;
+import io.paperdb.Paper;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -35,7 +39,9 @@ import static android.app.Activity.RESULT_OK;
 public class SettingsFragment extends Fragment {
 
     FragmentSettingsBinding binding;
+    Button logoutBtn;
     View view;
+    FirebaseAuth auth;
 
     void permissionHandle(){
 
@@ -84,7 +90,8 @@ public class SettingsFragment extends Fragment {
         binding = FragmentSettingsBinding.inflate(inflater,container,false);
         View root = binding.getRoot();
         view = root;
-
+        logoutBtn = view.findViewById(R.id.settingLogoutBtn);
+        auth = FirebaseAuth.getInstance();
 
         binding.chooseBackgroundBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,9 +101,25 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                Paper.book().write("useremail","");
+                Paper.book().write("userpassword","");
+
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                getActivity().finish();
+                startActivity(intent);
+
+
+
+            }
+        });
 
         return root;
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -111,4 +134,7 @@ public class SettingsFragment extends Fragment {
 
 
     }
+
+
 }
+

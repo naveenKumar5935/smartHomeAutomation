@@ -55,5 +55,6 @@ dependencies {
     compileOnly 'com.google.android.wearable:wearable:2.8.1'
     implementation 'com.karumi:dexter:6.2.3'
     implementation 'com.karumi:dexter:6.2.2'
+    implementation 'io.paperdb:paperdb:2.7.1'
 
 }

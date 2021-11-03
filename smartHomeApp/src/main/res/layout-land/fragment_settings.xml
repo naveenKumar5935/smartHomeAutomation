@@ -10,7 +10,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/logoutButton"
+        android:id="@+id/settingLogoutBtn"
         style="@style/ButtonText"
         android:layout_width="280dp"
         android:layout_height="67dp"
@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoutButton" />
+        app:layout_constraintTop_toBottomOf="@+id/settingLogoutBtn" />
 
     <Switch
         android:id="@+id/switch1"

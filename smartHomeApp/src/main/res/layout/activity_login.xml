@@ -44,14 +44,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginButton"
+        style="@style/ButtonText"
         android:layout_width="147dp"
         android:layout_height="52dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="38dp"
         android:text="@string/login_button_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_password_tb"
-        style="@style/ButtonText"/>
+        app:layout_constraintTop_toBottomOf="@+id/login_password_tb" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginSignupBtn"
@@ -63,6 +63,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
+    <CheckBox
+        android:id="@+id/loginRememberMe"
+        android:layout_width="128dp"
+        android:layout_height="42dp"
+        android:text="Remember me"
+        app:layout_constraintEnd_toEndOf="@+id/login_password_tb"
+        app:layout_constraintTop_toBottomOf="@+id/login_password_tb" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
