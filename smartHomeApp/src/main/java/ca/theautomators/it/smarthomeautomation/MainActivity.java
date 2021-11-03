@@ -126,4 +126,21 @@ public class MainActivity extends AppCompatActivity{
                 loadFragment(id, getString(R.string.home), new LandingFragment());
         }
     }
+
+    public void renameRoom(int id, String title){
+
+        NavigationView navView = findViewById(R.id.nav_view);
+        Menu menu = navView.getMenu();
+        MenuItem menuItem = menu.findItem(id);
+        menuItem.setTitle(title);
+    }
+
+    public void loadRoomInfo(int id){
+
+        NavigationView navView = findViewById(R.id.nav_view);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        Menu menu = navView.getMenu();
+        MenuItem item = menu.findItem(id);
+        toolbar.setTitle(item.getTitle());
+    }
 }

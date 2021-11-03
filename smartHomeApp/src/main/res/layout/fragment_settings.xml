@@ -48,37 +48,50 @@
         app:layout_constraintTop_toBottomOf="@+id/logoutButton2"
         style="@style/ButtonText"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/manageRooms"
+        android:layout_width="@dimen/settings_button_width"
+        android:layout_height="@dimen/settings_button_height"
+        android:layout_marginTop="@dimen/settings_button_marginTop"
+        android:text="Manage Rooms"
+        android:textSize="@dimen/button_text_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chooseBackgroundBtn"
+        style="@style/ButtonText"/>
+
     <Switch
         android:id="@+id/switch1"
         android:layout_width="280dp"
         android:layout_height="60dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="116dp"
         android:text="@string/setting_switch_mode"
         android:textSize="21sp"
+        android:theme="@style/SwitchColour"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.564"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chooseBackgroundBtn"
-        android:theme="@style/SwitchColour"/>
+        app:layout_constraintTop_toBottomOf="@+id/chooseBackgroundBtn" />
 
     <Switch
         android:id="@+id/switch2"
         android:layout_width="280dp"
         android:layout_height="60dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="@string/dark_mode"
         android:textSize="21sp"
+        android:theme="@style/SwitchColour"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.564"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch1"
-        android:theme="@style/SwitchColour"/>
+        app:layout_constraintTop_toBottomOf="@+id/switch1" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/settingProfileImg"
         android:layout_width="165dp"
         android:layout_height="157dp"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="32dp"
         android:src="@drawable/avatar"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"

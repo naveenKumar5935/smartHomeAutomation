@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 
 public class LivingRoomFragment extends Fragment {
@@ -33,6 +34,9 @@ public class LivingRoomFragment extends Fragment {
         }
 
         View root = inflater.inflate(R.layout.fragment_livingroom, container, false);
+
+        ((MainActivity)getActivity()).loadRoomInfo(R.id.nav_livingroom);
+
         livingRoomData = getString(R.string.living_room_data);
 
         TextView dataText = root.findViewById(R.id.living_room_data);

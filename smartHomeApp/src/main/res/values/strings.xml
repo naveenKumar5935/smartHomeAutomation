@@ -94,4 +94,5 @@
     <string name="review">Review</string>
     <string name="help">Help</string>
     <string name="exit">Exit</string>
+    <string name="title_activity_room_manager">RoomManagerActivity</string>
 </resources>

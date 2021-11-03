@@ -7,13 +7,10 @@
 
 package ca.theautomators.it.smarthomeautomation;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SplashScreenActivity extends Activity {
@@ -24,13 +21,14 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+
         handler=new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-//                Intent intent=new Intent(SplashScreenActivity.this,RegisterActivity.class);
-                //TODO Replace this intent with register activity before handing in
-                Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                /* DO NOT ADD NEW INTENT LINE WHEN TESTING LOGIN FUNCTIONALITY, JUST SWITCH WHICH LINE IS COMMENTED OUT*/
+//                Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class); //<--- Uncomment this line when working on Login
+                Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class); //<--- Uncomment this line when you don't want login page to load
                 startActivity(intent);
                 finish();
             }

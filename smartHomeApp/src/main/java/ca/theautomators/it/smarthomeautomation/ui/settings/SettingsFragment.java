@@ -6,6 +6,8 @@
  */
 package ca.theautomators.it.smarthomeautomation.ui.settings;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
@@ -29,11 +31,10 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import ca.theautomators.it.smarthomeautomation.LoginActivity;
+import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.databinding.FragmentSettingsBinding;
 import io.paperdb.Paper;
-
-import static android.app.Activity.RESULT_OK;
 
 
 public class SettingsFragment extends Fragment {
@@ -42,42 +43,6 @@ public class SettingsFragment extends Fragment {
     Button logoutBtn;
     View view;
     FirebaseAuth auth;
-
-    void permissionHandle(){
-
-        Dexter.withContext(getContext())
-                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                .withListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                        Snackbar.make(view, R.string.permission_granted,Snackbar.LENGTH_LONG).show();
-                        chooseImage();
-                    }
-
-                    @Override
-                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                        Snackbar.make(view, R.string.permission_denied,Snackbar.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                                permissionToken.continuePermissionRequest();
-                    }
-                }).check();
-
-    }
-
-    void chooseImage(){
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent,45);
-
-    }
-
-
-
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -92,6 +57,8 @@ public class SettingsFragment extends Fragment {
         view = root;
         logoutBtn = view.findViewById(R.id.settingLogoutBtn);
         auth = FirebaseAuth.getInstance();
+
+        Button manageRooms = (Button) root.findViewById(R.id.manageRooms);
 
         binding.chooseBackgroundBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,9 +79,13 @@ public class SettingsFragment extends Fragment {
                 getActivity().finish();
                 startActivity(intent);
 
+            }
+        });
 
-
-
+        manageRooms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).renameRoom(R.id.nav_kitchen, "test");
             }
         });
 
@@ -133,6 +104,37 @@ public class SettingsFragment extends Fragment {
         }
 
 
+
+    }
+
+    void permissionHandle(){
+
+        Dexter.withContext(getContext())
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                        Snackbar.make(view, R.string.permission_granted,Snackbar.LENGTH_LONG).show();
+                        chooseImage();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                        Snackbar.make(view, R.string.permission_denied,Snackbar.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                        permissionToken.continuePermissionRequest();
+                    }
+                }).check();
+
+    }
+
+    void chooseImage(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent,45);
 
     }
 
