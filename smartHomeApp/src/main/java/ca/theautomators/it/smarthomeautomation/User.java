@@ -1,14 +1,17 @@
+/*
+ Naveen Kumar N01355935 Section-RNA
+ Gaganajeet Hanny N01350705 Section-RNA
+ Sukhmanpreet Kaur N01355022 Section-RNA
+ James Ricci N00411900 Section-RNA
+ */
+
 package ca.theautomators.it.smarthomeautomation;
 
-public class Users {
+public class User {
 
     String email, password;
 
-    public Users(){
-
-    }
-
-    public Users(String email, String password){
+    public User(String email, String password){
         this.email = email;
         this.password = password;
     }
