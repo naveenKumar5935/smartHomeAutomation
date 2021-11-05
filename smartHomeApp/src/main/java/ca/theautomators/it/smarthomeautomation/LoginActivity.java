@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -43,14 +44,19 @@ public class LoginActivity extends AppCompatActivity {
         rememberMe = findViewById(R.id.loginRememberMe);
         auth = FirebaseAuth.getInstance();
 
+        // Firebase Singleton
+        FirebaseConnect firebaseConnect = FirebaseConnect.getInstance();
+
         // Signing in remember me user
         String userEmail="";
         userEmail = Paper.book().read("useremail");
         String userpassword="";
         userpassword = Paper.book().read("userpassword");
 
+        Log.d("user",userEmail);
+
         if(!TextUtils.isEmpty(userEmail)){
-            signInUser(userEmail,userpassword);
+            firebaseConnect.getUserData(userEmail,userpassword);
             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
             startActivity(intent);
             finish();
@@ -85,26 +91,25 @@ public class LoginActivity extends AppCompatActivity {
                 if(rememberMe.isChecked()){
                     Paper.book().write("useremail",getemail);
                     Paper.book().write("userpassword",encryptedPassword);
+                }else {
+                    Paper.book().write("useremail","");
+                    Paper.book().write("userpassword","");
                 }
 
-                signInUser(getemail,encryptedPassword);
+
+                firebaseConnect.getUserData(getemail,encryptedPassword);
+
+                if(firebaseConnect.result==true){
+                    Toast.makeText(LoginActivity.this,"Successfully Logged In",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(intent);
+
+                    finish();
+                }
             }
         });
 
 
     }
 
-    public void signInUser(String email, String encryptedPassword){
-
-        auth.signInWithEmailAndPassword(email,encryptedPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                Toast.makeText(LoginActivity.this,"Successfully logged in",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-    }
 }
