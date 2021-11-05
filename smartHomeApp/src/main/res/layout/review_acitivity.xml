@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReviewAcitivity"
+    style="@style/ScreenBackground">
+
+    <TextView
+        android:id="@+id/page_heading"
+        android:layout_width="372dp"
+        android:layout_height="57dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="79dp"
+        android:gravity="center_horizontal"
+        android:text="We hope you enjoyed using our app"
+        android:textSize="20sp"
+        android:textStyle="italic" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="537dp"
+        android:numStars="5"
+        android:rating="5"
+        android:stepSize="1" />
+
+    <TextView
+        android:id="@+id/tvRatingScale"
+        android:layout_width="148dp"
+        android:layout_height="36dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="126dp"
+        android:layout_marginBottom="465dp"
+        android:text="Awesome. I love it"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etFeedback"
+        android:layout_width="363dp"
+        android:layout_height="156dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="19dp"
+        android:layout_marginBottom="88dp"
+        android:gravity="top"
+        android:hint="Tell us what you loved"
+        android:inputType="textMultiLine"
+        android:lines="5" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="393dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="28dp"
+        android:background="#e57373"
+        android:text="Send feedback"
+        android:textColor="@android:color/white" />
+
+    <EditText
+        android:id="@+id/Name"
+        android:layout_width="358dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="398dp"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/Phoneno"
+        android:layout_width="365dp"
+        android:layout_height="59dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="331dp"
+        android:ems="10"
+        android:hint="Phone number"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="348dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="275dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
+
+
+</RelativeLayout>
