@@ -31,8 +31,8 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import ca.theautomators.it.smarthomeautomation.LoginActivity;
-import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
+import ca.theautomators.it.smarthomeautomation.RoomManagerActivity;
 import ca.theautomators.it.smarthomeautomation.databinding.FragmentSettingsBinding;
 import io.paperdb.Paper;
 
@@ -85,7 +85,9 @@ public class SettingsFragment extends Fragment {
         manageRooms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).renameRoom(R.id.nav_kitchen, "test");
+                Intent intent = new Intent(getActivity(), RoomManagerActivity.class);
+                getActivity().finish();
+                startActivity(intent);
             }
         });
 

@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
+import ca.theautomators.it.smarthomeautomation.RoomState;
 
 public class LandingFragment extends Fragment {
 
@@ -38,13 +39,21 @@ public class LandingFragment extends Fragment {
 
         root = inflater.inflate(R.layout.fragment_landing, container, false);
 
+        RoomState roomState = RoomState.getInstance();
+
         Button kitchenButton = (Button) root.findViewById(R.id.button_kitchen);
+        //TODO temporary set text, will be removed once add and remove room functionality developed
+        kitchenButton.setText(roomState.getRoomNames().get(1));
         setButtonData(kitchenButton, kitchenData);
 
         Button bedroomButton = (Button) root.findViewById(R.id.button_bedroom);
+        //TODO temporary set text, will be removed once add and remove room functionality developed
+        bedroomButton.setText(roomState.getRoomNames().get(0));
         setButtonData(bedroomButton, bedroomData);
 
         Button livingRoomButton = (Button) root.findViewById(R.id.button_living_room);
+        //TODO temporary set text, will be removed once add and remove room functionality developed
+        livingRoomButton.setText(roomState.getRoomNames().get(2));
         setButtonData(livingRoomButton, livingRoomData);
 
         Button settingsButton = (Button) root.findViewById(R.id.button_settings);

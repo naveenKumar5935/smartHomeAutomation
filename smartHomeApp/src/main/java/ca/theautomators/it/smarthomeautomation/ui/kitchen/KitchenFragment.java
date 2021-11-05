@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
+import ca.theautomators.it.smarthomeautomation.RoomState;
 
 public class KitchenFragment extends Fragment {
 
@@ -32,7 +33,13 @@ public class KitchenFragment extends Fragment {
             container.removeAllViews();
         }
 
+        RoomState roomState = RoomState.getInstance();
+
         View root = inflater.inflate(R.layout.fragment_kitchen, container, false);
+
+        TextView title = root.findViewById(R.id.kitchen_data_title);
+
+        title.setText(roomState.getRoomNames().get(1) + " Sensor Readings");
 
         ((MainActivity)getActivity()).loadRoomInfo(R.id.nav_kitchen);
 

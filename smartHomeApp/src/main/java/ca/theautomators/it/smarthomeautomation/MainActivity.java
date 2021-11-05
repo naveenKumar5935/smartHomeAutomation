@@ -9,6 +9,7 @@ package ca.theautomators.it.smarthomeautomation;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,12 +17,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ca.theautomators.it.smarthomeautomation.ui.bedroom.BedroomFragment;
 import ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment;
@@ -32,6 +37,8 @@ import ca.theautomators.it.smarthomeautomation.ui.settings.SettingsFragment;
 public class MainActivity extends AppCompatActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
+    private static ArrayList<Integer> roomList = new ArrayList<Integer>();
+    private static NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +48,48 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_bedroom, R.id.nav_home, R.id.nav_livingroom, R.id.nav_kitchen, R.id.nav_settings)
                 .setDrawerLayout(drawer)
                 .build();
+
+        //TODO: temp code for renaming room, will be replaced once add and remove room functionality developed
+        roomList.clear();
+        roomList.add(R.id.nav_bedroom);
+        roomList.add(R.id.nav_kitchen);
+        roomList.add(R.id.nav_livingroom);
+
+        RoomState roomState = RoomState.getInstance();
+
+        if(roomState.getRoomNameChanged()){
+
+            for(int i = 0; i < roomState.getNumRooms(); i++){
+
+                renameRoom(roomState.getRoomIds().get(i), roomState.getRoomNames().get(i));
+            }
+
+            roomState.setRoomNameChanged(false);
+        }
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        FragmentManager fragMan = getSupportFragmentManager();
+
+
+
+        List<Fragment> list = fragMan.getFragments();
+
+        for(Fragment item: list){
+
+            if(item.getId() == R.layout.fragment_kitchen){
+
+                Log.d("Fragments", "Kitchen");
+            }
+        }
 
 
     }
@@ -127,10 +167,9 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    public void renameRoom(int id, String title){
+    public static void renameRoom(int id, String title){
 
-        NavigationView navView = findViewById(R.id.nav_view);
-        Menu menu = navView.getMenu();
+        Menu menu = navigationView.getMenu();
         MenuItem menuItem = menu.findItem(id);
         menuItem.setTitle(title);
     }
@@ -143,4 +182,10 @@ public class MainActivity extends AppCompatActivity{
         MenuItem item = menu.findItem(id);
         toolbar.setTitle(item.getTitle());
     }
+
+    public static ArrayList<Integer> getRoomList(){
+        return roomList;
+    }
+
+    public static NavigationView getNavigationView(){return navigationView;}
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RoomManagerActivity"
+    android:padding="@dimen/fragment_padding"
+    style="@style/ScreenBackground"
+    android:paddingTop="30dp"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/roommanager"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/savebutton"
+        android:layout_width="@dimen/settings_button_width"
+        android:layout_height="@dimen/settings_button_height"
+        android:layout_marginTop="@dimen/settings_button_marginTop"
+        android:text="Save"
+        android:textSize="@dimen/button_text_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/ButtonText"/>
+
+
+</LinearLayout>
