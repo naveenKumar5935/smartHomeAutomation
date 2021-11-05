@@ -57,6 +57,7 @@ public class SettingsFragment extends Fragment {
         view = root;
         logoutBtn = view.findViewById(R.id.settingLogoutBtn);
         auth = FirebaseAuth.getInstance();
+        Paper.init(getActivity());
 
         Button manageRooms = (Button) root.findViewById(R.id.manageRooms);
 
