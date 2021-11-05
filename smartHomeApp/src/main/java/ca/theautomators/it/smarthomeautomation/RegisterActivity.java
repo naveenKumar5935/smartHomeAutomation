@@ -66,39 +66,18 @@ public class RegisterActivity extends AppCompatActivity {
                 String getaccess = accessCode.getText().toString();
                 PasswordEncryption passwordEncryption = new PasswordEncryption(getpass);
                 String encryptedPassword = passwordEncryption.getHashedPassword();
+                FirebaseConnect firebaseConnect = FirebaseConnect.getInstance();
+                firebaseConnect.setUserData(getemail,encryptedPassword);
 
-                signUpFirebase(getemail,encryptedPassword);
+                if(firebaseConnect.result==true){
+                    Toast.makeText(RegisterActivity.this,"Successfully Signed Up",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
 
 
-    }
-
-    public void signUpFirebase(String email, String encryptedPassword){
-        auth.createUserWithEmailAndPassword(email,encryptedPassword)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            User user = new User(email,encryptedPassword);
-                            FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid())
-                                    .setValue(user)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                Toast.makeText(RegisterActivity.this,"done",Toast.LENGTH_SHORT).show();
-                                            }else {
-                                                Toast.makeText(RegisterActivity.this,"failed adding to database",Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
-                                }else {
-                            Toast.makeText(RegisterActivity.this,"failed creating user",Toast.LENGTH_SHORT).show();
-                            }
-                    }
-                });
     }
 
 
