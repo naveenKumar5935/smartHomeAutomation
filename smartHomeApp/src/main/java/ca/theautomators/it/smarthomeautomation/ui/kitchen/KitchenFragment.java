@@ -33,7 +33,7 @@ public class KitchenFragment extends Fragment {
             container.removeAllViews();
         }
 
-        RoomState roomState = RoomState.getInstance();
+        RoomState roomState = RoomState.getInstance(null);
 
         View root = inflater.inflate(R.layout.fragment_kitchen, container, false);
 

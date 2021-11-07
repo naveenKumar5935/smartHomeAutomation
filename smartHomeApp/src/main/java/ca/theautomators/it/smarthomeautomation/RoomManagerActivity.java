@@ -24,10 +24,10 @@ public class RoomManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_manager);
 
-        RoomState roomState = RoomState.getInstance();
+        RoomState roomState = RoomState.getInstance(null);
 
         ArrayList<String> roomNames = roomState.getRoomNames();
-        ArrayList<Drawable> roomIcons = roomState.getRoomIcons();
+        int[] drawableId = roomState.getDrawableId();
 
         EditText[] editedRoomNames = new EditText[roomState.getNumRooms()];
         Drawable[] editedRoomIcons = new Drawable[roomState.getNumRooms()];
@@ -67,7 +67,12 @@ public class RoomManagerActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                    editedRoomIcons[finalI] = getDrawableId(position);
+                    Integer resource = getDrawableId(position);
+
+                    if(resource != null) {
+                        editedRoomIcons[finalI] = getResources().getDrawable(resource.intValue());
+                        drawableId[finalI] = resource.intValue();
+                    }
 
                 }
 
@@ -113,10 +118,9 @@ public class RoomManagerActivity extends AppCompatActivity {
 
     }
 
-    private Drawable getDrawableId(int selection){
+    private Integer getDrawableId(int selection){
 
-        int resource;
-        Drawable drawable;
+        Integer resource;
 
         switch(selection){
 
@@ -158,9 +162,8 @@ public class RoomManagerActivity extends AppCompatActivity {
 
         }
 
-        if(resource != -1) {
-            drawable = getResources().getDrawable(resource);
-            return drawable;
+        if(resource.intValue() != -1) {
+            return resource;
         }
         else
             return null;

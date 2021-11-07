@@ -39,7 +39,7 @@ public class LandingFragment extends Fragment {
 
         root = inflater.inflate(R.layout.fragment_landing, container, false);
 
-        RoomState roomState = RoomState.getInstance();
+        RoomState roomState = RoomState.getInstance(null);
 
         Button kitchenButton = (Button) root.findViewById(R.id.button_kitchen);
         //TODO temporary set text, will be removed once add and remove room functionality developed

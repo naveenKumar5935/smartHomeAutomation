@@ -38,7 +38,7 @@ import ca.theautomators.it.smarthomeautomation.ui.settings.SettingsFragment;
 public class MainActivity extends AppCompatActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
-    private static ArrayList<Integer> roomList = new ArrayList<Integer>();
+    private static ArrayList<Integer> roomList;
     private static NavigationView navigationView;
 
     @Override
@@ -56,15 +56,12 @@ public class MainActivity extends AppCompatActivity{
                 .setDrawerLayout(drawer)
                 .build();
 
-        //TODO: temp code for renaming room, will be replaced once add and remove room functionality developed
-        roomList.clear();
-        roomList.add(R.id.nav_bedroom);
-        roomList.add(R.id.nav_kitchen);
-        roomList.add(R.id.nav_livingroom);
 
-        RoomState roomState = RoomState.getInstance();
+        RoomState roomState = RoomState.getInstance(this);
 
-        if(roomState.getRoomStateChanged()){
+        roomList = roomState.getRoomIds();
+
+        if(roomState.getRoomStateChanged() || roomState.getStateSaved()){
 
             for(int i = 0; i < roomState.getNumRooms(); i++){
 
