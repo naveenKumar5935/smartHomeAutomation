@@ -14,20 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
     EditText email,password,accessCode;
     Button loginBtn, registerBtn;
-    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +31,6 @@ public class RegisterActivity extends AppCompatActivity {
         accessCode = findViewById(R.id.register_access_tb);
         registerBtn = findViewById(R.id.registerButton);
         loginBtn = findViewById(R.id.registerLoginBtn);
-        auth = FirebaseAuth.getInstance();
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

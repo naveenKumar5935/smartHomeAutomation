@@ -45,9 +45,9 @@ public class RoomManagerActivity extends AppCompatActivity {
 
         }
 
-        Button button = findViewById(R.id.savebutton);
+        Button save = findViewById(R.id.savebutton);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

@@ -7,8 +7,6 @@
 
 package ca.theautomators.it.smarthomeautomation;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,9 +17,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import androidx.appcompat.app.AppCompatActivity;
 
 import io.paperdb.Paper;
 
@@ -30,7 +26,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText email, password;
     Button logInButton, signUpButton;
     CheckBox rememberMe;
-    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         logInButton = findViewById(R.id.loginButton);
         signUpButton = findViewById(R.id.loginSignupBtn);
         rememberMe = findViewById(R.id.loginRememberMe);
-        auth = FirebaseAuth.getInstance();
 
         // Firebase Singleton
         FirebaseConnect firebaseConnect = FirebaseConnect.getInstance();

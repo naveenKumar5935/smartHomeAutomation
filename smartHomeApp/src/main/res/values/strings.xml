@@ -96,4 +96,19 @@
     <string name="exit">Exit</string>
     <string name="about_app">About app</string>
     <string name="report_an_issue">Report an issue</string>
+
+    <string-array name="rooms">
+        <item>Bedroom</item>
+        <item>Bathroom</item>
+        <item>Child's Room</item>
+        <item>Kitchen</item>
+        <item>Living Room</item>
+        <item>Garage</item>
+        <item>Office</item>
+        <item>Game Room</item>
+        <item>Backyard</item>
+        <item>Balcony</item>
+        <item>Music Room</item>
+    </string-array>
+
 </resources>

@@ -16,6 +16,7 @@ public class RoomState {
     private ArrayList<Integer> roomIds;
 
     //TODO add room icon to state
+    //TODO Save state to shared preferences
 
     private RoomState(){
 

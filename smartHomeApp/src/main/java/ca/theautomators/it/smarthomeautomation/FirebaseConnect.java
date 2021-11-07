@@ -7,9 +7,6 @@
 
 package ca.theautomators.it.smarthomeautomation;
 
-import android.content.Intent;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,21 +16,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.SplittableRandom;
-
 public class FirebaseConnect {
 
-   static FirebaseAuth auth;
+    static FirebaseAuth auth;
     boolean result;
 
     private static FirebaseConnect INSTANCE= null;
 
     private FirebaseConnect(){
 
+        auth=FirebaseAuth.getInstance();
     }
 
     public static FirebaseConnect getInstance(){
-        auth=FirebaseAuth.getInstance();
+
         if(INSTANCE == null){
 
             synchronized (FirebaseConnect.class){
@@ -47,7 +43,6 @@ public class FirebaseConnect {
 
     public void getUserData(String email, String password){
 
-        //TODO add get username and get password from database functionality
         auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
@@ -65,8 +60,6 @@ public class FirebaseConnect {
     }
 
     public void setUserData(String email, String password){
-
-
 
         auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
