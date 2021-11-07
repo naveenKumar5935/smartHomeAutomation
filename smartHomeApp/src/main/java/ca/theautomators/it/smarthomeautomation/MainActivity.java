@@ -8,6 +8,7 @@ package ca.theautomators.it.smarthomeautomation;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -63,14 +64,14 @@ public class MainActivity extends AppCompatActivity{
 
         RoomState roomState = RoomState.getInstance();
 
-        if(roomState.getRoomNameChanged()){
+        if(roomState.getRoomStateChanged()){
 
             for(int i = 0; i < roomState.getNumRooms(); i++){
 
-                renameRoom(roomState.getRoomIds().get(i), roomState.getRoomNames().get(i));
+                setRoomNameAndIcon(roomState.getRoomIds().get(i), roomState.getRoomNames().get(i), roomState.getRoomIcons().get(i));
             }
 
-            roomState.setRoomNameChanged(false);
+            roomState.setRoomStateChanged(false);
         }
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -167,11 +168,12 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    public static void renameRoom(int id, String title){
+    public static void setRoomNameAndIcon(int id, String title, Drawable icon){
 
         Menu menu = navigationView.getMenu();
         MenuItem menuItem = menu.findItem(id);
         menuItem.setTitle(title);
+        menuItem.setIcon(icon);
     }
 
     public void loadRoomInfo(int id){

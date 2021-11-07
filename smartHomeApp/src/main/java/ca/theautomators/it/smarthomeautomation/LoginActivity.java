@@ -10,7 +10,6 @@ package ca.theautomators.it.smarthomeautomation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -47,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         String userpassword="";
         userpassword = Paper.book().read("userpassword");
 
-        Log.d("user",userEmail);
+        //Log.d("user",userEmail);
 
         if(!TextUtils.isEmpty(userEmail)){
             firebaseConnect.getUserData(userEmail,userpassword);

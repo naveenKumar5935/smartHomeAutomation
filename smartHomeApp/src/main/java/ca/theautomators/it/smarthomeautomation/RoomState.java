@@ -1,5 +1,6 @@
 package ca.theautomators.it.smarthomeautomation;
 
+import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,14 +12,18 @@ public class RoomState {
 
     private static RoomState INSTANCE = null;
     private int numRooms;
-    private ArrayList<String> roomNames = new ArrayList<>();
-    private boolean roomNameChanged = false;
+    private ArrayList<String> roomNames;
+    private boolean roomStateChanged;
     private ArrayList<Integer> roomIds;
+    private ArrayList<Drawable> roomIcons;
 
-    //TODO add room icon to state
     //TODO Save state to shared preferences
 
     private RoomState(){
+
+        roomStateChanged = false;
+        roomNames  = new ArrayList<>();
+        roomIcons = new ArrayList<>();
 
         NavigationView navView = MainActivity.getNavigationView();
         Menu menu = navView.getMenu();
@@ -29,6 +34,7 @@ public class RoomState {
 
             MenuItem menuItem = menu.findItem(roomIds.get(i));
             roomNames.add((String)menuItem.getTitle());
+            roomIcons.add(menuItem.getIcon());
         }
     }
 
@@ -48,7 +54,13 @@ public class RoomState {
     public void changeRoomName(String name, int index){
 
         roomNames.set(index, name);
-        roomNameChanged = true;
+        roomStateChanged = true;
+    }
+
+    public void changeRoomIcons(Drawable icon, int index){
+
+        roomIcons.set(index, icon);
+        roomStateChanged = true;
     }
 
     public ArrayList<String> getRoomNames(){
@@ -56,14 +68,20 @@ public class RoomState {
         return roomNames;
     }
 
-    public void setRoomNameChanged(boolean bit){
+    public ArrayList<Drawable> getRoomIcons(){
 
-        roomNameChanged = bit;
+        return roomIcons;
     }
 
-    public boolean getRoomNameChanged(){
+    public void setRoomStateChanged(boolean bit){
 
-        return roomNameChanged;
+        roomStateChanged = bit;
+    }
+
+
+    public boolean getRoomStateChanged(){
+
+        return roomStateChanged;
     }
 
     public int getNumRooms(){
