@@ -98,7 +98,8 @@
         android:layout_marginBottom="331dp"
         android:ems="10"
         android:hint="Phone number"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:maxLength="10"/>
 
     <EditText
         android:id="@+id/email"

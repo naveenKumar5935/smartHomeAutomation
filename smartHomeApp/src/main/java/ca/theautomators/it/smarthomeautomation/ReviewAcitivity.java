@@ -44,7 +44,18 @@ public class ReviewAcitivity extends AppCompatActivity {
                     case 1:
                         mRatingScale.setText("Very bad");
                         break;
-
+                    case 2:
+                        mRatingScale.setText("Need some improvement");
+                        break;
+                    case 3:
+                        mRatingScale.setText("Good");
+                        break;
+                    case 4:
+                        mRatingScale.setText("Great");
+                        break;
+                    case 5:
+                        mRatingScale.setText("Awesome. I love it");
+                        break;
                     default:
                         mRatingScale.setText("");
                 }
@@ -60,11 +71,37 @@ public class ReviewAcitivity extends AppCompatActivity {
 
                 }
 
+                else if(Name.getText().toString().trim().length() < 3){
+                    Name.setError("Minimum 3 words");
+                }
+
+                else if (phonenumber.getText().toString().isEmpty()) {
+                    Toast.makeText(ReviewAcitivity.this, "Please fill in phone number text box", Toast.LENGTH_LONG).show();
+
+                }
+
+
+                else if(phonenumber.getText().toString().trim().length() < 10){
+                    phonenumber.setError("Invalid");
+                }
+
+                else if (email.getText().toString().isEmpty()) {
+                    Toast.makeText(ReviewAcitivity.this, "Please fill in Email text box", Toast.LENGTH_LONG).show();
+
+                }
+
+                else if (mFeedback.getText().toString().isEmpty()) {
+                    Toast.makeText(ReviewAcitivity.this, "Please fill in feedback text box", Toast.LENGTH_LONG).show();
+
+                }
+
+
 
                 else  {
                     mFeedback.setText("");
                     Name.setText(" ");
                     phonenumber.setText(" ");
+                    email.setText("");
                     mRatingBar.setRating(0);
                     Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
                 }
