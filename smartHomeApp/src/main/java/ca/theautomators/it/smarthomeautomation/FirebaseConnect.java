@@ -87,7 +87,37 @@ public class FirebaseConnect {
 
     }
 
-    //TODO add getters for devices and device data
+    /*TODO add getters for devices and device data
+    These stub routines are just a starting point, if you think some of these tasks can be
+    combined then delete the redundant ones
+     */
+
+    public void sendControlData(String data){
+
+    }
+
+    public String getSensorData(String identifier){
+
+        return "Data";
+    }
+
+    public int getNumDevices(){
+
+        return 0;
+    }
+
+    public String getDeviceType(String identifier){
+
+        return "Type";
+    }
+
+    public String[] getIdentifiers(){
+
+        String[] identifiers = new String[5];
+
+        return identifiers;
+    }
+
 
 
 }

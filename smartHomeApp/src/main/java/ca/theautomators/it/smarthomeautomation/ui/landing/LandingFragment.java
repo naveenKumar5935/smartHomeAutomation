@@ -105,4 +105,9 @@ public class LandingFragment extends Fragment {
         span.setSpan(new RelativeSizeSpan(0.6f), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         button.setText(span);
     }
+
+    private void createButton(String title, String data){
+
+
+    }
 }

@@ -21,9 +21,9 @@ public class RoomState {
     private ArrayList<Integer> roomIds;
     private ArrayList<Drawable> roomIcons;
     private int[] drawableId;
-    Context context;
-    MenuItem menuItem;
-    SharedPreferences state;
+    private Context context;
+    private MenuItem menuItem;
+    private SharedPreferences state;
 
 
     private RoomState(Context context){
@@ -124,7 +124,6 @@ public class RoomState {
         stateSaved = state.getBoolean("stateSaved", false);
 
 
-
         if(stateSaved){
 
             numRooms = state.getInt("numRooms", 0);
@@ -135,19 +134,12 @@ public class RoomState {
             roomIcons = new ArrayList<>();
 
             for(int i = 0; i < numRooms; i++) {
-                roomNames.add(null);
-                roomIds.add(null);
-                roomIcons.add(null);
-            }
-
-            for(int i = 0; i < numRooms; i++){
-
-                roomIds.set(i, state.getInt("roomId_" + i, 0));
-                roomIcons.set(i, context.getResources().getDrawable(context.getResources().getIdentifier(state.getString("roomIcon_" + i, "home"),
+                roomNames.add(state.getString("roomName_" + i, null));
+                roomIds.add(state.getInt("roomId_" + i, 0));
+                roomIcons.add(context.getResources().getDrawable(context.getResources().getIdentifier(state.getString("roomIcon_" + i, "home"),
                         "drawable", context.getPackageName())));
-                roomNames.set(i, state.getString("roomName_" + i, null));
-
             }
+
         }
         else {
 

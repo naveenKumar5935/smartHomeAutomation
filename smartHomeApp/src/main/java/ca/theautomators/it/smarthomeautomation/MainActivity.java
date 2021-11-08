@@ -9,17 +9,12 @@ package ca.theautomators.it.smarthomeautomation;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -97,6 +92,8 @@ public class MainActivity extends AppCompatActivity{
                 Log.d("Fragments", "Kitchen");
             }
         }
+
+        //TODO handle Nav Clicks
 
 
     }
@@ -217,4 +214,5 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public static NavigationView getNavigationView(){return navigationView;}
+
 }

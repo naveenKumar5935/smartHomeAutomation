@@ -169,4 +169,14 @@ public class RoomManagerActivity extends AppCompatActivity {
             return null;
     }
 
+
+    //TODO add functionality
+    private void createRoom(){
+
+    }
+
+    private void deleteRoom(){
+
+    }
+
 }
