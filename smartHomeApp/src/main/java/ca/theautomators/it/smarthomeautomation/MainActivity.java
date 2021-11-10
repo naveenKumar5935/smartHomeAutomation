@@ -36,6 +36,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.theautomators.it.smarthomeautomation.ui.AboutAppActivity;
 import ca.theautomators.it.smarthomeautomation.ui.bedroom.BedroomFragment;
 import ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment;
 import ca.theautomators.it.smarthomeautomation.ui.landing.LandingFragment;
@@ -187,6 +188,11 @@ public class MainActivity extends AppCompatActivity{
             case R.id.Review:
                 Intent intent = new Intent(MainActivity.this,ReviewAcitivity.class);
                 startActivity(intent);
+                break;
+
+            case R.id.AboutApp:
+                Intent intent1 = new Intent(MainActivity.this, AboutAppActivity.class);
+                startActivity(intent1);
                 break;
 
         }
