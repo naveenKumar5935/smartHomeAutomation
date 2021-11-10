@@ -97,6 +97,7 @@
     <string name="about_app">About app</string>
     <string name="report_an_issue">Report an issue</string>
     <string name="edit_room_name_and_type">Please edit room names and types below:\n\n</string>
+    <string name="sign_in_with_google">Sign In With Google</string>
 
     <string-array name="rooms">
         <item>Select Type</item>

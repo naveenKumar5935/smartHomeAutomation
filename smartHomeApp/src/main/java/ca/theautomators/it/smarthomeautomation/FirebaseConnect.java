@@ -132,8 +132,6 @@ public class FirebaseConnect {
 
                     FirebaseDatabase.getInstance().getReference("googleUsers").child(gUser.getId()).setValue(userdatamap);
 
-
-                    Toast.makeText(context, "sorry", Toast.LENGTH_SHORT).show();
                 }
 
             }
