@@ -98,5 +98,6 @@
     <string name="already_have_an_account_log_in">Already have an account? Log In</string>
     <string name="edit_room_name_and_type">Please edit room names and types below:\n\n</string>
     <string name="sign_in_with_google">Sign In With Google</string>
+    <string name="version1_0">Version1.0</string>
 
 </resources>
