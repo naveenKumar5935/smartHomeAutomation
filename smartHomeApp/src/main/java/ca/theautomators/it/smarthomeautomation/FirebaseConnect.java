@@ -7,25 +7,50 @@
 
 package ca.theautomators.it.smarthomeautomation;
 
-import androidx.annotation.NonNull;
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.util.Log;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 public class FirebaseConnect {
 
     static FirebaseAuth auth;
     boolean result;
+    private Context context;
 
     private static FirebaseConnect INSTANCE= null;
 
     private FirebaseConnect(){
 
         auth=FirebaseAuth.getInstance();
+    }
+
+    public void setContext(Context context){
+        this.context=context;
     }
 
     public static FirebaseConnect getInstance(){
@@ -86,6 +111,49 @@ public class FirebaseConnect {
                 });
 
     }
+
+    public void FirebaseAuthWithGoogle(GoogleSignInAccount account){
+        Log.i("name",account.getDisplayName());
+
+        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(context);
+                String email = gUser.getEmail();
+
+                if (snapshot.child("googleUsers").child(gUser.getId()).exists()) {
+                    Toast.makeText(context, "Welcome Back " + gUser.getGivenName(), Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    HashMap<String, Object> userdatamap = new HashMap<>();
+                    userdatamap.put("email", email);
+                    userdatamap.put("name", gUser.getGivenName());
+
+                    FirebaseDatabase.getInstance().getReference("googleUsers").child(gUser.getId()).setValue(userdatamap);
+
+
+                    Toast.makeText(context, "sorry", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+
+
+               // }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+    }
+
+
 
     //TODO add getters for devices and device data
 

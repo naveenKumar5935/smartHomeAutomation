@@ -21,6 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
@@ -51,6 +54,11 @@ public class SettingsFragment extends Fragment {
 
             container.removeAllViews();
         }
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(getActivity(),gso);
+
 
         binding = FragmentSettingsBinding.inflate(inflater,container,false);
         View root = binding.getRoot();
@@ -73,6 +81,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 auth.signOut();
+                googleSignInClient.signOut();
                 Paper.book().write("useremail","");
                 Paper.book().write("userpassword","");
 
