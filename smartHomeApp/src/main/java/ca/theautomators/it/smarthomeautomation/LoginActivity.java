@@ -167,6 +167,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void updateUI(GoogleSignInAccount account) {
 
         FirebaseConnect firebaseConnect = FirebaseConnect.getInstance();

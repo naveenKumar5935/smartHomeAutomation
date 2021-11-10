@@ -113,7 +113,7 @@ public class FirebaseConnect {
     }
 
     public void FirebaseAuthWithGoogle(GoogleSignInAccount account){
-        Log.i("name",account.getDisplayName());
+     //   Log.i("name",account.getDisplayName());
 
         FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -144,6 +144,20 @@ public class FirebaseConnect {
         });
 
 
+
+    }
+
+    public void setUserFeedback(String name, String email, String phone, String feedback, float rating,String modelNo){
+
+        HashMap<String, Object> userFeedback = new HashMap<>();
+        userFeedback.put("name",name);
+        userFeedback.put("email", email);
+        userFeedback.put("phone", phone);
+        userFeedback.put("feedback",feedback);
+        userFeedback.put("rating",rating);
+        userFeedback.put("Device",modelNo);
+
+        FirebaseDatabase.getInstance().getReference("UserFeedback").child(phone).setValue(userFeedback);
 
     }
 

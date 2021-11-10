@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 public class ReviewAcitivity extends AppCompatActivity {
     private TextView mTextView;
+    FirebaseConnect firebaseConnect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,8 @@ public class ReviewAcitivity extends AppCompatActivity {
         EditText Name = findViewById(R.id.Name);
         EditText phonenumber = findViewById(R.id.Phoneno);
         EditText email = findViewById(R.id.email);
+
+        firebaseConnect = FirebaseConnect.getInstance();
 
 
         mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -97,9 +100,17 @@ public class ReviewAcitivity extends AppCompatActivity {
 
                 }
 
-
-
                 else  {
+                    String name = Name.getText().toString().trim();
+                    String email1 = email.getText().toString().trim();
+                    String phone = phonenumber.getText().toString().trim();
+                    String feedback = mFeedback.getText().toString();
+                    float rating = mRatingBar.getRating();
+                    String modelNo = getDeviceName();
+
+                    firebaseConnect.setUserFeedback(name,email1,phone,feedback,rating,modelNo);
+
+
                     mFeedback.setText("");
                     Name.setText(" ");
                     phonenumber.setText(" ");
