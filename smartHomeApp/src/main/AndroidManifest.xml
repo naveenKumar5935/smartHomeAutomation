@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartHomeAutomation"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ReviewAcitivity"></activity>
+        <activity android:name=".ui.AboutAppActivity"></activity>
+        <activity android:name=".ReviewAcitivity" />
         <activity
             android:name=".RoomManagerActivity"
             android:exported="false" /> <!-- <uses-library -->
