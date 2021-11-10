@@ -112,8 +112,8 @@ public class ReviewAcitivity extends AppCompatActivity {
 
 
                     mFeedback.setText("");
-                    Name.setText(" ");
-                    phonenumber.setText(" ");
+                    Name.setText("");
+                    phonenumber.setText("");
                     email.setText("");
                     mRatingBar.setRating(0);
                     Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
