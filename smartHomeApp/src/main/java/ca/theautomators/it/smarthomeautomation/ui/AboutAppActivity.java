@@ -17,6 +17,7 @@ public class AboutAppActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about_app);
 
         TextView ntextview =findViewById(R.id.textView2);
+        //ImageView imageView = findViewById(R.id.imageView2);
         ImageView imageView = findViewById(R.id.imageView2);
     }
 }
