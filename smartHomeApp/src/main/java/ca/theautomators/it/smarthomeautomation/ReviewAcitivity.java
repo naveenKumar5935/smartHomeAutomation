@@ -54,7 +54,7 @@ public class ReviewAcitivity extends AppCompatActivity {
                         mRatingScale.setText("Great");
                         break;
                     case 5:
-                        mRatingScale.setText("Awesome. I love it");
+                        mRatingScale.setText("Awesome, I liked the service");
                         break;
                     default:
                         mRatingScale.setText("");
