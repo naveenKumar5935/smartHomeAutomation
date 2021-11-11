@@ -64,14 +64,21 @@ public class LoginActivity extends AppCompatActivity {
         rememberMe = findViewById(R.id.loginRememberMe);
         googleSignInButton = findViewById(R.id.googleSignInButton);
         auth = FirebaseAuth.getInstance();
-        // Firebase Singleton
-        FirebaseConnect firebaseConnect = FirebaseConnect.getInstance();
 
         // Signing in remember me user
         String userEmail="";
         userEmail = Paper.book().read("useremail");
         String userpassword="";
         userpassword = Paper.book().read("userpassword");
+        String googleRememberMeCheck="";
+        googleRememberMeCheck=Paper.book().read("googleSignIn");
+
+        if(googleRememberMeCheck.matches("checked")){
+            GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
+            if(gUser!=null){
+                FirebaseSignInWithGoogle();
+            }
+        }
 
         //Log.d("user",userEmail);
 
@@ -85,6 +92,11 @@ public class LoginActivity extends AppCompatActivity {
         googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(rememberMe.isChecked()){
+                    Paper.book().write("googleSignIn","checked");
+                }else {
+                    Paper.book().write("googleSignIn","unchecked");
+                }
                     googleSignInRequest();
             }
         });
@@ -181,22 +193,21 @@ public class LoginActivity extends AppCompatActivity {
             Log.i("name",account.getDisplayName());
 
             // Signed in successfully, show authenticated UI.
-            FirebaseSignInWithGoogle(account);
+            FirebaseSignInWithGoogle();
         } catch (ApiException e) {
 
-            FirebaseSignInWithGoogle(null);
+            FirebaseSignInWithGoogle();
         }
     }
 
 
-    public void FirebaseSignInWithGoogle(GoogleSignInAccount account){
+    public void FirebaseSignInWithGoogle(){
         //   Log.i("name",account.getDisplayName());
 
         FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
-                String email = gUser.getEmail();
 
                 if (snapshot.child("googleUsers").child(gUser.getId()).exists()) {
                     Toast.makeText(LoginActivity.this, "Welcome Back " + gUser.getGivenName(), Toast.LENGTH_SHORT).show();
