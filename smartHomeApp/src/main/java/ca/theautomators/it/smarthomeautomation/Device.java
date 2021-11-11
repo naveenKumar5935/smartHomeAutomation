@@ -1,5 +1,7 @@
 package ca.theautomators.it.smarthomeautomation;
 
+import com.google.firebase.database.DatabaseReference;
+
 public class Device {
 
     private String type;
@@ -12,17 +14,17 @@ public class Device {
         fC = FirebaseConnect.getInstance();
 
         this.identifier = identifier;
-        this.type = fC.getDeviceType(identifier);
+        type = fC.getDeviceType(identifier);
     }
 
-    public String getSensorData(String identifier){
+    public DatabaseReference getSensorData(String identifier){
 
         return fC.getSensorData(identifier);
     }
 
-    public void sendControl(String controlData){
+    public void sendControlData(String controlData){
 
-        fC.sendControlData(controlData);
+        fC.sendControlData(controlData, identifier);
     }
 
     public String getType(){

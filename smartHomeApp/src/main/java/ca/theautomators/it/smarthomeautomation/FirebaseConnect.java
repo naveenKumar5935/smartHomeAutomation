@@ -7,30 +7,15 @@
 
 package ca.theautomators.it.smarthomeautomation;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.util.Log;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.Nullable;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -38,19 +23,14 @@ import java.util.HashMap;
 
 public class FirebaseConnect {
 
-    static FirebaseAuth auth;
-    boolean result;
-    private Context context;
+    private final DatabaseReference deviceRef;
 
     private static FirebaseConnect INSTANCE= null;
 
     private FirebaseConnect(){
 
-        auth=FirebaseAuth.getInstance();
-    }
+        deviceRef = FirebaseDatabase.getInstance().getReference().child("Devices");
 
-    public void setContext(Context context){
-        this.context=context;
     }
 
     public static FirebaseConnect getInstance(){
@@ -65,11 +45,6 @@ public class FirebaseConnect {
 
         return(INSTANCE);
     }
-
-
-
-
-
 
 
     public void setUserFeedback(String name, String email, String phone, String feedback, float rating,String modelNo){
@@ -87,35 +62,88 @@ public class FirebaseConnect {
     }
 
 
-    }
-
     /*TODO add getters for devices and device data
     These stub routines are just a starting point, if you think some of these tasks can be
     combined then delete the redundant ones
      */
 
-    public void sendControlData(String data){
+    public void sendControlData(String data, String identifier){
 
+        deviceRef.child(identifier).child("DATA").setValue(data);
     }
 
-    public String getSensorData(String identifier){
+    public DatabaseReference getSensorData(String identifier){
 
-        return "Data";
+        return deviceRef.child(identifier).child("DATA");
+
     }
 
     public int getNumDevices(){
 
-        return 0;
+        final int[] numDevices = {0};
+
+        deviceRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+               numDevices[0] = (int)snapshot.getChildrenCount();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return numDevices[0];
     }
 
     public String getDeviceType(String identifier){
 
-        return "Type";
+        final String[] type = {""};
+
+        deviceRef.child(identifier).child("TYPE").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                type[0] = snapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return type[0];
     }
 
     public String[] getIdentifiers(){
 
-        String[] identifiers = new String[5];
+        int numChildren = getNumDevices();
+
+        String[] identifiers = new String[numChildren];
+
+        deviceRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                int count = 0;
+
+                for(DataSnapshot snap : snapshot.getChildren()){
+
+                    if(count < numChildren){
+
+                        identifiers[count] = snap.getKey();
+                        count++;
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         return identifiers;
     }
