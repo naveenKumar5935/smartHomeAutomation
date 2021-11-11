@@ -71,40 +71,6 @@ public class FirebaseConnect {
 
 
 
-    public void FirebaseAuthWithGoogle(GoogleSignInAccount account){
-     //   Log.i("name",account.getDisplayName());
-
-        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(context);
-                String email = gUser.getEmail();
-
-                if (snapshot.child("googleUsers").child(gUser.getId()).exists()) {
-                    Toast.makeText(context, "Welcome Back " + gUser.getGivenName(), Toast.LENGTH_SHORT).show();
-
-                } else {
-
-                    HashMap<String, Object> userdatamap = new HashMap<>();
-                    userdatamap.put("email", email);
-                    userdatamap.put("name", gUser.getGivenName());
-
-                    FirebaseDatabase.getInstance().getReference("googleUsers").child(gUser.getId()).setValue(userdatamap);
-
-                }
-
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
-    }
 
     public void setUserFeedback(String name, String email, String phone, String feedback, float rating,String modelNo){
 

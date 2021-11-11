@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +33,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 import io.paperdb.Paper;
 
@@ -173,25 +180,47 @@ public class LoginActivity extends AppCompatActivity {
             Log.i("name",account.getDisplayName());
 
             // Signed in successfully, show authenticated UI.
-            updateUI(account);
+            FirebaseSignInWithGoogle(account);
         } catch (ApiException e) {
 
-            updateUI(null);
+            FirebaseSignInWithGoogle(null);
         }
     }
 
 
+    public void FirebaseSignInWithGoogle(GoogleSignInAccount account){
+        //   Log.i("name",account.getDisplayName());
 
-    private void updateUI(GoogleSignInAccount account) {
+        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
+                String email = gUser.getEmail();
 
-        FirebaseConnect firebaseConnect = FirebaseConnect.getInstance();
-        firebaseConnect.setContext(LoginActivity.this);
-        firebaseConnect.FirebaseAuthWithGoogle(account);
-        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-        startActivity(intent);
+                if (snapshot.child("googleUsers").child(gUser.getId()).exists()) {
+                    Toast.makeText(LoginActivity.this, "Welcome Back " + gUser.getGivenName(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(intent);
+
+                } else {
+
+                    Toast.makeText(LoginActivity.this,"Please sign up first",Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
     }
+
 
 
 
