@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                 String getemail = email.getText().toString().trim();
                 String getpass = password.getText().toString().trim();
                 if (!getemail.contains("@") || !getemail.contains(".")){
-                    email.setError("Please type correct email");
+                    email.setError(getString(R.string.email_error));
                     return;
                 }
                 if(getpass.length()<8){
