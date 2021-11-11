@@ -216,15 +216,15 @@ public class RegisterActivity extends AppCompatActivity {
             Log.i("name",account.getDisplayName());
 
             // Signed in successfully, show authenticated UI.
-            FirebaseSignUpWithGoogle(account);
+            FirebaseSignUpWithGoogle();
         } catch (ApiException e) {
 
-            FirebaseSignUpWithGoogle(null);
+            FirebaseSignUpWithGoogle();
         }
     }
 
 
-    public void FirebaseSignUpWithGoogle(GoogleSignInAccount account){
+    public void FirebaseSignUpWithGoogle(){
         //   Log.i("name",account.getDisplayName());
 
         FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
