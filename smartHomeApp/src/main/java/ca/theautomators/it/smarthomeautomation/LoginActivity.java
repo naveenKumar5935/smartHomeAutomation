@@ -29,16 +29,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.List;
 
 import io.paperdb.Paper;
 
@@ -147,6 +151,23 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void getUserData(String email, String password){
+
+        // analysing if user is already registered or login credentials are right or wrong
+        auth.signInWithEmailAndPassword(email,password).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("exception",e.toString());
+                if(e.toString().contains("invalid")){
+                    Toast.makeText(LoginActivity.this,"Please check your credentials",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(e.toString().contains("no user")){
+                    Toast.makeText(LoginActivity.this,"Please Create an account",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+        });
+
 
         auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
