@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if(accessCodeStored.matches(code)){
                     setUserData(email,password);
                 }else {
-                    Toast.makeText(RegisterActivity.this,"Invalid Access Code",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, R.string.invalid_access_code,Toast.LENGTH_SHORT).show();
                 }
             }
 
