@@ -204,7 +204,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else {
 
-                    Toast.makeText(LoginActivity.this,"Please sign up first",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.sign_up_toast,Toast.LENGTH_SHORT).show();
 
                 }
 

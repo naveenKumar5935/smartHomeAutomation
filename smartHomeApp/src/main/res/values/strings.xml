@@ -101,6 +101,7 @@
     <string name="version1_0">Version1.0</string>
     <string name="invalid_access_code">Invalid Access Code</string>
     <string name="sign_up_with_google">Sign Up with Google</string>
+    <string name="sign_up_toast">Please sign up first</string>
 
     <string-array name="rooms">
         <item>Select Type</item>
