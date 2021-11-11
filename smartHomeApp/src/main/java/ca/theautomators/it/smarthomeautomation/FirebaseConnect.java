@@ -71,46 +71,15 @@ public class FirebaseConnect {
         auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-               registerLoginStatus(true);
+
 
             }
         });
     }
 
-    public void registerLoginStatus(boolean r){
-
-        result = r;
 
 
-    }
 
-    public void setUserData(String email, String password){
-
-        auth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            User user = new User(email,password);
-                            FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid())
-                                    .setValue(user)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                registerLoginStatus(true);
-                                            }else {
-                                                registerLoginStatus(false);
-                                            }
-                                        }
-                                    });
-                        }else {
-                          registerLoginStatus(false);
-                        }
-                    }
-                });
-
-    }
 
     public void FirebaseAuthWithGoogle(GoogleSignInAccount account){
      //   Log.i("name",account.getDisplayName());

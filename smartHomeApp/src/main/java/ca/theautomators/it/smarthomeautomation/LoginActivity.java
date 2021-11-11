@@ -115,13 +115,13 @@ public class LoginActivity extends AppCompatActivity {
 
                 firebaseConnect.getUserData(getemail,encryptedPassword);
 
-                if(firebaseConnect.result==true){
-                    Toast.makeText(LoginActivity.this,"Successfully Logged In",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    startActivity(intent);
-
-                    finish();
-                }
+//                if(firebaseConnect.result==true){
+//                    Toast.makeText(LoginActivity.this,"Successfully Logged In",Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+//                    startActivity(intent);
+//
+//                    finish();
+//                }
             }
         });
 
