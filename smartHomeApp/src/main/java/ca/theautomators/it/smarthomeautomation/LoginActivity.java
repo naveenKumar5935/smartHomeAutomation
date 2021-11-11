@@ -71,11 +71,11 @@ public class LoginActivity extends AppCompatActivity {
 
         // Signing in remember me user
         String userEmail="";
-        userEmail = Paper.book().read("useremail");
+        userEmail = Paper.book().read("useremail","");
         String userpassword="";
-        userpassword = Paper.book().read("userpassword");
+        userpassword = Paper.book().read("userpassword","");
         String googleRememberMeCheck="";
-        googleRememberMeCheck=Paper.book().read("googleSignIn");
+        googleRememberMeCheck=Paper.book().read("googleSignIn","");
 
         if(googleRememberMeCheck.matches("checked")){
             GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
