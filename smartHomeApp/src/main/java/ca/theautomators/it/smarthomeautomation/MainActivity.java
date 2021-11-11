@@ -200,6 +200,27 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent2);
                 break;
 
+            case R.id.Exit:
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                alert.setIcon(android.R.drawable.ic_dialog_alert);
+                alert.setTitle(R.string.alert_title);
+                alert.setMessage(R.string.alert_message);
+                alert.setPositiveButton(R.string.alert_positive_btn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+                alert.setNegativeButton(R.string.alert_negative_btn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+                break;
+
         }
         return super.onOptionsItemSelected(item);
 
