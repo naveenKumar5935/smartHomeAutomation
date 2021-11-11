@@ -195,6 +195,11 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent1);
                 break;
 
+            case R.id.legal:
+                Intent intent2 = new Intent(MainActivity.this, LegalActivity.class);
+                startActivity(intent2);
+                break;
+
         }
         return super.onOptionsItemSelected(item);
 
