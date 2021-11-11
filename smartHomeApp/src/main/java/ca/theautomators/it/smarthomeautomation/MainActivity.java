@@ -31,6 +31,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.theautomators.it.smarthomeautomation.ui.AboutAppActivity;
 import ca.theautomators.it.smarthomeautomation.ui.bedroom.BedroomFragment;
 import ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment;
 import ca.theautomators.it.smarthomeautomation.ui.landing.LandingFragment;
@@ -186,8 +187,39 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent);
                 break;
 
+            case R.id.AboutApp:
+                Intent intent1 = new Intent(MainActivity.this, AboutAppActivity.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.legal:
+                Intent intent2 = new Intent(MainActivity.this, LegalActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.Exit:
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                alert.setIcon(android.R.drawable.ic_dialog_alert);
+                alert.setTitle(R.string.alert_title);
+                alert.setMessage(R.string.alert_message);
+                alert.setPositiveButton(R.string.alert_positive_btn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+                alert.setNegativeButton(R.string.alert_negative_btn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+                break;
+
         }
-        return true;
+        return super.onOptionsItemSelected(item);
 
     }
 

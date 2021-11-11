@@ -2,7 +2,9 @@ package ca.theautomators.it.smarthomeautomation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,11 +14,14 @@ import android.widget.Toast;
 
 public class ReviewAcitivity extends AppCompatActivity {
     private TextView mTextView;
+    FirebaseConnect firebaseConnect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_acitivity);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Review");
 
         mTextView = findViewById(R.id.text);
 
@@ -27,6 +32,8 @@ public class ReviewAcitivity extends AppCompatActivity {
         EditText Name = findViewById(R.id.Name);
         EditText phonenumber = findViewById(R.id.Phoneno);
         EditText email = findViewById(R.id.email);
+
+        firebaseConnect = FirebaseConnect.getInstance();
 
 
         mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -54,7 +61,7 @@ public class ReviewAcitivity extends AppCompatActivity {
                         mRatingScale.setText("Great");
                         break;
                     case 5:
-                        mRatingScale.setText("Awesome. I love it");
+                        mRatingScale.setText("Awesome, I liked the service");
                         break;
                     default:
                         mRatingScale.setText("");
@@ -95,18 +102,59 @@ public class ReviewAcitivity extends AppCompatActivity {
 
                 }
 
-
-
                 else  {
+                    String name = Name.getText().toString().trim();
+                    String email1 = email.getText().toString().trim();
+                    String phone = phonenumber.getText().toString().trim();
+                    String feedback = mFeedback.getText().toString();
+                    float rating = mRatingBar.getRating();
+                    String modelNo = getDeviceName();
+
+                    firebaseConnect.setUserFeedback(name,email1,phone,feedback,rating,modelNo);
+
+
                     mFeedback.setText("");
-                    Name.setText(" ");
-                    phonenumber.setText(" ");
+                    Name.setText("");
+                    phonenumber.setText("");
                     email.setText("");
                     mRatingBar.setRating(0);
                     Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(ReviewAcitivity.this, getDeviceName(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
     }
+
+    public static String getDeviceName() {
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        if (model.startsWith(manufacturer)) {
+            return capitalize(model);
+        }
+        return capitalize(manufacturer) + " " + model;
+    }
+
+    private static String capitalize(String str) {
+        if (TextUtils.isEmpty(str)) {
+            return str;
+        }
+        char[] arr = str.toCharArray();
+        boolean capitalizeNext = true;
+
+        StringBuilder phrase = new StringBuilder();
+        for (char c : arr) {
+            if (capitalizeNext && Character.isLetter(c)) {
+                phrase.append(Character.toUpperCase(c));
+                capitalizeNext = false;
+                continue;
+            } else if (Character.isWhitespace(c)) {
+                capitalizeNext = true;
+            }
+            phrase.append(c);
+        }
+
+        return phrase.toString();
+    }
+
 }
