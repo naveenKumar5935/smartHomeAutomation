@@ -15,6 +15,9 @@ public class AboutAppActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_app);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setTitle("About App");
 
         TextView ntextview =findViewById(R.id.textView2);
         //ImageView imageView = findViewById(R.id.imageView2);

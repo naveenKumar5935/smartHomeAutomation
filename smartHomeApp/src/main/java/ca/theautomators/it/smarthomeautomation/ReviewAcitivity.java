@@ -20,6 +20,8 @@ public class ReviewAcitivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_acitivity);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Review");
 
         mTextView = findViewById(R.id.text);
 
