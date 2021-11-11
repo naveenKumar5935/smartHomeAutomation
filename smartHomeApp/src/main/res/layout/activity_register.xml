@@ -10,7 +10,7 @@
         android:id="@+id/register_image"
         android:layout_width="160dp"
         android:layout_height="131dp"
-        android:layout_marginTop="204dp"
+        android:layout_marginTop="40dp"
         android:src="@mipmap/ic_launcher"
         app:civ_border_color="#0E0E0E"
         app:civ_border_width="2dp"
@@ -65,16 +65,29 @@
         app:layout_constraintTop_toBottomOf="@+id/register_access_tb"
         style="@style/ButtonText"/>
 
+    <com.developer.gbuttons.GoogleSignInButton
+        android:id="@+id/googleSignUpButton"
+        android:layout_width="271dp"
+        android:layout_height="48dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/sign_up_with_google"
+        app:isDarkTheme="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerButton" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerLoginBtn"
         style="@style/ButtonText"
         android:layout_width="340dp"
         android:layout_height="55dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:text="@string/already_have_an_account_log_in"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerButton" />
+        app:layout_constraintTop_toBottomOf="@+id/googleSignUpButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

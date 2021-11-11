@@ -66,86 +66,11 @@ public class FirebaseConnect {
         return(INSTANCE);
     }
 
-    public void getUserData(String email, String password){
-
-        auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-               registerLoginStatus(true);
-
-            }
-        });
-    }
-
-    public void registerLoginStatus(boolean r){
-
-        result = r;
-
-
-    }
-
-    public void setUserData(String email, String password){
-
-        auth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            User user = new User(email,password);
-                            FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid())
-                                    .setValue(user)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                registerLoginStatus(true);
-                                            }else {
-                                                registerLoginStatus(false);
-                                            }
-                                        }
-                                    });
-                        }else {
-                          registerLoginStatus(false);
-                        }
-                    }
-                });
-
-    }
-
-    public void FirebaseAuthWithGoogle(GoogleSignInAccount account){
-     //   Log.i("name",account.getDisplayName());
-
-        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(context);
-                String email = gUser.getEmail();
-
-                if (snapshot.child("googleUsers").child(gUser.getId()).exists()) {
-                    Toast.makeText(context, "Welcome Back " + gUser.getGivenName(), Toast.LENGTH_SHORT).show();
-
-                } else {
-
-                    HashMap<String, Object> userdatamap = new HashMap<>();
-                    userdatamap.put("email", email);
-                    userdatamap.put("name", gUser.getGivenName());
-
-                    FirebaseDatabase.getInstance().getReference("googleUsers").child(gUser.getId()).setValue(userdatamap);
-
-                }
-
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
 
-    }
+
+
 
     public void setUserFeedback(String name, String email, String phone, String feedback, float rating,String modelNo){
 

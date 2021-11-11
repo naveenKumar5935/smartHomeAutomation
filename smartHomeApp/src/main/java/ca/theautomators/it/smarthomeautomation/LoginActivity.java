@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +29,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 import io.paperdb.Paper;
 
@@ -40,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox rememberMe;
     GoogleSignInButton googleSignInButton;
     private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         signUpButton = findViewById(R.id.loginSignupBtn);
         rememberMe = findViewById(R.id.loginRememberMe);
         googleSignInButton = findViewById(R.id.googleSignInButton);
-
+        auth = FirebaseAuth.getInstance();
         // Firebase Singleton
         FirebaseConnect firebaseConnect = FirebaseConnect.getInstance();
 
@@ -65,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         //Log.d("user",userEmail);
 
         if(!TextUtils.isEmpty(userEmail)){
-            firebaseConnect.getUserData(userEmail,userpassword);
+          getUserData(userEmail,userpassword);
             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
             startActivity(intent);
             finish();
@@ -84,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -113,19 +125,28 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
 
-                firebaseConnect.getUserData(getemail,encryptedPassword);
+                getUserData(getemail,encryptedPassword);
 
-                if(firebaseConnect.result==true){
-                    Toast.makeText(LoginActivity.this,"Successfully Logged In",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    startActivity(intent);
-
-                    finish();
-                }
             }
         });
 
 
+    }
+
+
+    public void getUserData(String email, String password){
+
+        auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                Toast.makeText(LoginActivity.this,"Successfully Logged In",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+
+                finish();
+
+            }
+        });
     }
 
     private void googleSignInRequest(){
@@ -160,57 +181,49 @@ public class LoginActivity extends AppCompatActivity {
             Log.i("name",account.getDisplayName());
 
             // Signed in successfully, show authenticated UI.
-            updateUI(account);
+            FirebaseSignInWithGoogle(account);
         } catch (ApiException e) {
 
-            updateUI(null);
+            FirebaseSignInWithGoogle(null);
         }
     }
 
 
+    public void FirebaseSignInWithGoogle(GoogleSignInAccount account){
+        //   Log.i("name",account.getDisplayName());
 
-    private void updateUI(GoogleSignInAccount account) {
+        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
+                String email = gUser.getEmail();
 
-        FirebaseConnect firebaseConnect = FirebaseConnect.getInstance();
-        firebaseConnect.setContext(LoginActivity.this);
-        firebaseConnect.FirebaseAuthWithGoogle(account);
-        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-        startActivity(intent);
+                if (snapshot.child("googleUsers").child(gUser.getId()).exists()) {
+                    Toast.makeText(LoginActivity.this, "Welcome Back " + gUser.getGivenName(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+
+                } else {
+
+                    Toast.makeText(LoginActivity.this, R.string.sign_up_toast,Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
     }
 
-    public String[] accessCheck(){
-        AlertDialog.Builder alert;
-        alert = new AlertDialog.Builder(LoginActivity.this);
-
-        alert.setTitle("Access Code");
-        alert.setMessage("Please enter the access code");
-
-// Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-        final String[] valueEntered = new String[1];
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
-                valueEntered[0] = value;
-                // Do something with value!
-                Log.i("input",input.getText().toString());
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
-
-        return valueEntered;
 
 
-    }
+
 }
