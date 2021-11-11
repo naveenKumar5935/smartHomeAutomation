@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -86,7 +87,22 @@ public class RegisterActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String accessCodeStored = snapshot.child("UserAccessCode").child("AccessCode").getValue().toString();
                 if(accessCodeStored.matches(code)){
-                    setUserData(email,password);
+
+                    auth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                            boolean check = task.getResult().getSignInMethods().isEmpty();
+
+                            if(check){
+                                setUserData(email,password);
+                            }else {
+                                Toast.makeText(RegisterActivity.this,"User already exist",Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+
+
                 }else {
                     Toast.makeText(RegisterActivity.this, R.string.invalid_access_code,Toast.LENGTH_SHORT).show();
                 }
@@ -101,6 +117,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void setUserData(String email, String password){
+
+
 
         auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

@@ -66,16 +66,6 @@ public class FirebaseConnect {
         return(INSTANCE);
     }
 
-    public void getUserData(String email, String password){
-
-        auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-
-
-            }
-        });
-    }
 
 
 
