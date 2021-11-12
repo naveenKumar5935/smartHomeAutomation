@@ -3,6 +3,7 @@ package ca.theautomators.it.smarthomeautomation;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,7 +13,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class RoomState {
+public class RoomState extends AsyncTask<Void, Void, Void> {
 
     private static RoomState INSTANCE = null;
     private int numRooms;
@@ -67,14 +68,14 @@ public class RoomState {
 
         roomNames.set(index, name);
         roomStateChanged = true;
-        saveState();
+        doInBackground();
     }
 
     public void changeRoomIcons(Drawable icon, int index){
 
         roomIcons.set(index, icon);
         roomStateChanged = true;
-        saveState();
+        doInBackground();
     }
 
     public ArrayList<String> getRoomNames(){
@@ -181,5 +182,14 @@ public class RoomState {
 
     }
 
+
+
+    @Override
+    protected Void doInBackground(Void... voids) {
+
+        saveState();
+
+        return null;
+    }
 }
 
