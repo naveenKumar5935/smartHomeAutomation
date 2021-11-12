@@ -205,7 +205,10 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent2);
                 break;
 
-
+            case R.id.ReportAnIssue:
+                Intent intent3 = new Intent(MainActivity.this, ReportIssue.class);
+                startActivity(intent3);
+                break;
 
             case R.id.Exit:
 
