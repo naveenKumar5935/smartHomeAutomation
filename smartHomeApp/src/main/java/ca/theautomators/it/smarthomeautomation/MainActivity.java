@@ -84,15 +84,15 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-        List<Fragment> list = fragMan.getFragments();
-
-        for(Fragment item: list){
-
-            if(item.getId() == R.layout.fragment_kitchen){
-
-                Log.d("Fragments", "Kitchen");
-            }
-        }
+//        List<Fragment> list = fragMan.getFragments();
+//
+//        for(Fragment item: list){
+//
+//            if(item.getId() == R.layout.fragment_kitchen){
+//
+//                Log.d("Fragments", "Kitchen");
+//            }
+//        }
 
         //TODO handle Nav Clicks
 

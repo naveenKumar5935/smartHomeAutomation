@@ -48,7 +48,6 @@ public class RoomState {
             roomIcons.add(menuItem.getIcon());
         }
 
-        //saveState();
     }
 
     public static RoomState getInstance(@Nullable Context context){
@@ -88,6 +87,11 @@ public class RoomState {
         return roomIcons;
     }
 
+    public ArrayList<Integer> getRoomIds(){
+
+        return roomIds;
+    }
+
     public void setRoomStateChanged(boolean bit){
 
         roomStateChanged = bit;
@@ -108,10 +112,6 @@ public class RoomState {
         return numRooms;
     }
 
-    public ArrayList<Integer> getRoomIds(){
-
-        return roomIds;
-    }
 
     public int[] getDrawableId(){
         return drawableId;

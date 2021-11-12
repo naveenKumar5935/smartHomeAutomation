@@ -62,11 +62,6 @@ public class FirebaseConnect {
     }
 
 
-    /*TODO add getters for devices and device data
-    These stub routines are just a starting point, if you think some of these tasks can be
-    combined then delete the redundant ones
-     */
-
     public void sendControlData(String data, String identifier){
 
         deviceRef.child(identifier).child("DATA").setValue(data);
