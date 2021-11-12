@@ -32,6 +32,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="SplashBackground">
+        <item name="android:startColor">@color/white</item>
+    </style>
+
     <style name="Theme.SmartHomeAutomation.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.SmartHomeAutomation.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

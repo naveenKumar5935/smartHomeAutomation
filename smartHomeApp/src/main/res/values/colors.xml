@@ -14,5 +14,7 @@
     <color name="green_200">#7dcb03</color>
     <color name="green_700">#479a00</color>
     <color name="light_grey">#dbdcdb</color>
+    <color name="dark_grey">#333333</color>
+    <color name="grey">#5e5e5e</color>
     <color name="green_faded">#C5E4B4</color>
 </resources>

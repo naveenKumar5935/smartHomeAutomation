@@ -23,6 +23,7 @@ import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -74,6 +75,7 @@ public class SettingsFragment extends Fragment {
         Paper.init(getActivity());
 
         Button manageRooms = (Button) root.findViewById(R.id.manageRooms);
+        Switch darkMode = (Switch)root.findViewById(R.id.darkModeSwitch);
 
         binding.chooseBackgroundBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +88,12 @@ public class SettingsFragment extends Fragment {
         if(Paper.book().read("orientationSwitch","").matches("selected")){
             orientationSwitch.setChecked(true);
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+        if(Paper.book().read("darkMode", "").equals("ON")){
+            darkMode.setChecked(true);
+        }
+        else{
+            darkMode.setChecked(false);
         }
 
         orientationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -121,6 +129,20 @@ public class SettingsFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), RoomManagerActivity.class);
                 getActivity().finish();
                 startActivity(intent);
+            }
+        });
+
+        darkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    Paper.book().write("darkMode", "ON");
+                }
+                else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    Paper.book().write("darkMode", "OFF");
+                }
             }
         });
 

@@ -79,7 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/chooseBackgroundBtn" />
 
     <Switch
-        android:id="@+id/switch2"
+        android:id="@+id/darkModeSwitch"
         android:layout_width="280dp"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
@@ -101,7 +101,7 @@
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch2" />
+        app:layout_constraintTop_toBottomOf="@+id/darkModeSwitch" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
