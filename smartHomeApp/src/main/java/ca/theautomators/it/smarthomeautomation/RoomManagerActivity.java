@@ -1,6 +1,7 @@
 package ca.theautomators.it.smarthomeautomation;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+import io.paperdb.Paper;
+
 public class RoomManagerActivity extends AppCompatActivity {
 
 
@@ -36,6 +39,10 @@ public class RoomManagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_manager);
+        if(Paper.book().read("orientationSwitch","").matches("selected")){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         setTitle("Room Manager");
 
         roomState = RoomState.getInstance(null);

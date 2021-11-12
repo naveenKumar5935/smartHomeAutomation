@@ -8,6 +8,7 @@
 package ca.theautomators.it.smarthomeautomation;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -39,6 +40,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
+import io.paperdb.Paper;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 1;
@@ -52,6 +55,10 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        if(Paper.book().read("orientationSwitch","").matches("selected")){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         email = findViewById(R.id.register_email_tb);
         password = findViewById(R.id.register_password_tb);

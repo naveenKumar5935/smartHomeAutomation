@@ -9,6 +9,7 @@ package ca.theautomators.it.smarthomeautomation;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -69,6 +70,9 @@ public class LoginActivity extends AppCompatActivity {
         googleSignInButton = findViewById(R.id.googleSignInButton);
         auth = FirebaseAuth.getInstance();
 
+        if(Paper.book().read("orientationSwitch","").matches("selected")){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         // Signing in remember me user
         String userEmail="";
         userEmail = Paper.book().read("useremail","");

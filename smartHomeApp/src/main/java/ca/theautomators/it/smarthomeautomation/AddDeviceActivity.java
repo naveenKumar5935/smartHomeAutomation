@@ -1,10 +1,13 @@
 package ca.theautomators.it.smarthomeautomation;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+
+import io.paperdb.Paper;
 
 public class AddDeviceActivity extends AppCompatActivity {
 
@@ -22,6 +25,10 @@ public class AddDeviceActivity extends AppCompatActivity {
 
         numDevices = fC.getNumDevices();
         identifiers = fC.getIdentifiers();
+
+        if(Paper.book().read("orientationSwitch","").matches("selected")){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         for(int i = 0; i < numDevices; i++){
 

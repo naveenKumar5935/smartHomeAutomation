@@ -3,12 +3,15 @@ package ca.theautomators.it.smarthomeautomation;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import io.paperdb.Paper;
 
 public class LegalActivity extends AppCompatActivity {
 
@@ -22,6 +25,10 @@ public class LegalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_legal);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Legal");
+
+        if(Paper.book().read("orientationSwitch","").matches("selected")){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         lv = findViewById(R.id.simpleListView);
         ArrayAdapter<String> arr;

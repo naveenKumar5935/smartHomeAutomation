@@ -9,8 +9,11 @@ package ca.theautomators.it.smarthomeautomation;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
+
+import io.paperdb.Paper;
 
 
 public class SplashScreenActivity extends Activity {
@@ -21,6 +24,9 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        if(Paper.book().read("orientationSwitch","").matches("selected")){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         handler=new Handler();
         handler.postDelayed(new Runnable() {

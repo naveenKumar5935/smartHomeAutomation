@@ -2,6 +2,7 @@ package ca.theautomators.it.smarthomeautomation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +12,8 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import io.paperdb.Paper;
 
 public class ReviewAcitivity extends AppCompatActivity {
     private TextView mTextView;
@@ -24,6 +27,10 @@ public class ReviewAcitivity extends AppCompatActivity {
         setTitle("Review");
 
         mTextView = findViewById(R.id.text);
+
+        if(Paper.book().read("orientationSwitch","").matches("selected")){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         RatingBar mRatingBar = findViewById(R.id.ratingBar);
         TextView mRatingScale =findViewById(R.id.tvRatingScale);

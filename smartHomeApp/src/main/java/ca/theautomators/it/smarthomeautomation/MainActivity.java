@@ -9,6 +9,7 @@ package ca.theautomators.it.smarthomeautomation;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +40,7 @@ import ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment;
 import ca.theautomators.it.smarthomeautomation.ui.landing.LandingFragment;
 import ca.theautomators.it.smarthomeautomation.ui.livingroom.LivingRoomFragment;
 import ca.theautomators.it.smarthomeautomation.ui.settings.SettingsFragment;
+import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -53,6 +55,10 @@ public class MainActivity extends AppCompatActivity{
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        if(Paper.book().read("orientationSwitch","").matches("selected")){
+           setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
