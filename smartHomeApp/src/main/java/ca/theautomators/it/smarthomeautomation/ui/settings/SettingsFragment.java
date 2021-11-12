@@ -9,13 +9,17 @@ package ca.theautomators.it.smarthomeautomation.ui.settings;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +48,7 @@ public class SettingsFragment extends Fragment {
 
     FragmentSettingsBinding binding;
     Button logoutBtn;
+    Switch orientationSwitch;
     View view;
     FirebaseAuth auth;
 
@@ -64,6 +69,7 @@ public class SettingsFragment extends Fragment {
         View root = binding.getRoot();
         view = root;
         logoutBtn = view.findViewById(R.id.settingLogoutBtn);
+        orientationSwitch = view.findViewById(R.id.orientationSwitch);
         auth = FirebaseAuth.getInstance();
         Paper.init(getActivity());
 
@@ -74,6 +80,23 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                permissionHandle();
 
+            }
+        });
+
+        if(Paper.book().read("orientationSwitch","").matches("selected")){
+            orientationSwitch.setChecked(true);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
+        orientationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    Paper.book().write("orientationSwitch","selected");
+                }else {
+                    Paper.book().write("orientationSwitch","unselected");
+                }
             }
         });
 

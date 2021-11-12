@@ -66,7 +66,7 @@
         style="@style/ButtonText"/>
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/orientationSwitch"
         android:layout_width="280dp"
         android:layout_height="60dp"
         android:layout_marginTop="116dp"
@@ -89,7 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" />
+        app:layout_constraintTop_toBottomOf="@+id/orientationSwitch" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/settingProfileImg"
