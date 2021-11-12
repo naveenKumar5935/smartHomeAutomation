@@ -29,7 +29,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import ca.theautomators.it.smarthomeautomation.ui.AboutAppActivity;
 import ca.theautomators.it.smarthomeautomation.ui.bedroom.BedroomFragment;

@@ -23,8 +23,8 @@ public class RoomManagerActivity extends AppCompatActivity {
 
 
     private ArrayList<String> roomNames;
-    private ArrayList<Drawable> roomIcons;
-    private ArrayList<Integer> roomIds;
+    private ArrayList<EditText> newRoomNames;
+    private ArrayList<Drawable> roomIcons, newRoomIcons;
     private int[] drawableId;
     private Drawable[] editedRoomIcons;
     EditText[] editedRoomNames;
@@ -36,12 +36,15 @@ public class RoomManagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_manager);
+        setTitle("Room Manager");
 
         roomState = RoomState.getInstance(null);
 
         roomNames = roomState.getRoomNames();
         roomIcons = roomState.getRoomIcons();
-        roomIds = roomState.getRoomIds();
+
+        newRoomNames = new ArrayList<>();
+        newRoomIcons = new ArrayList<>();
 
         drawableId = roomState.getDrawableId();
         numRows = roomState.getNumRooms();
@@ -63,15 +66,23 @@ public class RoomManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                for(int i = 0; i < roomState.getNumRooms(); i++){
+                int delta = numRows - roomState.getNumRooms();
 
-                    if(editedRoomNames[i].getText().toString().compareTo("") != 0)
-                        roomState.changeRoomName(editedRoomNames[i].getText().toString(), i);
+                for(int i = 0; i < numRows; i++){
 
-                    if(editedRoomIcons[i] != null)
-                        roomState.changeRoomIcons(editedRoomIcons[i], i);
+                    if(i < roomState.getNumRooms()){
+                        if (editedRoomNames[i].getText().toString().compareTo("") != 0)
+                            roomState.changeRoomName(editedRoomNames[i].getText().toString(), i);
 
-                    //TODO modify room set accordingly
+                        if (editedRoomIcons[i] != null)
+                            roomState.changeRoomIcons(editedRoomIcons[i], i);
+                    }
+                    else{
+
+                        roomNames.set(i, newRoomNames.get(delta - 1).getText().toString());
+                        roomIcons.set(i, newRoomIcons.get(delta - 1));
+                    }
+
 
                 }
 
@@ -85,6 +96,10 @@ public class RoomManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(numRows < 10){
+                    newRoomNames.add(null);
+                    roomNames.add(null);
+                    newRoomIcons.add(null);
+                    roomIcons.add(null);
                     linearLayout.addView(addRow(null));
                     numRows++;
                 }
@@ -94,9 +109,24 @@ public class RoomManagerActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                numRows--;
-                linearLayout = buildLayout();
-                display();
+                if(numRows > 0){
+                    numRows--;
+                    if (newRoomNames.size() > 1) {
+                        newRoomNames.remove(newRoomNames.size() - 1);
+                        newRoomIcons.remove(newRoomIcons.size() - 1);
+                    } else {
+                        newRoomNames.clear();
+                        newRoomIcons.clear();
+                    }
+
+                    if (roomIcons.size() > roomState.getNumRooms()) {
+                        roomIcons.remove(roomIcons.size() - 1);
+                        roomNames.remove(roomNames.size() - 1);
+                    }
+
+                    linearLayout = buildLayout();
+                    display();
+                }
             }
         });
 
@@ -217,7 +247,7 @@ public class RoomManagerActivity extends AppCompatActivity {
                 if(resource != null) {
 
                     if(index == null){
-                        //TODO add new icons entry to roomstate
+                        newRoomIcons.set(newRoomIcons.size() - 1, getResources().getDrawable(resource.intValue()));
                     }
                     else{
                         editedRoomIcons[index] = getResources().getDrawable(resource.intValue());
@@ -241,6 +271,9 @@ public class RoomManagerActivity extends AppCompatActivity {
         //save changes
         if(index != null){
             editedRoomNames[index] = editText;
+        }
+        else{
+            newRoomNames.set(newRoomNames.size() - 1, editText);
         }
 
         return entryRow;
