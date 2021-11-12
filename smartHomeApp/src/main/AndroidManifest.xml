@@ -15,20 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartHomeAutomation"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ReportIssue"></activity>
         <activity
             android:name=".ReviewAcitivity"
             android:parentActivityName=".MainActivity" />
-
         <activity
             android:name=".LegalActivity"
-            android:parentActivityName=".MainActivity"
-            />
-
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ui.AboutAppActivity"
-            android:parentActivityName=".MainActivity"
-            />
-
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".RoomManagerActivity"
             android:exported="false" /> <!-- <uses-library -->
