@@ -20,6 +20,7 @@ public class AboutAppActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle("About App");
+        Paper.init(this);
 
         if(Paper.book().read("orientationSwitch","").matches("selected")){
 

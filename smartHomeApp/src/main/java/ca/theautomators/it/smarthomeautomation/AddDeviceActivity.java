@@ -25,7 +25,7 @@ public class AddDeviceActivity extends AppCompatActivity {
 
         numDevices = fC.getNumDevices();
         identifiers = fC.getIdentifiers();
-
+        Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
