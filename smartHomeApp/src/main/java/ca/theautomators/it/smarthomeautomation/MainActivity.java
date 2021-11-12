@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -179,26 +180,29 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
 
-        MenuItem.OnActionExpandListener onActionExpandListener=new MenuItem.OnActionExpandListener() {
+        getMenuInflater().inflate(R.menu.main,menu);
+        MenuItem menuItem=menu.findItem(R.id.search);
+        SearchView searchView=(SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search here");
+
+        SearchView.OnQueryTextListener queryTextListener=new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                return false;
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+                searchView.clearFocus();
+                return true;
             }
 
             @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
+            public boolean onQueryTextChange(String newText) {
                 return false;
             }
         };
 
-        menu.findItem(R.id.search).setOnActionExpandListener(onActionExpandListener);
-        SearchView searchView=(SearchView) menu.findItem(R.id.search).getActionView();
-        //searchView.setQueryHint("Search data here");
+        searchView.setOnQueryTextListener(queryTextListener);
 
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
 
@@ -248,7 +252,11 @@ public class MainActivity extends AppCompatActivity{
                 alert.show();
                 break;
 
+            case R.id.search:
+
+                break;
         }
+
         return super.onOptionsItemSelected(item);
 
     }
