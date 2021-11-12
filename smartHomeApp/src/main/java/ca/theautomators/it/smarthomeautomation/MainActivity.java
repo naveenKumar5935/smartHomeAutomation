@@ -199,6 +199,8 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent2);
                 break;
 
+
+
             case R.id.Exit:
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
