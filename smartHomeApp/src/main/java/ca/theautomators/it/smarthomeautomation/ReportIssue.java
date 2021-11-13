@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+
 import io.paperdb.Paper;
 
 public class ReportIssue extends AppCompatActivity {
@@ -46,6 +50,14 @@ public class ReportIssue extends AppCompatActivity {
                 }
 
                 else  {
+
+                    //Sending data to Database
+                    HashMap<String, Object> userReport = new HashMap<>();
+                    userReport.put("email",email.getText().toString().trim());
+                    userReport.put("report", report.getText().toString());
+                    FirebaseDatabase.getInstance().getReference("UserReports").child(email.getText().toString().replace(".","")).setValue(userReport);
+
+
                     report.setText("");
                     email.setText("");
 
