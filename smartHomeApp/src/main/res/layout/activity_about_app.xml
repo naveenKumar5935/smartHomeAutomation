@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AboutAppActivity">
+    tools:context=".ui.AboutAppActivity"
+    style="@style/ScreenBackground">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="411dp"
-        android:layout_height="394dp"
+        android:layout_width="407dp"
+        android:layout_height="322dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,14 +19,25 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="287dp"
-        android:layout_height="102dp"
-        android:text="Version1.0 Copyright 2021"
+        android:layout_width="299dp"
+        android:layout_height="88dp"
+        android:text="@string/version1_0_copyright_2021"
         android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.078"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.132" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="403dp"
+        android:layout_height="288dp"
+        android:text="                    Who We Are?                                         We are a Home Automation Company Specializing in Custom Smart Home Solutions.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        We can't wait to be part of your project - reach out today and see how we can make your dreams a reality!"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
