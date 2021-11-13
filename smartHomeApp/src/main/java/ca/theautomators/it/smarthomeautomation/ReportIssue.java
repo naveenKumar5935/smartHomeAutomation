@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,8 +33,17 @@ public class ReportIssue extends AppCompatActivity {
         EditText email = findViewById(R.id.email_issue);
         Button sendFeedback = findViewById(R.id.button_issue);
 
-        String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        email.setText(currentUserEmail);
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+            String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            email.setText(currentUserEmail);
+        }else {
+            GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+            if(gUser!=null){
+                String currentUserEmail = gUser.getEmail();
+                email.setText(currentUserEmail);
+            }
+        }
+
 
 
         Paper.init(this);
