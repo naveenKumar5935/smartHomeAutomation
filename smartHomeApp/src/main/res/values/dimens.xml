@@ -47,4 +47,5 @@
     <dimen name="button_text_large">21sp</dimen>
     <dimen name="button_text_medium">18sp</dimen>
     <dimen name="settings_margin_top">39dp</dimen>
+    <dimen name="device_manager_icon">10dp</dimen>
 </resources>

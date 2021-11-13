@@ -103,6 +103,7 @@
     <string name="sign_up_with_google">Sign Up with Google</string>
     <string name="sign_up_toast">Please sign up first</string>
     <string name="email_error">Please type correct email</string>
+    <string name="add_devices_to_rooms">Add devices to rooms below:</string>
 
     <string-array name="rooms">
         <item>Select Type</item>

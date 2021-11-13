@@ -195,21 +195,22 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
 
     public void saveIdentifiers(String[] identifiers){
 
-        String identifierMerge = "";
+        StringBuilder identifierMerge = new StringBuilder();
 
         for(int i = 0; i < identifiers.length; i++){
 
             if(i == identifiers.length -1){
 
-                identifierMerge += identifiers[i];
+                identifierMerge.append(identifiers[i]);
                 break;
             }
 
-            identifierMerge += identifiers[i] + ":";
+            identifierMerge.append(identifiers[i]).append(":");
         }
 
         SharedPreferences.Editor editor = state.edit();
-        editor.putString("identifiers", identifierMerge);
+        editor.putString("identifiers", identifierMerge.toString());
+        editor.apply();
 
     }
 

@@ -1,10 +1,20 @@
 package ca.theautomators.it.smarthomeautomation;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import io.paperdb.Paper;
@@ -13,11 +23,13 @@ public class ManageDeviceActivity extends AppCompatActivity {
 
     private String[] identifiers;
     private ArrayList<Device> devices;
+    private LinearLayout linearLayout;
+    private ArrayList<String> roomNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_device);
+        setContentView(R.layout.activity_manage_device);
 
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){
@@ -27,32 +39,122 @@ public class ManageDeviceActivity extends AppCompatActivity {
         FirebaseConnect fC = FirebaseConnect.getInstance();
         RoomState rS = RoomState.getInstance(null);
 
+        setTitle("Detected Devices");
+
         //Get device identifiers from shared preferences
         identifiers = rS.loadIdentifiers();
 
+        //Get Room names from RoomState
+        roomNames = new ArrayList<>();
+        roomNames.add("Select Room");
+        roomNames.addAll(rS.getRoomNames());
+
+
         //if null, get list from database and save to shared preferences
-        if(identifiers == null){
+        if(identifiers[0].equals("")){
 
             identifiers = fC.getIdentifiers();
             rS.saveIdentifiers(identifiers);
         }
         //compares shared pref identifiers with database, if new devices found, gets new list
-        else if(fC.checkNewDevices(identifiers)){
-
-            identifiers = fC.getIdentifiers();
-            rS.saveIdentifiers(identifiers);
-        }
+        //TODO uncomment once checkNewDevices has beed adapted
+//        else if(fC.checkNewDevices(identifiers)){
+//
+//            identifiers = fC.getIdentifiers();
+//            rS.saveIdentifiers(identifiers);
+//        }
 
         devices = new ArrayList<>();
         //Creates array list of devices using identifiers
-        for(int i = 0; i < identifiers.length; i++){
+        for (String identifier : identifiers) {
 
-            devices.add(new Device(identifiers[i]));
+            devices.add(new Device(identifier));
         }
 
+        linearLayout = findViewById(R.id.devicemanager);
+        if(linearLayout != null)
+            linearLayout.removeAllViews();
 
+        display();
 
 
         //TODO add functionality to display devices and link them to generic room fragment
+    }
+
+    private void display(){
+
+        for(int i = 0; i < devices.size(); i++){
+
+            LinearLayout row = new LinearLayout(this);
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(170, 170);
+            params.weight = 1;
+
+            TextView text = new TextView(this);
+            text.setText(devices.get(i).getType());
+            text.setLayoutParams(params);
+            text.setPadding(20, 20, 20, 20);
+
+
+            ImageView icon = new ImageView(this);
+            icon.setImageDrawable(getDrawable(devices.get(i).getType()));
+            icon.setLayoutParams(params);
+
+            Spinner spinner = new Spinner(this);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, roomNames);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+            spinner.setPadding(20, 20, 20, 20);
+            spinner.setBackgroundColor(getColor(R.color.white));
+            spinner.setAlpha((float)(0.6));
+
+            spinner.setLayoutParams(params);
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            row.addView(icon);
+            row.addView(text);
+            row.addView(spinner);
+            linearLayout.addView(row);
+        }
+
+    }
+
+    private Drawable getDrawable(String type){
+
+        if(type.equals("RFID")){
+            return getDrawable(R.drawable.rfid_nobg);
+        }
+        else if(type.equals("PIR")){
+            return getDrawable(R.drawable.motion_detection_nobg);
+        }
+        else if(type.equals("SERVO")){
+            return getDrawable(R.drawable.door_closed_nobg);
+        }
+        else if(type.equals("SMOKE")){
+            return getDrawable(R.drawable.smoke);
+        }
+        else if(type.equals("TEMP")){
+            return getDrawable(R.drawable.thermostat);
+        }
+        else if(type.equals("HUMID")){
+            return getDrawable(R.drawable.humidity);
+        }
+        else if(type.equals("LIGHT")){
+            return getDrawable(R.drawable.lights_off_nobg);
+        }
+        else{
+            return null;
+        }
     }
 }

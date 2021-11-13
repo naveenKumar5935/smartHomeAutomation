@@ -7,32 +7,33 @@
 
 package ca.theautomators.it.smarthomeautomation;
 
-import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.google.firebase.database.ChildEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Arrays;
 import java.util.HashMap;
-
-import io.paperdb.Paper;
 
 public class FirebaseConnect {
 
     private final DatabaseReference deviceRef;
+    private int numDevices;
+    private String[] identifiers;
+    private String[] deviceTypes;
 
     private static FirebaseConnect INSTANCE= null;
 
     private FirebaseConnect(){
 
         deviceRef = FirebaseDatabase.getInstance().getReference().child("Devices");
+        loadNumDevices();
     }
 
     public static FirebaseConnect getInstance(){
@@ -75,78 +76,71 @@ public class FirebaseConnect {
 
     }
 
-    public int getNumDevices(){
+    public void loadNumDevices(){
 
-        final int[] numDevices = {0};
-
-        deviceRef.addValueEventListener(new ValueEventListener() {
+        deviceRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-               numDevices[0] = (int)snapshot.getChildrenCount();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isComplete()) {
+                    numDevices = (int) task.getResult().getChildrenCount();
+                    loadIdentifiers();
+                }
+                else
+                    Log.e("firebase", "Error getting data", task.getException());
             }
         });
+    }
 
-        return numDevices[0];
+    private void loadDeviceTypes(){
+
+        deviceTypes = new String[numDevices];
+
+        for(int i = 0; i < numDevices; i++){
+
+            int finalI = i;
+            deviceRef.child(identifiers[i]).child("TYPE").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    deviceTypes[finalI] = task.getResult().getValue().toString();
+                }
+            });
+        }
     }
 
     public String getDeviceType(String identifier){
 
-        final String[] type = {""};
+        int index = Integer.parseInt(identifier) - 100;
 
-        deviceRef.child(identifier).child("TYPE").addValueEventListener(new ValueEventListener() {
+        return deviceTypes[index];
+    }
+
+    public void loadIdentifiers(){
+
+        identifiers = new String[numDevices];
+
+        deviceRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                type[0] = snapshot.getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                int count = 0;
+                for(DataSnapshot snap: task.getResult().getChildren()){
+                    identifiers[count] = snap.getKey();
+                    count++;
+                }
+                loadDeviceTypes();
             }
         });
-        return type[0];
     }
 
     public String[] getIdentifiers(){
 
-        int numChildren = getNumDevices();
-
-        String[] identifiers = new String[numChildren];
-
-        deviceRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                int count = 0;
-
-                for(DataSnapshot snap : snapshot.getChildren()){
-
-                    if(count < numChildren){
-
-                        identifiers[count] = snap.getKey();
-                        count++;
-
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         return identifiers;
     }
 
+
+    //TODO needs to be reworked to properly handle asynchronous database calls
     public boolean checkNewDevices(String[] identifierList){
 
+        loadIdentifiers();
         String[] currIdentifiers = getIdentifiers();
         boolean found = true;
 

@@ -72,7 +72,9 @@ public class MainActivity extends AppCompatActivity{
                 .build();
 
 
+
         RoomState roomState = RoomState.getInstance(this);
+        FirebaseConnect fC = FirebaseConnect.getInstance();
 
         roomList = roomState.getRoomIds();
 

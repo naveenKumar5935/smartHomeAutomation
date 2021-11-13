@@ -288,10 +288,5 @@ public class RoomManagerActivity extends AppCompatActivity {
         return entryRow;
     }
 
-    public void deleteRow(){
-
-
-    }
-
 
 }
