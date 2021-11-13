@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
@@ -29,6 +30,9 @@ public class ReportIssue extends AppCompatActivity {
         EditText report = findViewById(R.id.issue);
         EditText email = findViewById(R.id.email_issue);
         Button sendFeedback = findViewById(R.id.button_issue);
+
+        String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        email.setText(currentUserEmail);
 
 
         Paper.init(this);
