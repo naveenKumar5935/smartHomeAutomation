@@ -14,12 +14,14 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,16 +29,23 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.squareup.picasso.Picasso;
 
 import ca.theautomators.it.smarthomeautomation.LoginActivity;
 import ca.theautomators.it.smarthomeautomation.R;
@@ -52,6 +61,8 @@ public class SettingsFragment extends Fragment {
     Switch orientationSwitch;
     View view;
     FirebaseAuth auth;
+    StorageReference storageReference;
+    GoogleSignInAccount gUser;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -66,13 +77,39 @@ public class SettingsFragment extends Fragment {
         GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(getActivity(),gso);
 
 
+
+
+
         binding = FragmentSettingsBinding.inflate(inflater,container,false);
         View root = binding.getRoot();
         view = root;
         logoutBtn = view.findViewById(R.id.settingLogoutBtn);
         orientationSwitch = view.findViewById(R.id.orientationSwitch);
         auth = FirebaseAuth.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
         Paper.init(getActivity());
+
+        gUser = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if(gUser!=null){
+            Log.e("abc",gUser.getDisplayName());
+
+            storageReference.child(gUser.getGivenName()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Picasso.get().load(uri).into(binding.settingProfileImg);
+                }
+            });
+
+        }
+
+        if(auth.getCurrentUser()!=null){
+            storageReference.child(auth.getCurrentUser().getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Picasso.get().load(uri).into(binding.settingProfileImg);
+                }
+            });
+        }
 
         Button manageRooms = (Button) root.findViewById(R.id.manageRooms);
         Switch darkMode = (Switch)root.findViewById(R.id.darkModeSwitch);
@@ -158,6 +195,36 @@ public class SettingsFragment extends Fragment {
             Uri uri = data.getData();
 
             binding.settingProfileImg.setImageURI(uri);
+
+            if(auth.getCurrentUser()!=null){
+                storageReference.child(auth.getCurrentUser().getUid()).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(getActivity().getApplicationContext(),"Image Uploaded",Toast.LENGTH_LONG).show();
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity().getApplicationContext(),"Image Upload failed",Toast.LENGTH_LONG).show();
+                            }
+                        });
+            }else {
+                storageReference.child(String.valueOf(gUser.getGivenName())).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(getActivity().getApplicationContext(),"Image Uploaded",Toast.LENGTH_LONG).show();
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity().getApplicationContext(),"Image Upload failed",Toast.LENGTH_LONG).show();
+                            }
+                        });
+            }
+
+
         }
 
 
