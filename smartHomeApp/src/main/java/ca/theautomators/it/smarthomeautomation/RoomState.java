@@ -25,6 +25,7 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
     private Context context;
     private MenuItem menuItem;
     private SharedPreferences state;
+    private String[] identifiers;
 
 
     private RoomState(Context context){
@@ -190,6 +191,31 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         saveState();
 
         return null;
+    }
+
+    public void saveIdentifiers(String[] identifiers){
+
+        String identifierMerge = "";
+
+        for(int i = 0; i < identifiers.length; i++){
+
+            if(i == identifiers.length -1){
+
+                identifierMerge += identifiers[i];
+                break;
+            }
+
+            identifierMerge += identifiers[i] + ":";
+        }
+
+        SharedPreferences.Editor editor = state.edit();
+        editor.putString("identifiers", identifierMerge);
+
+    }
+
+    public String[] loadIdentifiers(){
+
+        return state.getString("identifiers", "").split(":");
     }
 }
 

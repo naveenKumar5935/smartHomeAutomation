@@ -95,7 +95,7 @@ public class RoomManagerActivity extends AppCompatActivity {
 
                 }
 
-                Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
+                Intent intent = new Intent(RoomManagerActivity.this, ManageDeviceActivity.class);
                 startActivity(intent);
 
             }
