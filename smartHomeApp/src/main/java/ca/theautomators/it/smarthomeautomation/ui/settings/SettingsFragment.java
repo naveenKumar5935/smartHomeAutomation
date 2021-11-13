@@ -10,6 +10,7 @@ import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -20,11 +21,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
@@ -36,6 +39,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -47,6 +51,8 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
 import ca.theautomators.it.smarthomeautomation.LoginActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.RoomManagerActivity;
@@ -57,8 +63,9 @@ import io.paperdb.Paper;
 public class SettingsFragment extends Fragment {
 
     FragmentSettingsBinding binding;
-    Button logoutBtn;
+    Button logoutBtn,accessCardBtn;
     Switch orientationSwitch;
+
     View view;
     FirebaseAuth auth;
     StorageReference storageReference;
@@ -85,6 +92,7 @@ public class SettingsFragment extends Fragment {
         view = root;
         logoutBtn = view.findViewById(R.id.settingLogoutBtn);
         orientationSwitch = view.findViewById(R.id.orientationSwitch);
+        accessCardBtn = view.findViewById(R.id.accessCardButton);
         auth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         Paper.init(getActivity());
@@ -113,6 +121,30 @@ public class SettingsFragment extends Fragment {
 
         Button manageRooms = (Button) root.findViewById(R.id.manageRooms);
         Switch darkMode = (Switch)root.findViewById(R.id.darkModeSwitch);
+
+        accessCardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                final EditText input = new EditText(getActivity());
+                input.setHint("hint");
+                alertDialog.setTitle("title");
+                alertDialog.setMessage("Enter card number");
+                alertDialog.setView(input);
+                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if(!input.getText().toString().matches("")){
+                            HashMap<String, Object> accessCard = new HashMap<>();
+                            accessCard.put("Access Card",input.getText().toString().trim());
+                            FirebaseDatabase.getInstance().getReference("AccessCards").setValue(accessCard);
+
+                        }
+                    }
+                });
+                alertDialog.show();
+            }
+        });
 
         binding.chooseBackgroundBtn.setOnClickListener(new View.OnClickListener() {
             @Override
