@@ -101,7 +101,7 @@ public class SettingsFragment extends Fragment {
         if(gUser!=null){
             Log.e("abc",gUser.getDisplayName());
 
-            storageReference.child(gUser.getGivenName()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            storageReference.child(gUser.getId()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
                     Picasso.get().load(uri).into(binding.settingProfileImg);
@@ -242,7 +242,7 @@ public class SettingsFragment extends Fragment {
                             }
                         });
             }else {
-                storageReference.child(String.valueOf(gUser.getGivenName())).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                storageReference.child(String.valueOf(gUser.getId())).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Toast.makeText(getActivity().getApplicationContext(),"Image Uploaded",Toast.LENGTH_LONG).show();
