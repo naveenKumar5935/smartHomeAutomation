@@ -99,5 +99,6 @@
     <string name="edit_room_name_and_type">Please edit room names and types below:\n\n</string>
     <string name="sign_in_with_google">Sign In With Google</string>
     <string name="version1_0">Version1.0</string>
+    <string name="version1_0_copyright_2021">Version1.0 Copyright 2021</string>
 
 </resources>

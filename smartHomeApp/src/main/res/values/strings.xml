@@ -104,6 +104,7 @@
     <string name="sign_up_toast">Please sign up first</string>
     <string name="email_error">Please type correct email</string>
     <string name="add_devices_to_rooms">Add devices to rooms below:</string>
+    <string name="version1_0_copyright_2021">Version1.0 Copyright 2021</string>
 
     <string-array name="rooms">
         <item>Select Type</item>
