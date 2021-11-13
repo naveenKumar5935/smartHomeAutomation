@@ -19,7 +19,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Arrays;
 import java.util.HashMap;
+
+import io.paperdb.Paper;
 
 public class FirebaseConnect {
 
@@ -30,7 +33,6 @@ public class FirebaseConnect {
     private FirebaseConnect(){
 
         deviceRef = FirebaseDatabase.getInstance().getReference().child("Devices");
-
     }
 
     public static FirebaseConnect getInstance(){
@@ -143,6 +145,23 @@ public class FirebaseConnect {
         return identifiers;
     }
 
+    public boolean checkNewDevices(String[] identifierList){
+
+        String[] currIdentifiers = getIdentifiers();
+        boolean found = true;
+
+        for(String current : currIdentifiers){
+
+            for(String previous : identifierList){
+
+                if(current.equals(previous)){
+                    found = false;
+                }
+            }
+        }
+
+        return found;
+    }
 
 
 }

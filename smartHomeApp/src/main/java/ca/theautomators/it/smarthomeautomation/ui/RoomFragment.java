@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import java.io.Serializable;
+
 import ca.theautomators.it.smarthomeautomation.Device;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.RoomState;

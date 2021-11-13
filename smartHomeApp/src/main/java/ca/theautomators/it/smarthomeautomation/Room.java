@@ -1,8 +1,9 @@
 package ca.theautomators.it.smarthomeautomation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class RoomBuilder {
+public class Room implements Serializable {
 
     private static ArrayList<Device> devices;
     private static String[] identifiers;
