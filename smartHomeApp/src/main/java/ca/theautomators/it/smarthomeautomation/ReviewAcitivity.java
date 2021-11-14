@@ -63,19 +63,19 @@ public class ReviewAcitivity extends AppCompatActivity {
                 mRatingScale.setText(String.valueOf(v));
                 switch ((int) ratingBar.getRating()) {
                     case 1:
-                        mRatingScale.setText("Very bad");
+                        mRatingScale.setText(R.string.verybad);
                         break;
                     case 2:
-                        mRatingScale.setText("Need some improvement");
+                        mRatingScale.setText(R.string.Needsomeimprovement);
                         break;
                     case 3:
-                        mRatingScale.setText("Good");
+                        mRatingScale.setText(R.string.Good);
                         break;
                     case 4:
-                        mRatingScale.setText("Great");
+                        mRatingScale.setText(R.string.Great);
                         break;
                     case 5:
-                        mRatingScale.setText("Awesome, I liked the service");
+                        mRatingScale.setText(R.string.AwesomeIlikedtheservice);
                         break;
                     default:
                         mRatingScale.setText("");

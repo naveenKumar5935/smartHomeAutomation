@@ -107,6 +107,22 @@
     <string name="version1_0_copyright_2021">Version1.0  Copyright 2021</string>
     <string name="temp_alarm">Temperature Alarm</string>
     <string name="temp_alarm_description">Alerts user if temperature goes below 10 or above 25 degrees</string>
+    <string name="who_we_are_we_are_a_home_automation_company_specializing_in_custom_smart_home_solutions_we_can_t_wait_to_be_part_of_your_project_reach_out_today_and_see_how_we_can_make_your_dreams_a_reality">Who We Are? We are a Home Automation Company Specializing in Custom Smart Home Solutions. We can\'t wait to be part of your project - reach out today and see how we can make your dreams a reality!</string>
+    <string name="verybad">very bad</string>
+    <string name="Needsomeimprovement">Need some improvement</string>
+    <string name="Good">Good</string>
+    <string name="Great">Great</string>
+    <string name="AwesomeIlikedtheservice">Awesome, I liked the service</string>
+    <string name="email">Email</string>
+    <string name="type_here">Type here</string>
+    <string name="describe_the_issue_in_detail">Describe the issue in detail</string>
+    <string name="button">Button</string>
+    <string name="we_hope_you_enjoyed_using_our_app">We hope you enjoyed using our app</string>
+    <string name="tell_us_what_you_loved">Tell us what you loved</string>
+    <string name="send_feedback">Send feedback</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="Email">Email</string>
 
     <string-array name="rooms">
         <item>Select Type</item>

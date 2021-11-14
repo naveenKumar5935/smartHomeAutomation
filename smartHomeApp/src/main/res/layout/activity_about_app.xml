@@ -32,7 +32,7 @@
         android:id="@+id/textView3"
         android:layout_width="403dp"
         android:layout_height="288dp"
-        android:text="                    Who We Are?                                         We are a Home Automation Company Specializing in Custom Smart Home Solutions.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        We can't wait to be part of your project - reach out today and see how we can make your dreams a reality!"
+        android:text="@string/who_we_are_we_are_a_home_automation_company_specializing_in_custom_smart_home_solutions_we_can_t_wait_to_be_part_of_your_project_reach_out_today_and_see_how_we_can_make_your_dreams_a_reality"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
