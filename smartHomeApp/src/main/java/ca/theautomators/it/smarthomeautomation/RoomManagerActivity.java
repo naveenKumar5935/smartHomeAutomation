@@ -75,12 +75,12 @@ public class RoomManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int delta = numRows - roomState.getNumRooms();
+                int counter = 0;
 
                 for(int i = 0; i < numRows; i++){
 
                     if(i < roomState.getNumRooms()){
-                        if (editedRoomNames[i].getText().toString().compareTo("") != 0)
+                        if (!editedRoomNames[i].getText().toString().isEmpty())
                             roomState.changeRoomName(editedRoomNames[i].getText().toString(), i);
 
                         if (editedRoomIcons[i] != null)
@@ -88,8 +88,15 @@ public class RoomManagerActivity extends AppCompatActivity {
                     }
                     else{
 
-                        roomNames.set(i, newRoomNames.get(delta - 1).getText().toString());
-                        roomIcons.set(i, newRoomIcons.get(delta - 1));
+                        if(newRoomNames.get(counter).getText().toString().isEmpty()){
+                            roomNames.set(i, "Room " +(counter + 1));
+                            roomIcons.set(i, getDrawable(R.drawable.bedroom));
+                        }
+                        else{
+                            roomNames.set(i, newRoomNames.get(counter).getText().toString());
+                            roomIcons.set(i, newRoomIcons.get(counter));
+                        }
+                        counter++;
                     }
 
 

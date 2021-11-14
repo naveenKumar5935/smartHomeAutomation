@@ -157,5 +157,9 @@ public class FirebaseConnect {
         return found;
     }
 
+    public int getNumDevices(){
+        return numDevices;
+    }
+
 
 }

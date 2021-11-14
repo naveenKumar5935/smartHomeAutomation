@@ -53,8 +53,11 @@ public class ManageDeviceActivity extends AppCompatActivity {
 
 
         //if null, get list from database and save to shared preferences
-        if(identifiers[0].equals("")){
-
+        if(identifiers[0].isEmpty()){
+            identifiers = fC.getIdentifiers();
+            rS.saveIdentifiers(identifiers);
+        }
+        else if(fC.getNumDevices() != identifiers.length){
             identifiers = fC.getIdentifiers();
             rS.saveIdentifiers(identifiers);
         }
@@ -90,7 +93,7 @@ public class ManageDeviceActivity extends AppCompatActivity {
         });
 
 
-        //TODO add functionality to display devices and link them to generic room fragment
+        //TODO add functionality to link devices to room objects
     }
 
     private void display(){
