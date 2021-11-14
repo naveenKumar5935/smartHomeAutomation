@@ -85,20 +85,27 @@
     <string name="search">recherche</string>
     <string name="logout">déconnexion</string>
 
-    <string name="legal">legal</string>
-    <string name="review">Review</string>
-    <string name="help">Help</string>
-    <string name="exit">Exit</string>
-    <string name="about_app">About app</string>
-    <string name="report_an_issue">Report an issue</string>
-    <string name="manage_access_card">Manage access card</string>
-    <string name="choose_image">Choose Image</string>
-    <string name="dark_mode">Dark Mode</string>
-    <string name="dont_have_an_account_sign_up">Dont have an account? Sign Up</string>
-    <string name="already_have_an_account_log_in">Already have an account? Log In</string>
-    <string name="edit_room_name_and_type">Please edit room names and types below:\n\n</string>
-    <string name="sign_in_with_google">Sign In With Google</string>
+    <string name="legal">légal</string>
+    <string name="review">Révision</string>
+    <string name="help">Aide</string>
+    <string name="exit">Sortie</string>
+    <string name="about_app">À propos de l’application</string>
+    <string name="report_an_issue">Signaler un problème</string>
+    <string name="manage_access_card">Gérer la carte d’accès</string>
+    <string name="choose_image">Choisissez l’image</string>
+    <string name="dark_mode">Mode sombre</string>
+    <string name="dont_have_an_account_sign_up">Vous n’avez pas de compte ? S’enregistrer</string>
+    <string name="already_have_an_account_log_in">Vous avez déjà un compte ? Sidentifier</string>
+    <string name="edit_room_name_and_type">Veuillez modifier les noms et les types de salles ci-dessous :\n\n</string>
+    <string name="sign_in_with_google">Connectez-vous avec Google</string>
     <string name="version1_0">Version1.0</string>
-    <string name="version1_0_copyright_2021">Version1.0 Copyright 2021</string>
+    <string name="invalid_access_code">Code d’accès non valide</string>
+    <string name="sign_up_with_google">S’inscrire avec Google</string>
+    <string name="sign_up_toast">Veuillez d’abord vous inscrire</string>
+    <string name="email_error">S’il vous plaît taper l’e-mail correct</string>
+    <string name="add_devices_to_rooms">Ajoutez des appareils aux salles ci-dessous :</string>
+    <string name="version1_0_copyright_2021">Version1.0 Droits d’auteur 2021</string>
+    <string name="temp_alarm">Alarme de température</string>
+    <string name="temp_alarm_description">Alerte l’utilisateur si la température descend en dessous de 10 ou au-dessus de 25 degrés</string>
 
 </resources>
