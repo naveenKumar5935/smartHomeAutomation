@@ -1,5 +1,6 @@
 package ca.theautomators.it.smarthomeautomation;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -57,7 +59,7 @@ public class ManageDeviceActivity extends AppCompatActivity {
             rS.saveIdentifiers(identifiers);
         }
         //compares shared pref identifiers with database, if new devices found, gets new list
-        //TODO uncomment once checkNewDevices has beed adapted
+        //TODO uncomment once checkNewDevices has been adapted
 //        else if(fC.checkNewDevices(identifiers)){
 //
 //            identifiers = fC.getIdentifiers();
@@ -76,6 +78,16 @@ public class ManageDeviceActivity extends AppCompatActivity {
             linearLayout.removeAllViews();
 
         display();
+
+        Button save = findViewById(R.id.savebutton);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManageDeviceActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         //TODO add functionality to display devices and link them to generic room fragment

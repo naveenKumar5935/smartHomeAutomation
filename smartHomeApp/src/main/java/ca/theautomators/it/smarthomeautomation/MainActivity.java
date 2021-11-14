@@ -7,10 +7,15 @@
 package ca.theautomators.it.smarthomeautomation;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,9 +23,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -29,7 +37,13 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -49,6 +63,9 @@ public class MainActivity extends AppCompatActivity{
     private AppBarConfiguration mAppBarConfiguration;
     private static ArrayList<Integer> roomList;
     private static NavigationView navigationView;
+    private static NotificationCompat.Builder builder;
+    private static Context context;
+    private TemperatureNotifier tempNotifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +79,55 @@ public class MainActivity extends AppCompatActivity{
            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
+        context = this;
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        FirebaseConnect fC = FirebaseConnect.getInstance();
+        String[] identifiers = fC.getIdentifiers();
+        String tempIdentifier = "";
+        DatabaseReference tempRef;
+
+        for(int i = 0; i < identifiers.length; i++){
+            String type = fC.getDeviceType(identifiers[i]);
+            if(type.equals("TEMP")){
+                tempIdentifier = identifiers[i];
+                break;
+            }
+        }
+
+        if(!tempIdentifier.isEmpty()){
+            tempRef = fC.getSensorData(tempIdentifier);
+
+            builder = new NotificationCompat.Builder(this, "TEMPERATURE")
+                    .setSmallIcon(R.drawable.thermostat)
+                    .setContentText("Temperature Alarm")
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+
+            tempRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    long temperature = snapshot.getValue(long.class);
+                    TemperatureNotifier temperatureNotifier = new TemperatureNotifier(temperature);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+//        TemperatureNotifier test = new TemperatureNotifier("5");
+
+
+
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
 
@@ -74,7 +140,6 @@ public class MainActivity extends AppCompatActivity{
 
 
         RoomState roomState = RoomState.getInstance(this);
-        FirebaseConnect fC = FirebaseConnect.getInstance();
 
         roomList = roomState.getRoomIds();
 
@@ -92,21 +157,6 @@ public class MainActivity extends AppCompatActivity{
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        FragmentManager fragMan = getSupportFragmentManager();
-
-
-
-//        List<Fragment> list = fragMan.getFragments();
-//
-//        for(Fragment item: list){
-//
-//            if(item.getId() == R.layout.fragment_kitchen){
-//
-//                Log.d("Fragments", "Kitchen");
-//            }
-//        }
-
-        //TODO handle Nav Clicks
 
 
     }
@@ -286,5 +336,15 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public static NavigationView getNavigationView(){return navigationView;}
+
+    public static Context getMainActivityContext(){
+
+        return context;
+    }
+
+    public static NotificationCompat.Builder getBuilder(){
+        return builder;
+    }
+
 
 }
