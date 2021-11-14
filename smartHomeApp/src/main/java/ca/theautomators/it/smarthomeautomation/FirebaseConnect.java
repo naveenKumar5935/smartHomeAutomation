@@ -30,6 +30,7 @@ public class FirebaseConnect {
 
     private static FirebaseConnect INSTANCE= null;
 
+    //This class uses a Singleton style Creational design pattern
     private FirebaseConnect(){
 
         deviceRef = FirebaseDatabase.getInstance().getReference().child("Devices");

@@ -123,8 +123,6 @@ public class MainActivity extends AppCompatActivity{
             });
         }
 
-//        TemperatureNotifier test = new TemperatureNotifier("5");
-
 
 
 
