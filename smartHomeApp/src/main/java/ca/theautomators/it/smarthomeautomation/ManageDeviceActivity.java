@@ -1,3 +1,9 @@
+/*
+ Naveen Kumar N01355935 Section-RNA
+ Gaganajeet Hanny N01350705 Section-RNA
+ Sukhmanpreet Kaur N01355022 Section-RNA
+ James Ricci N00411900 Section-RNA
+ */
 package ca.theautomators.it.smarthomeautomation;
 
 import android.content.Intent;
@@ -145,6 +151,8 @@ public class ManageDeviceActivity extends AppCompatActivity {
 
     }
 
+    //An example of the Keep It Simple and Stupid Design principle. This functionality could have easily been incorporated into the display() function
+    //But extracting it to it's own method means it can be used elsewhere in the class
     private Drawable getDrawable(String type){
 
         if(type.equals("RFID")){

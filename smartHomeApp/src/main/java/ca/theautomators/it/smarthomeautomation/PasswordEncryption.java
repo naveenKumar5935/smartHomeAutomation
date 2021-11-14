@@ -11,6 +11,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+//An example of the Single Responsibility Principle
+//The PasswordEncryption class has only one purpose, to encrypt and return a Hashed Password
 public class PasswordEncryption {
 
     String password;
@@ -37,8 +39,6 @@ public class PasswordEncryption {
             e.printStackTrace();
         }
         return hashedPassword;
-
-
 
     }
 }
