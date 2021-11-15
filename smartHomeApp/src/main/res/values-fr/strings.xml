@@ -107,5 +107,21 @@
     <string name="version1_0_copyright_2021">Version1.0 Droits d’auteur 2021</string>
     <string name="temp_alarm">Alarme de température</string>
     <string name="temp_alarm_description">Alerte l’utilisateur si la température descend en dessous de 10 ou au-dessus de 25 degrés</string>
+    <string name="who_we_are_we_are_a_home_automation_company_specializing_in_custom_smart_home_solutions_we_can_t_wait_to_be_part_of_your_project_reach_out_today_and_see_how_we_can_make_your_dreams_a_reality">Qui sommes-nous? Nous sommes une entreprise domotique spécialisée dans les solutions de maison intelligente personnalisées.Nous sommes impatients de faire partie de votre projet - contactez-nous dès aujourd’hui et voyons comment nous pouvons faire de vos rêves une réalité!.</string>
+    <string name="verybad">Très mal</string>
+    <string name="Needsomeimprovement">Besoin d’amélioration</string>
+    <string name="Good">Bon</string>
+    <string name="Great">Génial</string>
+    <string name="AwesomeIlikedtheservice">Génial, j’ai aimé le service</string>
+    <string name="email">Courriel</string>
+    <string name="type_here">Tapez ici</string>
+    <string name="describe_the_issue_in_detail">Décrire le problème en détail</string>
+    <string name="button">Bouton</string>
+    <string name="we_hope_you_enjoyed_using_our_app">Nous espérons que vous avez apprécié l’utilisation de notre application</string>
+    <string name="tell_us_what_you_loved">Dites-nous ce que vous avez aimé</string>
+    <string name="send_feedback">Envoyer des commentaires</string>
+    <string name="name">Nom</string>
+    <string name="phone_number">Numéro de téléphone</string>
+    <string name="Email">Courriel</string>
 
 </resources>
