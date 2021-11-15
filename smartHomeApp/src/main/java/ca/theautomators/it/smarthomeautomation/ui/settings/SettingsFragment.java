@@ -99,7 +99,6 @@ public class SettingsFragment extends Fragment {
 
         gUser = GoogleSignIn.getLastSignedInAccount(getActivity());
         if(gUser!=null){
-            Log.e("abc",gUser.getDisplayName());
 
             storageReference.child(gUser.getId()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -127,11 +126,10 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                 final EditText input = new EditText(getActivity());
-                input.setHint("hint");
-                alertDialog.setTitle("title");
-                alertDialog.setMessage("Enter card number");
+                alertDialog.setTitle(R.string.alert_card);
+                alertDialog.setMessage(R.string.enter_card);
                 alertDialog.setView(input);
-                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                alertDialog.setPositiveButton(R.string.alert_text, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if(!input.getText().toString().matches("")){
@@ -232,26 +230,26 @@ public class SettingsFragment extends Fragment {
                 storageReference.child(auth.getCurrentUser().getUid()).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(getActivity().getApplicationContext(),"Image Uploaded",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.image_uploaded,Toast.LENGTH_LONG).show();
                     }
                 })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getActivity().getApplicationContext(),"Image Upload failed",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity().getApplicationContext(), R.string.img_failef,Toast.LENGTH_LONG).show();
                             }
                         });
             }else {
                 storageReference.child(String.valueOf(gUser.getId())).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(getActivity().getApplicationContext(),"Image Uploaded",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.img_upload,Toast.LENGTH_LONG).show();
                     }
                 })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getActivity().getApplicationContext(),"Image Upload failed",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity().getApplicationContext(), R.string.img_upl,Toast.LENGTH_LONG).show();
                             }
                         });
             }
