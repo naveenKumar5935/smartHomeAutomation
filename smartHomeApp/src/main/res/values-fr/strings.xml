@@ -123,10 +123,33 @@
     <string name="name">Nom</string>
     <string name="phone_number">Numéro de téléphone</string>
     <string name="Email">Courriel</string>
-    <string name="review_heading">Review</string>
-    <string name="phonenoerror">Invalid</string>
-    <string name="reportemail">email</string>
-    <string name="report">report</string>
-    <string name="reporttitle">Report an Issue</string>
+
+    <string name="review_heading">Révision</string>
+    <string name="phonenoerror">Non valide</string>
+    <string name="reportemail">Messagerie électronique</string>
+    <string name="report">rapport</string>
+    <string name="reporttitle">Signaler un problème</string>
+    <string name="enter_card">Entrez le numéro de carte</string>
+    <string name="alert_card">Entrez la carte</string>
+    <string name="alert_text">D’ACCORD</string>
+    <string name="image_uploaded">Image téléchargée</string>
+    <string name="img_failef">Échec du téléchargement de l’image</string>
+    <string name="img_upload">Image téléchargée</string>
+    <string name="img_upl">Échec du téléchargement de l’image</string>
+    <string name="minimul_length">La longueur minimale doit être de 8</string>
+    <string name="toast_login_check">Veuillez vérifier vos informations d’identification</string>
+    <string name="Please_create_can_acc">Veuillez créer un compte</string>
+    <string name="successlogin_toast">Connexion réussie</string>
+    <string name="wlcm_back">\"Bienvenue à nouveau \</string>
+    <string name="pleasE_type_corrent_email">S’il vous plaît taper l’e-mail correct</string>
+    <string name="minimum_length">La longueur minimale doit être de 8</string>
+    <string name="enter_access">Veuillez saisir le code d’accès</string>
+    <string name="user_already_Exist">L’utilisateur existe déjà</string>
+    <string name="successful_signedup">Inscription réussie</string>
+    <string name="already_signed_up">Déjà inscrit, veuillez vous connecter</string>
+    <string name="success">Inscription réussie</string>
+    <string name="nameerror">Minimum 3 mots</string>
+    <string name="orientationSwitch">orientationSwitch</string>
+    <string name="selected">sélectionné</string>
 
 </resources>

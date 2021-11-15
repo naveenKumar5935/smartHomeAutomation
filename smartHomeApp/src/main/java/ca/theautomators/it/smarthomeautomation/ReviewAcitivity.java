@@ -35,7 +35,7 @@ public class ReviewAcitivity extends AppCompatActivity {
         mTextView = findViewById(R.id.text);
 
         Paper.init(this);
-        if(Paper.book().read("orientationSwitch","").matches("selected")){
+        if(Paper.book().read(getString(R.string.orientationSwitch),"").matches(getString(R.string.selected))){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 

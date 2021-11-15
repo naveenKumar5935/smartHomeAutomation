@@ -148,6 +148,8 @@
     <string name="reportemail">email</string>
     <string name="report">report</string>
     <string name="reporttitle">Report an Issue</string>
+    <string name="orientationSwitch">orientationSwitch</string>
+    <string name="selected">selected</string>
 
     <string-array name="rooms">
         <item>Select Type</item>
