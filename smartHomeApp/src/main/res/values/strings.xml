@@ -135,6 +135,13 @@
     <string name="Please_create_can_acc">Please Create an account</string>
     <string name="successlogin_toast">Successfully Logged In</string>
     <string name="wlcm_back">\"Welcome Back \"</string>
+    <string name="pleasE_type_corrent_email">Please type correct email</string>
+    <string name="minimum_length">Minimum length should be 8</string>
+    <string name="enter_access">Please enter access code</string>
+    <string name="user_already_Exist">User already exist</string>
+    <string name="successful_signedup">Successfully Signed Up</string>
+    <string name="already_signed_up">Already Signed Up, please log in</string>
+    <string name="success">Successfully Signed Up</string>
 
     <string-array name="rooms">
         <item>Select Type</item>

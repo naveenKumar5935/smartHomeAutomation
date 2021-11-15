@@ -84,11 +84,11 @@ public class RegisterActivity extends AppCompatActivity {
                 String getemail = email.getText().toString().trim();
                 String getpass = password.getText().toString().trim();
                 if (!getemail.contains("@") || !getemail.contains(".")){
-                    email.setError("Please type correct email");
+                    email.setError(getString(R.string.pleasE_type_corrent_email));
                     return;
                 }
                 if(getpass.length()<8){
-                    password.setError("Minimum length should be 8");
+                    password.setError(getString(R.string.minimum_length));
                     return;
                 }
 
@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String encryptedPassword = passwordEncryption.getHashedPassword();
                 String getaccess = accessCode.getText().toString().trim();
                 if(TextUtils.isEmpty(getaccess)){
-                    Toast.makeText(RegisterActivity.this,"Please enter access code",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, R.string.enter_access,Toast.LENGTH_SHORT).show();
                 }else {
                     getAndMatchAccessCode(getaccess,getemail,encryptedPassword);
                 }
@@ -109,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String accessCodeEntered = accessCode.getText().toString().trim();
                 if(TextUtils.isEmpty(accessCodeEntered)){
-                    Toast.makeText(RegisterActivity.this,"Please enter access code",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,R.string.enter_access,Toast.LENGTH_SHORT).show();
                 }else {
                     getAndMatchAccessCode(accessCodeEntered,null,null);
                 }
@@ -139,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if(check){
                                 setUserData(email,password);
                             }else {
-                                Toast.makeText(RegisterActivity.this,"User already exist",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, R.string.user_already_Exist,Toast.LENGTH_SHORT).show();
                             }
 
                         }
@@ -175,7 +175,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
-                                                Toast.makeText(RegisterActivity.this,"Successfully Signed Up",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(RegisterActivity.this, R.string.successful_signedup,Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                                                 startActivity(intent);
                                                 finish();
@@ -243,7 +243,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = gUser.getEmail();
 
                 if (snapshot.child("googleUsers").child(gUser.getId()).exists()) {
-                    Toast.makeText(RegisterActivity.this, "Already Signed Up, please log in", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, R.string.already_signed_up, Toast.LENGTH_SHORT).show();
                     return;
 
 
@@ -254,7 +254,7 @@ public class RegisterActivity extends AppCompatActivity {
                     userdatamap.put("name", gUser.getGivenName());
 
                     FirebaseDatabase.getInstance().getReference("googleUsers").child(gUser.getId()).setValue(userdatamap);
-                    Toast.makeText(RegisterActivity.this,"Successfully Signed Up",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, R.string.success,Toast.LENGTH_SHORT).show();
 
                 }
 
