@@ -123,5 +123,10 @@
     <string name="name">Nom</string>
     <string name="phone_number">Numéro de téléphone</string>
     <string name="Email">Courriel</string>
+    <string name="review_heading">Review</string>
+    <string name="phonenoerror">Invalid</string>
+    <string name="reportemail">email</string>
+    <string name="report">report</string>
+    <string name="reporttitle">Report an Issue</string>
 
 </resources>

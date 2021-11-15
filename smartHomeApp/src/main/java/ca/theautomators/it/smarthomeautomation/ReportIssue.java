@@ -32,7 +32,7 @@ public class ReportIssue extends AppCompatActivity {
         setContentView(R.layout.activity_report_issue);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Report an Issue");
+        setTitle(getString(R.string.reporttitle));
 
 
         EditText report = findViewById(R.id.issue);
@@ -74,8 +74,8 @@ public class ReportIssue extends AppCompatActivity {
 
                     //Sending data to Database
                     HashMap<String, Object> userReport = new HashMap<>();
-                    userReport.put("email",email.getText().toString().trim());
-                    userReport.put("report", report.getText().toString());
+                    userReport.put(getString(R.string.reportemail),email.getText().toString().trim());
+                    userReport.put(getString(R.string.report), report.getText().toString());
                     FirebaseDatabase.getInstance().getReference("UserReports").child(email.getText().toString().replace(".","")).setValue(userReport);
 
 

@@ -30,7 +30,7 @@ public class ReviewAcitivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_acitivity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Review");
+        setTitle(getString(R.string.review_heading));
 
         mTextView = findViewById(R.id.text);
 
@@ -93,7 +93,7 @@ public class ReviewAcitivity extends AppCompatActivity {
                 }
 
                 else if(Name.getText().toString().trim().length() < 3){
-                    Name.setError("Minimum 3 words");
+                    Name.setError(getString(R.string.nameerror));
                 }
 
                 else if (phonenumber.getText().toString().isEmpty()) {
@@ -103,7 +103,7 @@ public class ReviewAcitivity extends AppCompatActivity {
 
 
                 else if(phonenumber.getText().toString().trim().length() < 10){
-                    phonenumber.setError("Invalid");
+                    phonenumber.setError(getString(R.string.phonenoerror));
                 }
 
                 else if (email.getText().toString().isEmpty()) {
@@ -140,6 +140,8 @@ public class ReviewAcitivity extends AppCompatActivity {
 
     }
 
+
+    //Get device model number and store in the database
     public static String getDeviceName() {
         String manufacturer = Build.MANUFACTURER;
         String model = Build.MODEL;

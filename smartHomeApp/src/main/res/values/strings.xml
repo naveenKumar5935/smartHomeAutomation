@@ -142,6 +142,12 @@
     <string name="successful_signedup">Successfully Signed Up</string>
     <string name="already_signed_up">Already Signed Up, please log in</string>
     <string name="success">Successfully Signed Up</string>
+    <string name="review_heading">Review</string>
+    <string name="nameerror">Minimum 3 words</string>
+    <string name="phonenoerror">Invalid</string>
+    <string name="reportemail">email</string>
+    <string name="report">report</string>
+    <string name="reporttitle">Report an Issue</string>
 
     <string-array name="rooms">
         <item>Select Type</item>
