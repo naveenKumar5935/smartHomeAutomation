@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 if(getpass.length()<8){
-                    password.setError("Minimum length should be 8");
+                    password.setError(getString(R.string.minimul_length));
                     return;
                 }
                 PasswordEncryption passwordEncryption = new PasswordEncryption(getpass);
@@ -163,11 +163,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 Log.e("exception",e.toString());
                 if(e.toString().contains("invalid")){
-                    Toast.makeText(LoginActivity.this,"Please check your credentials",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.toast_login_check,Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(e.toString().contains("no user")){
-                    Toast.makeText(LoginActivity.this,"Please Create an account",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.Please_create_can_acc,Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
         auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Toast.makeText(LoginActivity.this,"Successfully Logged In",Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, R.string.successlogin_toast,Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                 startActivity(intent);
 
@@ -236,7 +236,7 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
 
                 if (snapshot.child("googleUsers").child(gUser.getId()).exists()) {
-                    Toast.makeText(LoginActivity.this, "Welcome Back " + gUser.getGivenName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.wlcm_back) + gUser.getGivenName(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
                     finish();

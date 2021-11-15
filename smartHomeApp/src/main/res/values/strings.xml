@@ -130,6 +130,11 @@
     <string name="img_failef">Image Upload failed</string>
     <string name="img_upload">Image Uploaded</string>
     <string name="img_upl">Image Upload failed</string>
+    <string name="minimul_length">Minimum length should be 8</string>
+    <string name="toast_login_check">Please check your credentials</string>
+    <string name="Please_create_can_acc">Please Create an account</string>
+    <string name="successlogin_toast">Successfully Logged In</string>
+    <string name="wlcm_back">\"Welcome Back \"</string>
 
     <string-array name="rooms">
         <item>Select Type</item>
