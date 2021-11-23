@@ -150,6 +150,9 @@
     <string name="reporttitle">Report an Issue</string>
     <string name="orientationSwitch">orientationSwitch</string>
     <string name="selected">selected</string>
+    <string name="full_name">Full Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="phone_no">Phone No</string>
 
     <string-array name="rooms">
         <item>Select Type</item>
