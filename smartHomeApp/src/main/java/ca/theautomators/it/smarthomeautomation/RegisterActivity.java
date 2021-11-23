@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String getemail = email.getText().toString().trim();
                 String getpass = password.getText().toString().trim();
-                Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&=])(?=\\S+$).{8,}$");
+                Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&=?])(?=\\S+$).{8,}$");
                 Matcher matcher = pattern.matcher(getpass);
                 if(matcher.matches()){
                   //  Toast.makeText(RegisterActivity.this, "password matched",Toast.LENGTH_SHORT).show();

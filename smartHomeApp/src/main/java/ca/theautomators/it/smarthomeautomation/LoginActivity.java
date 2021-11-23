@@ -44,6 +44,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.paperdb.Paper;
 
@@ -129,8 +131,13 @@ public class LoginActivity extends AppCompatActivity {
                     email.setError(getString(R.string.email_error));
                     return;
                 }
-                if(getpass.length()<8){
-                    password.setError(getString(R.string.minimul_length));
+                Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&=?])(?=\\S+$).{8,}$");
+                Matcher matcher = pattern.matcher(getpass);
+                if(matcher.matches()){
+                    //  Toast.makeText(RegisterActivity.this, "password matched",Toast.LENGTH_SHORT).show();
+                }else {
+                    password.setError("Minimum 8 characters with atleast 1 upper case, 1 lowercase, 1 special character and 1 number");
+                    Toast.makeText(LoginActivity.this, "Password does not satisfy requirements",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 PasswordEncryption passwordEncryption = new PasswordEncryption(getpass);
