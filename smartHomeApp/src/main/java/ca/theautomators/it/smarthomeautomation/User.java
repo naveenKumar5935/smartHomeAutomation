@@ -9,11 +9,29 @@ package ca.theautomators.it.smarthomeautomation;
 
 public class User {
 
-    String email, password;
+    String email, password, fullName, phone;
 
-    public User(String email, String password){
+    public User(String email, String password, String fullName, String phone){
         this.email = email;
         this.password = password;
+        this.fullName = fullName;
+        this.phone = phone;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {

@@ -47,7 +47,7 @@ import io.paperdb.Paper;
 public class RegisterActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 1;
-    EditText email,password,accessCode;
+    EditText email,password,accessCode, fullname, phone;
     Button loginBtn, registerBtn;
     FirebaseAuth auth;
     GoogleSignInButton googleSignUpButton;
@@ -68,6 +68,8 @@ public class RegisterActivity extends AppCompatActivity {
         accessCode = findViewById(R.id.register_access_tb);
         registerBtn = findViewById(R.id.registerButton);
         loginBtn = findViewById(R.id.registerLoginBtn);
+        fullname = findViewById(R.id.register_fullname_et);
+        phone = findViewById(R.id.register_phone_et);
         googleSignUpButton = findViewById(R.id.googleSignUpButton);
         auth = FirebaseAuth.getInstance();
 
@@ -85,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String getemail = email.getText().toString().trim();
                 String getpass = password.getText().toString().trim();
+
                 Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&=?])(?=\\S+$).{8,}$");
                 Matcher matcher = pattern.matcher(getpass);
                 if(matcher.matches()){
@@ -174,7 +177,9 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            User user = new User(email,password);
+                            String getphone = phone.getText().toString();
+                            String getname = fullname.getText().toString();
+                            User user = new User(email,password,getname,getphone);
                             FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid())
                                     .setValue(user)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
