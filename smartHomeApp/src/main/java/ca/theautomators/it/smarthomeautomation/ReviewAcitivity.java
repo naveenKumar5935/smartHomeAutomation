@@ -50,17 +50,6 @@ public class ReviewAcitivity extends AppCompatActivity {
 
         firebaseConnect = FirebaseConnect.getInstance();
 
-      //  String emailString = email.getText().toString().trim();
-
-
-
-        String emailPattern =
-                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
-                        +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
-                        +"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
-                        +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
 
 
         mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -99,8 +88,13 @@ public class ReviewAcitivity extends AppCompatActivity {
         mSendFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                float rating = mRatingBar.getRating();
 
-                if (Name.getText().toString().isEmpty()) {
+                if (rating < 0){
+                    Toast.makeText(ReviewAcitivity.this, "Please choose the rating", Toast.LENGTH_LONG).show();
+                }
+
+                else if (Name.getText().toString().isEmpty()) {
                     Toast.makeText(ReviewAcitivity.this, "Please fill in Name text box", Toast.LENGTH_LONG).show();
 
                 }
@@ -135,7 +129,7 @@ public class ReviewAcitivity extends AppCompatActivity {
                     String email1 = email.getText().toString().trim();
                     String phone = phonenumber.getText().toString().trim();
                     String feedback = mFeedback.getText().toString();
-                    float rating = mRatingBar.getRating();
+                 //   float rating = mRatingBar.getRating();
                     String modelNo = getDeviceName();
 
                     firebaseConnect.setUserFeedback(name,email1,phone,feedback,rating,modelNo);
