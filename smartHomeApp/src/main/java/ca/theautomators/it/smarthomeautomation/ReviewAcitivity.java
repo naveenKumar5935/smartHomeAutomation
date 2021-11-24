@@ -8,9 +8,12 @@ package ca.theautomators.it.smarthomeautomation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
@@ -19,6 +22,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import io.paperdb.Paper;
 
@@ -86,11 +90,20 @@ public class ReviewAcitivity extends AppCompatActivity {
         });
 
         mSendFeedback.setOnClickListener(new View.OnClickListener() {
+            ProgressDialog progressDialog =null ;
+
+            Handler handle = new Handler() {
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    progressDialog.incrementProgressBy(10); // Incremented By Value 2
+                }
+            };
+
             @Override
             public void onClick(View view) {
                 float rating = mRatingBar.getRating();
 
-                if (rating < 0){
+                if (rating < 0 ){
                     Toast.makeText(ReviewAcitivity.this, "Please choose the rating", Toast.LENGTH_LONG).show();
                 }
 
@@ -139,7 +152,33 @@ public class ReviewAcitivity extends AppCompatActivity {
                     phonenumber.setText("");
                     email.setText("");
                     mRatingBar.setRating(0);
-                    Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
+
+                    progressDialog = new ProgressDialog(ReviewAcitivity.this);
+                    progressDialog.setMax(100); // Progress Dialog Max Value
+                    progressDialog.setMessage("Loading..."); // Setting Message
+                    progressDialog.setTitle("ProgressDialog"); // Setting Title
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL); // Progress Dialog Style Horizontal
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(false);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                while (progressDialog.getProgress() <= progressDialog.getMax()) {
+                                    Thread.sleep(200);
+                                    handle.sendMessage(handle.obtainMessage());
+                                    if (progressDialog.getProgress() == progressDialog.getMax()) {
+                                        progressDialog.dismiss();
+                                    }
+                                    Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
+
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+
                 }
             }
         });
