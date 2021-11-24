@@ -12,6 +12,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +49,18 @@ public class ReviewAcitivity extends AppCompatActivity {
         EditText email = findViewById(R.id.email);
 
         firebaseConnect = FirebaseConnect.getInstance();
+
+      //  String emailString = email.getText().toString().trim();
+
+
+
+        String emailPattern =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        +"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
 
 
         mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -106,17 +119,18 @@ public class ReviewAcitivity extends AppCompatActivity {
                     phonenumber.setError(getString(R.string.phonenoerror));
                 }
 
-                else if (email.getText().toString().isEmpty()) {
-                    Toast.makeText(ReviewAcitivity.this, "Please fill in Email text box", Toast.LENGTH_LONG).show();
+
+                else if(!email.getText().toString().trim().contains("@") || !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+                    Toast.makeText(ReviewAcitivity.this, "Enter valid Email Address", Toast.LENGTH_LONG).show();
 
                 }
-
-                else if (mFeedback.getText().toString().isEmpty()) {
-                    Toast.makeText(ReviewAcitivity.this, "Please fill in feedback text box", Toast.LENGTH_LONG).show();
+                else if(mFeedback.getText().toString().isEmpty()){
+                    Toast.makeText(ReviewAcitivity.this, "Please fill in feedback box", Toast.LENGTH_LONG).show();
 
                 }
 
                 else  {
+
                     String name = Name.getText().toString().trim();
                     String email1 = email.getText().toString().trim();
                     String phone = phonenumber.getText().toString().trim();
@@ -126,14 +140,12 @@ public class ReviewAcitivity extends AppCompatActivity {
 
                     firebaseConnect.setUserFeedback(name,email1,phone,feedback,rating,modelNo);
 
-
                     mFeedback.setText("");
                     Name.setText("");
                     phonenumber.setText("");
                     email.setText("");
                     mRatingBar.setRating(0);
                     Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
-                 //   Toast.makeText(ReviewAcitivity.this, getDeviceName(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
