@@ -12,6 +12,7 @@ public class Device {
 
     private final String type;
     private final String identifier;
+    private String data;
 
     FirebaseConnect fC;
 
@@ -24,9 +25,11 @@ public class Device {
         type = fC.getDeviceType(identifier);
     }
 
-    public DatabaseReference getSensorData(String identifier){
+    public String getSensorData(){
 
-        return fC.getSensorData(identifier);
+        fC.getSensorDataRef(identifier);
+
+        return "WIP";
     }
 
     public void sendControlData(String controlData){

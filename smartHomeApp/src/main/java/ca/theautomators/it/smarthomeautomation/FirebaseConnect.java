@@ -71,7 +71,7 @@ public class FirebaseConnect {
         deviceRef.child(identifier).child("DATA").setValue(data);
     }
 
-    public DatabaseReference getSensorData(String identifier){
+    public DatabaseReference getSensorDataRef(String identifier){
 
         return deviceRef.child(identifier).child("DATA");
 

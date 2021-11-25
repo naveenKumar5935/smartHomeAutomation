@@ -42,7 +42,7 @@ public class BedroomFragment extends Fragment {
 
         title.setText(roomState.getRoomNames().get(0) + " Sensor Readings");
 
-        ((MainActivity)getActivity()).loadRoomInfo(R.id.nav_bedroom);
+//        ((MainActivity)getActivity()).loadRoomInfo(R.id.nav_bedroom);
 
         bedroomData = getString(R.string.bedroom_data);
 

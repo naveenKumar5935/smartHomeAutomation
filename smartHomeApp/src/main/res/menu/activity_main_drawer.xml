@@ -6,23 +6,25 @@
     <group android:checkableBehavior="single"
         android:id="@+id/drawer_list">
         <item
+            android:orderInCategory="0"
             android:id="@+id/nav_home"
             android:icon="@drawable/home"
             android:title="@string/main_drawer_t1" />
-        <item
-            android:id="@+id/nav_kitchen"
-            android:icon="@drawable/kitchen"
-            android:title="@string/main_drawer_t4" />
-        <item
-            android:id="@+id/nav_bedroom"
-            android:icon="@drawable/bedroom"
-            android:title="@string/main_drawer_t2" />
-        <item
-            android:id="@+id/nav_livingroom"
-            android:icon="@drawable/living_room"
-            android:title="@string/main_drawer_t3" />
+<!--        <item-->
+<!--            android:id="@+id/nav_kitchen"-->
+<!--            android:icon="@drawable/kitchen"-->
+<!--            android:title="@string/main_drawer_t4" />-->
+<!--        <item-->
+<!--            android:id="@+id/nav_bedroom"-->
+<!--            android:icon="@drawable/bedroom"-->
+<!--            android:title="@string/main_drawer_t2" />-->
+<!--        <item-->
+<!--            android:id="@+id/nav_livingroom"-->
+<!--            android:icon="@drawable/living_room"-->
+<!--            android:title="@string/main_drawer_t3" />-->
 
         <item
+            android:orderInCategory="1"
             android:id="@+id/nav_settings"
             android:icon="@drawable/settings"
             android:title="@string/nav_settings" />

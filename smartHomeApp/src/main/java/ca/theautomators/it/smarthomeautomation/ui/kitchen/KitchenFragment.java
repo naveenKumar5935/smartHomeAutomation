@@ -41,7 +41,7 @@ public class KitchenFragment extends Fragment {
 
         title.setText(roomState.getRoomNames().get(1) + " Sensor Readings");
 
-        ((MainActivity)getActivity()).loadRoomInfo(R.id.nav_kitchen);
+//        ((MainActivity)getActivity()).loadRoomInfo(R.id.nav_kitchen);
 
         kitchenData = getString(R.string.kitchen_data);
 

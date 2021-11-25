@@ -43,17 +43,17 @@ public class LandingFragment extends Fragment {
 
         Button kitchenButton = (Button) root.findViewById(R.id.button_kitchen);
         //TODO temporary set text, will be removed once add and remove room functionality developed
-        kitchenButton.setText(roomState.getRoomNames().get(1));
+//        kitchenButton.setText(roomState.getRoomNames().get(1));
         setButtonData(kitchenButton, kitchenData);
 
         Button bedroomButton = (Button) root.findViewById(R.id.button_bedroom);
         //TODO temporary set text, will be removed once add and remove room functionality developed
-        bedroomButton.setText(roomState.getRoomNames().get(0));
+//        bedroomButton.setText(roomState.getRoomNames().get(0));
         setButtonData(bedroomButton, bedroomData);
 
         Button livingRoomButton = (Button) root.findViewById(R.id.button_living_room);
         //TODO temporary set text, will be removed once add and remove room functionality developed
-        livingRoomButton.setText(roomState.getRoomNames().get(2));
+//        livingRoomButton.setText(roomState.getRoomNames().get(2));
         setButtonData(livingRoomButton, livingRoomData);
 
         Button settingsButton = (Button) root.findViewById(R.id.button_settings);
@@ -62,7 +62,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_kitchen);
+//                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_kitchen);
             }
         });
 
@@ -70,7 +70,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_bedroom);
+//                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_bedroom);
             }
         });
 
@@ -78,7 +78,7 @@ public class LandingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_livingroom);
+//                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_livingroom);
             }
         });
 

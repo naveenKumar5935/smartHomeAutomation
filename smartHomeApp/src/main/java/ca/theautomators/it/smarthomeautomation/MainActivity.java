@@ -7,19 +7,15 @@
 package ca.theautomators.it.smarthomeautomation;
 
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -28,17 +24,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,15 +39,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import ca.theautomators.it.smarthomeautomation.ui.AboutAppActivity;
-import ca.theautomators.it.smarthomeautomation.ui.bedroom.BedroomFragment;
-import ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment;
+import ca.theautomators.it.smarthomeautomation.ui.RoomFragment;
 import ca.theautomators.it.smarthomeautomation.ui.landing.LandingFragment;
-import ca.theautomators.it.smarthomeautomation.ui.livingroom.LivingRoomFragment;
 import ca.theautomators.it.smarthomeautomation.ui.settings.SettingsFragment;
 import io.paperdb.Paper;
 
@@ -99,7 +87,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
         if(!tempIdentifier.isEmpty()){
-            tempRef = fC.getSensorData(tempIdentifier);
+            tempRef = fC.getSensorDataRef(tempIdentifier);
 
             builder = new NotificationCompat.Builder(this, "TEMPERATURE")
                     .setSmallIcon(R.drawable.thermostat)
@@ -129,27 +117,127 @@ public class MainActivity extends AppCompatActivity{
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
 
+//***************************************TEST*******************************************************
+
+
+
+        Menu menu = navigationView.getMenu();
+        MenuItem home = menu.findItem(R.id.nav_home);
+        MenuItem settings = menu.findItem(R.id.nav_settings);
+
+        ArrayList<MenuItem> items = new ArrayList<>();
+
+
+        menu.add(R.id.drawer_list, 1, 0, "test").setCheckable(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                RoomFragment rF = new RoomFragment();
+                Toolbar toolbarText = findViewById(R.id.toolbar);
+                toolbarText.setTitle(item.getTitle());
+
+                if(savedInstanceState == null){
+                    FragmentTransaction fT = getSupportFragmentManager().beginTransaction();
+                    fT.replace(R.id.nav_host_fragment, rF);
+                    fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    fT.addToBackStack(item.getTitle().toString());
+                    fT.commit();
+                }
+
+                drawer.closeDrawer(Gravity.LEFT);
+                home.setChecked(false);
+                settings.setChecked(false);
+                item.setChecked(true);
+                items.add(item);
+                uncheckOtherItems(item, items);
+
+                return false;
+            }
+        });
+
+        menu.add(R.id.drawer_list, 2, 0, "test2").setCheckable(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                RoomFragment rF = new RoomFragment();
+                Toolbar toolbarText = findViewById(R.id.toolbar);
+                toolbarText.setTitle(item.getTitle());
+
+                if(savedInstanceState == null){
+                    FragmentTransaction fT = getSupportFragmentManager().beginTransaction();
+                    fT.replace(R.id.nav_host_fragment, rF);
+                    fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    fT.addToBackStack(item.getTitle().toString());
+                    fT.commit();
+                }
+
+                drawer.closeDrawer(Gravity.LEFT);
+                home.setChecked(false);
+                settings.setChecked(false);
+                item.setChecked(true);
+                items.add(item);
+                uncheckOtherItems(item, items);
+
+                return false;
+            }
+        });
+
+        menu.add(R.id.drawer_list, 3, 0, "test3").setCheckable(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                RoomFragment rF = new RoomFragment();
+                Toolbar toolbarText = findViewById(R.id.toolbar);
+                toolbarText.setTitle(item.getTitle());
+
+                if(savedInstanceState == null){
+                    FragmentTransaction fT = getSupportFragmentManager().beginTransaction();
+                    fT.replace(R.id.nav_host_fragment, rF);
+                    fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    fT.addToBackStack(item.getTitle().toString());
+                    fT.commit();
+                }
+
+                drawer.closeDrawer(Gravity.LEFT);
+                home.setChecked(false);
+                settings.setChecked(false);
+                item.setChecked(true);
+                items.add(item);
+                uncheckOtherItems(item, items);
+
+                return false;
+            }
+        });
+
+
+//***************************************TEST*******************************************************
+
+
+//        mAppBarConfiguration = new AppBarConfiguration.Builder(
+//                R.id.nav_bedroom, R.id.nav_home, R.id.nav_livingroom, R.id.nav_kitchen, R.id.nav_settings)
+//                .setDrawerLayout(drawer)
+//                .build();
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_bedroom, R.id.nav_home, R.id.nav_livingroom, R.id.nav_kitchen, R.id.nav_settings)
+                R.id.nav_home, R.id.nav_settings)
                 .setDrawerLayout(drawer)
                 .build();
 
 
 
-        RoomState roomState = RoomState.getInstance(this);
-
-        roomList = roomState.getRoomIds();
-
-        if(roomState.getRoomStateChanged() || roomState.getStateSaved()){
-
-            for(int i = 0; i < roomState.getNumRooms(); i++){
-
-                setRoomNameAndIcon(roomState.getRoomIds().get(i), roomState.getRoomNames().get(i), roomState.getRoomIcons().get(i));
-            }
-
-            roomState.setRoomStateChanged(false);
-        }
+//        RoomState roomState = RoomState.getInstance(this);
+//
+//        roomList = roomState.getRoomIds();
+//
+//        if(roomState.getRoomStateChanged() || roomState.getStateSaved()){
+//
+//            for(int i = 0; i < roomState.getNumRooms(); i++){
+//
+//                setRoomNameAndIcon(roomState.getRoomIds().get(i), roomState.getRoomNames().get(i), roomState.getRoomIcons().get(i));
+//            }
+//
+//            roomState.setRoomStateChanged(false);
+//        }
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -189,43 +277,6 @@ public class MainActivity extends AppCompatActivity{
         alert.show();
 
 
-    }
-
-    private void loadFragment(int id, String title, Fragment fragment){
-
-        NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
-        Menu menu = navigationView.getMenu();
-        Toolbar toolbarText = findViewById(R.id.toolbar);
-        MenuItem navLoad = menu.findItem(id);
-
-        toolbarText.setTitle(title);
-        navLoad.setChecked(true);
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, fragment,
-                null).setReorderingAllowed(true).commit();
-
-    }
-
-    public void fragmentSwitch(int id){
-
-        switch(id){
-
-            case R.id.nav_kitchen:
-                loadFragment(id, getString(R.string.kitchen), new KitchenFragment());
-                break;
-            case R.id.nav_bedroom:
-                loadFragment(id, getString(R.string.bedroom), new BedroomFragment());
-                break;
-            case R.id.nav_livingroom:
-                loadFragment(id, getString(R.string.living_room), new LivingRoomFragment());
-                break;
-            case R.id.nav_settings:
-                loadFragment(id, getString(R.string.settings), new SettingsFragment());
-                break;
-            case R.id.nav_home:
-                loadFragment(id, getString(R.string.home), new LandingFragment());
-                break;
-        }
     }
 
     @Override
@@ -345,4 +396,67 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//        getSupportFragmentManager().beginTransaction().setReorderingAllowed(true)
+//                .add(R.id.nav_host_fragment, RoomFragment.class, null, item.getTitle().toString()).commit();
+//
+//        fragmentSwitch(item.getItemId());
+//
+//        return false;
+//    }
+
+    public void fragmentSwitch(int id){
+
+        Menu menu = navigationView.getMenu();
+
+        switch(id){
+
+//            case R.id.nav_kitchen:
+//                loadFragment(id, getString(R.string.kitchen), new KitchenFragment());
+//                break;
+//            case R.id.nav_bedroom:
+//                loadFragment(id, getString(R.string.bedroom), new BedroomFragment());
+//                break;
+//            case R.id.nav_livingroom:
+//                loadFragment(id, getString(R.string.living_room), new LivingRoomFragment());
+//                break;
+            case R.id.nav_settings:
+                loadFragment(id, getString(R.string.settings), new SettingsFragment());
+                break;
+            case R.id.nav_home:
+                loadFragment(id, getString(R.string.home), new LandingFragment());
+                break;
+            default:
+                String tag = menu.findItem(id).getTitle().toString();
+                loadFragment(id, tag, getSupportFragmentManager().findFragmentByTag(tag));
+        }
+    }
+
+    private void loadFragment(int id, String title, Fragment fragment){
+
+        NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        Toolbar toolbarText = findViewById(R.id.toolbar);
+        MenuItem navLoad = menu.findItem(id);
+
+        toolbarText.setTitle(title);
+        navLoad.setChecked(true);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, fragment,
+                null).setReorderingAllowed(true).commit();
+
+    }
+
+    private void uncheckOtherItems(MenuItem menuItem, ArrayList<MenuItem> list){
+
+        for(MenuItem  item: list){
+
+            if(!(item.getItemId() == menuItem.getItemId())){
+
+                item.setChecked(false);
+            }
+        }
+    }
 }

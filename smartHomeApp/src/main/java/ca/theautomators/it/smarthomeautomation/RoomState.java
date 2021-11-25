@@ -39,7 +39,7 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         if(context != null)
             this.context = context;
 
-        state = context.getSharedPreferences("room_state", Context.MODE_PRIVATE);
+//        state = context.getSharedPreferences("room_state", Context.MODE_PRIVATE);
         roomStateChanged = false;
         stateSaved = false;
 
@@ -129,7 +129,7 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
 
         //TODO This function will need to be modified once add and remove functionality developed
 
-        stateSaved = state.getBoolean("stateSaved", false);
+//        stateSaved = state.getBoolean("stateSaved", false);
 
 
         if(stateSaved){
@@ -156,16 +156,16 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
             roomIcons = new ArrayList<>();
 
             roomIds.clear();
-            roomIds.add(R.id.nav_bedroom);
-            roomIds.add(R.id.nav_kitchen);
-            roomIds.add(R.id.nav_livingroom);
+//            roomIds.add(R.id.nav_bedroom);
+//            roomIds.add(R.id.nav_kitchen);
+//            roomIds.add(R.id.nav_livingroom);
 
             numRooms = roomIds.size();
             drawableId = new int[numRooms];
 
-            drawableId[0] = R.drawable.bedroom;
-            drawableId[1] = R.drawable.kitchen;
-            drawableId[2] = R.drawable.living_room;
+//            drawableId[0] = R.drawable.bedroom;
+//            drawableId[1] = R.drawable.kitchen;
+//            drawableId[2] = R.drawable.living_room;
 
         }
     }

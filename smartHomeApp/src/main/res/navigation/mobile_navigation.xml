@@ -5,11 +5,11 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/nav_home">
 
-    <fragment
-        android:id="@+id/nav_bedroom"
-        android:name="ca.theautomators.it.smarthomeautomation.ui.bedroom.BedroomFragment"
-        android:label="Bedroom"
-        tools:layout="@layout/fragment_bedroom" />
+<!--    <fragment-->
+<!--        android:id="@+id/nav_bedroom"-->
+<!--        android:name="ca.theautomators.it.smarthomeautomation.ui.bedroom.BedroomFragment"-->
+<!--        android:label="Bedroom"-->
+<!--        tools:layout="@layout/fragment_bedroom" />-->
 
     <fragment
         android:id="@+id/nav_home"
@@ -17,16 +17,16 @@
         android:label="Home"
         tools:layout="@layout/fragment_landing" />
 
-    <fragment
-        android:id="@+id/nav_livingroom"
-        android:name="ca.theautomators.it.smarthomeautomation.ui.livingroom.LivingRoomFragment"
-        android:label="Living Room"
-        tools:layout="@layout/fragment_livingroom" />
-    <fragment
-        android:id="@+id/nav_kitchen"
-        android:name="ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment"
-        android:label="Kitchen"
-        tools:layout="@layout/fragment_kitchen" />
+<!--    <fragment-->
+<!--        android:id="@+id/nav_livingroom"-->
+<!--        android:name="ca.theautomators.it.smarthomeautomation.ui.livingroom.LivingRoomFragment"-->
+<!--        android:label="Living Room"-->
+<!--        tools:layout="@layout/fragment_livingroom" />-->
+<!--    <fragment-->
+<!--        android:id="@+id/nav_kitchen"-->
+<!--        android:name="ca.theautomators.it.smarthomeautomation.ui.kitchen.KitchenFragment"-->
+<!--        android:label="Kitchen"-->
+<!--        tools:layout="@layout/fragment_kitchen" />-->
     <fragment
         android:id="@+id/nav_settings"
         android:name="ca.theautomators.it.smarthomeautomation.ui.settings.SettingsFragment"

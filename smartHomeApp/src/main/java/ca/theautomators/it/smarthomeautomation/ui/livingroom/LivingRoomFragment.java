@@ -42,7 +42,7 @@ public class LivingRoomFragment extends Fragment {
 
         title.setText(roomState.getRoomNames().get(2) + " Sensor Readings");
 
-        ((MainActivity)getActivity()).loadRoomInfo(R.id.nav_livingroom);
+//        ((MainActivity)getActivity()).loadRoomInfo(R.id.nav_livingroom);
 
         livingRoomData = getString(R.string.living_room_data);
 

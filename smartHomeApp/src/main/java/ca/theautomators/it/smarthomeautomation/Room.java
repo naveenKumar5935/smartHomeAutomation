@@ -9,21 +9,15 @@ package ca.theautomators.it.smarthomeautomation;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Room implements Serializable {
+public class Room {
 
-    private static ArrayList<Device> devices;
-    private static String[] identifiers;
+    private static Device[] devices;
 
-    public static void createRooms(ArrayList<Device> deviceList, String[] identifierList){
+    public Room(Device[] devices){
 
-        devices = deviceList;
-        identifiers = identifierList;
+        this.devices = devices;
     }
 
-    public static void deleteRoom(int id){
-
-        createRooms(devices, identifiers);
-    }
 
     public void addNavItem(int id){
 
