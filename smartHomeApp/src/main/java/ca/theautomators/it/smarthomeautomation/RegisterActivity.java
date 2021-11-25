@@ -47,7 +47,7 @@ import io.paperdb.Paper;
 public class RegisterActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 1;
-    EditText email,password,accessCode, fullname, phone;
+    EditText email,password,accessCode, fullname, phone,confirmPassword;
     Button loginBtn, registerBtn;
     FirebaseAuth auth;
     GoogleSignInButton googleSignUpButton;
@@ -70,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
         loginBtn = findViewById(R.id.registerLoginBtn);
         fullname = findViewById(R.id.register_fullname_et);
         phone = findViewById(R.id.register_phone_et);
+        confirmPassword = findViewById(R.id.register_confirmpassword_et);
         googleSignUpButton = findViewById(R.id.googleSignUpButton);
         auth = FirebaseAuth.getInstance();
 
@@ -87,6 +88,11 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String getemail = email.getText().toString().trim();
                 String getpass = password.getText().toString().trim();
+                String getConfirmPassword = confirmPassword.getText().toString().trim();
+                if(!getpass.matches(getConfirmPassword)){
+                    confirmPassword.setError("Password doesn't match");
+                    return;
+                }
 
                 Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&=?])(?=\\S+$).{8,}$");
                 Matcher matcher = pattern.matcher(getpass);

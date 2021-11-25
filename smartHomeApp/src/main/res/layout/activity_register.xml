@@ -17,15 +17,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:maxLength="10"
         android:hint="@string/phone_no"
         android:inputType="phone"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_password_tb" />
+        app:layout_constraintTop_toBottomOf="@+id/register_confirmpassword_et" />
 
     <EditText
-        android:id="@+id/register_confirmpassword_et"
+        android:id="@+id/register_password_tb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -76,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@+id/register_fullname_et" />
 
     <EditText
-        android:id="@+id/register_password_tb"
+        android:id="@+id/register_confirmpassword_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -86,7 +87,7 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_confirmpassword_et" />
+        app:layout_constraintTop_toBottomOf="@+id/register_password_tb" />
 
     <EditText
         android:id="@+id/register_access_tb"
