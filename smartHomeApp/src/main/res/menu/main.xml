@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        app:showAsAction="ifRoom|collapseActionView"
-        android:id="@+id/search"
-        android:title="@string/search"
-        android:icon="@drawable/search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
-
 <!--    <item-->
 <!--        android:id="@+id/History"-->
 <!--        android:title="@string/history"-->
 <!--        app:showAsAction="always"-->
 <!--        android:icon="@drawable/history"-->
 <!--        android:actionLayout="@layout/toolbar_layout"/>-->
+
+    <item
+        app:showAsAction="ifRoom|collapseActionView"
+        android:id="@+id/search"
+        android:title="@string/search"
+        android:icon="@drawable/search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
     <item
         app:showAsAction="always"

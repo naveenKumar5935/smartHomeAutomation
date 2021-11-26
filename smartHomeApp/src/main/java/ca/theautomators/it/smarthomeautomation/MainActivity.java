@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity{
         getMenuInflater().inflate(R.menu.main,menu);
         MenuItem menuItem=menu.findItem(R.id.search);
         SearchView searchView=(SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Search here");
+        searchView.setQueryHint("Type here");
 
         SearchView.OnQueryTextListener queryTextListener=new SearchView.OnQueryTextListener() {
             @Override
