@@ -18,16 +18,6 @@ public class Room {
         this.devices = devices;
     }
 
-
-    public void addNavItem(int id){
-
-    }
-
-    public void addControls(int id){
-
-
-    }
-
     public void setSensorData(String sensorData){
 
     }
