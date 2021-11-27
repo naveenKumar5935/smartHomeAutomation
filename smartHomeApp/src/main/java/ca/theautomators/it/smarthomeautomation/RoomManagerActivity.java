@@ -34,7 +34,7 @@ public class RoomManagerActivity extends AppCompatActivity {
     private ArrayList<String> roomNames;
     private ArrayList<EditText> newRoomNames;
     private ArrayList<Drawable> roomIcons, newRoomIcons;
-    private int[] drawableIds;
+    private ArrayList<Integer> drawableIds;
     private Drawable[] editedRoomIcons;
     private EditText[] editedRoomNames;
     private RoomState roomState;
@@ -99,12 +99,16 @@ public class RoomManagerActivity extends AppCompatActivity {
                     else{
 
                         if(newRoomNames.get(counter).getText().toString().isEmpty()){
-                            roomNames.set(i, "Room");
-                            roomIcons.set(i, getDrawable(R.drawable.bedroom));
+//                            roomNames.set(i, "Room");
+//                            roomIcons.set(i, getDrawable(R.drawable.bedroom));
+                            roomState.changeRoomName("Room " + i, i);
+                            roomState.changeRoomIcons(getDrawable(R.drawable.bedroom), i);
                         }
                         else{
-                            roomNames.set(i, newRoomNames.get(counter).getText().toString());
-                            roomIcons.set(i, newRoomIcons.get(counter));
+//                            roomNames.set(i, newRoomNames.get(counter).getText().toString());
+//                            roomIcons.set(i, newRoomIcons.get(counter));
+                            roomState.changeRoomName(newRoomNames.get(counter).getText().toString(), i);
+                            roomState.changeRoomIcons(newRoomIcons.get(counter), i);
                         }
                         counter++;
                     }
@@ -156,7 +160,6 @@ public class RoomManagerActivity extends AppCompatActivity {
 
                     display();
 
-//                    roomState.save();
                 }
             }
         });
@@ -282,10 +285,20 @@ public class RoomManagerActivity extends AppCompatActivity {
                     }
                     else{
                         editedRoomIcons[index] = getResources().getDrawable(resource);
-                        drawableIds[index] = resource;
+
+                    }
+                    if(index != null){
+                        if (drawableIds.size() <= index)
+                            drawableIds.add(resource);
+                        else
+                            drawableIds.set(index, resource);
+                    }
+                    else{
+                        drawableIds.add(resource);
                     }
 
                 }
+
 
             }
 

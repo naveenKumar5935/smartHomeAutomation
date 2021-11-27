@@ -188,8 +188,10 @@ public class MainActivity extends AppCompatActivity{
         for(int i = 0; i < roomNames.size(); i++){
 
             rB.buildRoom(roomNames.get(i), roomIcons.get(i), i);
-            menuIds.add(i);
+            roomState.changeMenuIds(i, i);
         }
+
+        roomState.save();
 
 
         if(roomState.getRoomStateChanged() || !roomState.getStateSaved()){
@@ -205,6 +207,8 @@ public class MainActivity extends AppCompatActivity{
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        fragmentSwitch(R.id.nav_home);
 
 
 
@@ -359,17 +363,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//        getSupportFragmentManager().beginTransaction().setReorderingAllowed(true)
-//                .add(R.id.nav_host_fragment, RoomFragment.class, null, item.getTitle().toString()).commit();
-//
-//        fragmentSwitch(item.getItemId());
-//
-//        return false;
-//    }
-
     public void fragmentSwitch(int id){
 
         Menu menu = navigationView.getMenu();
@@ -407,7 +400,7 @@ public class MainActivity extends AppCompatActivity{
         toolbarText.setTitle(title);
         navLoad.setChecked(true);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, fragment,
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment,
                 null).setReorderingAllowed(true).commit();
 
     }
