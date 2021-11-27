@@ -56,6 +56,9 @@ public class RoomBuilder{
             public boolean onMenuItemClick(MenuItem item) {
 
                 RoomFragment rF = new RoomFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("title", roomName);
+                rF.setArguments(bundle);
 
                 FragmentTransaction fT = fragMan.beginTransaction();
                 fT.replace(R.id.nav_host_fragment, rF);
