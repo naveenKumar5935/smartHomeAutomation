@@ -12,11 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import java.io.Serializable;
 
 import ca.theautomators.it.smarthomeautomation.Device;
+import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.RoomState;
 
@@ -47,9 +49,13 @@ public class RoomFragment extends Fragment {
             title = bundle.getString("title", "Room");
         }
 
+        ((MainActivity)getActivity()).setToolbarTitle(title);
+
         title += " " + getString(R.string.sensor_data);
         TextView roomTitle = root.findViewById(R.id.room_data_title);
         roomTitle.setText(title);
+
+
 
 
         return root;

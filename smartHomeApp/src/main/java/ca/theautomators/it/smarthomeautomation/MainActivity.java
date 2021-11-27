@@ -405,14 +405,9 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-//    private void uncheckOtherItems(MenuItem menuItem, ArrayList<MenuItem> list){
-//
-//        for(MenuItem  item: list){
-//
-//            if(!(item.getItemId() == menuItem.getItemId())){
-//
-//                item.setChecked(false);
-//            }
-//        }
-//    }
+    public void setToolbarTitle(String title){
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(title);
+    }
 }
