@@ -11,14 +11,37 @@ import java.util.ArrayList;
 
 public class Room {
 
-    private static Device[] devices;
+    private ArrayList<String> devices;
+    private String title;
 
-    public Room(Device[] devices){
+    public Room(String title){
 
-        this.devices = devices;
+        this.title = title;
+        devices = new ArrayList<>();
     }
 
-    public void setSensorData(String sensorData){
+    public void addDevice(String identifier){
 
+//        removeDevice(identifier);
+        devices.add(identifier);
+    }
+
+    public void removeDevice(String identifier){
+
+        for(int i = 0; i < devices.size(); i++){
+
+            if(devices.get(i).equals(identifier)){
+
+                devices.remove(devices.get(i));
+            }
+        }
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public ArrayList<String> getDeviceIdentifierList() {
+        return devices;
     }
 }

@@ -32,8 +32,8 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
     private ArrayList<MenuItem> menuItems;
     private SharedPreferences state;
     private String[] identifiers;
-    NavigationView navView;
-    Menu menu;
+    private NavigationView navView;
+    private Menu menu;
 
 
     private RoomState(Context context){
@@ -273,6 +273,49 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
     public String[] loadIdentifiers(){
 
         return state.getString("identifiers", "").split(":");
+    }
+
+    public void saveBuiltRooms(ArrayList<Room> rooms){
+
+        SharedPreferences.Editor editor = state.edit();
+
+        for(int i = 0; i < rooms.size(); i++){
+
+            String builtRoom = rooms.get(i).getTitle();
+            ArrayList<String> identifierList = rooms.get(i).getDeviceIdentifierList();
+
+            for(int j = 0; j < identifierList.size(); j++){
+
+                builtRoom += ":" + identifierList.get(j);
+            }
+
+            editor.putString("builtRoom_" + i, builtRoom);
+        }
+
+        editor.putInt("numBuiltRooms", rooms.size());
+        editor.apply();
+    }
+
+    public ArrayList<Room> loadBuiltRooms(){
+
+        ArrayList<Room> rooms = new ArrayList<>();
+
+        for(int i = 0; i < state.getInt("numBuiltRooms", 0); i++){
+
+            String temp = state.getString("builtRoom_" + i, "_x_");
+            String[] tempSplit = temp.split(":");
+
+            Room tempRoom = new Room(tempSplit[0]);
+
+            for(int j = 1; j < tempSplit.length; j++){
+
+                tempRoom.addDevice(tempSplit[j]);
+            }
+
+            rooms.add(tempRoom);
+        }
+
+        return rooms;
     }
 }
 

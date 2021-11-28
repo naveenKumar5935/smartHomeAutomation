@@ -11,7 +11,6 @@ import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import io.paperdb.Paper;
@@ -33,6 +31,7 @@ public class ManageDeviceActivity extends AppCompatActivity {
     private ArrayList<Device> devices;
     private LinearLayout linearLayout;
     private ArrayList<String> roomNames;
+    private ArrayList<Room> rooms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +55,11 @@ public class ManageDeviceActivity extends AppCompatActivity {
         roomNames = new ArrayList<>();
         roomNames.add("Select Room");
         roomNames.addAll(rS.getRoomNames());
+
+        rooms = new ArrayList<>();
+
+        for(String room : rS.getRoomNames())
+            rooms.add(new Room(room));
 
 
         //if null, get list from database and save to shared preferences
@@ -93,6 +97,9 @@ public class ManageDeviceActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                rS.saveBuiltRooms(rooms);
+
                 Intent intent = new Intent(ManageDeviceActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -131,14 +138,30 @@ public class ManageDeviceActivity extends AppCompatActivity {
 
             spinner.setLayoutParams(params);
 
+            int finalI = i;
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    if(position != 0){
+                        for (Room room : rooms) {
+
+                            room.removeDevice(devices.get(finalI).getIdentifier());
+
+                            if (room.getTitle().equals(roomNames.get(position))) {
+                                room.addDevice(devices.get(finalI).getIdentifier());
+                            }
+                        }
+                    }
 
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
+
+                    for(Room room: rooms){
+                        room.removeDevice(devices.get(finalI).getIdentifier());
+                    }
 
                 }
             });

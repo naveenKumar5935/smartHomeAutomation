@@ -16,10 +16,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import ca.theautomators.it.smarthomeautomation.Device;
 import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
+import ca.theautomators.it.smarthomeautomation.Room;
 import ca.theautomators.it.smarthomeautomation.RoomState;
 
 public class RoomFragment extends Fragment {
@@ -39,7 +41,7 @@ public class RoomFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_room, container, false);
 
-        RoomState roomState = RoomState.getInstance(null);
+        RoomState rS = RoomState.getInstance(null);
 
         String title = "";
 
@@ -55,8 +57,7 @@ public class RoomFragment extends Fragment {
         TextView roomTitle = root.findViewById(R.id.room_data_title);
         roomTitle.setText(title);
 
-
-
+        ArrayList<Room> rooms = rS.loadBuiltRooms();
 
         return root;
     }

@@ -25,6 +25,7 @@ public class Device {
 
         fC = FirebaseConnect.getInstance();
 
+        data = "";
         this.identifier = identifier;
         type = fC.getDeviceType(identifier);
     }
@@ -45,7 +46,7 @@ public class Device {
             }
         });
 
-        return "WIP";
+        return data;
     }
 
     public void sendControlData(String controlData){
@@ -65,7 +66,7 @@ public class Device {
 
     public String getData(){
 
-        if(data.isEmpty() || data == null){
+        if(data.isEmpty()){
 
             return "No Data Available";
         }
