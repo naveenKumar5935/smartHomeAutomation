@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -26,7 +25,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -41,7 +39,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import ca.theautomators.it.smarthomeautomation.ui.AboutAppActivity;
-import ca.theautomators.it.smarthomeautomation.ui.RoomFragment;
 import ca.theautomators.it.smarthomeautomation.ui.landing.LandingFragment;
 import ca.theautomators.it.smarthomeautomation.ui.settings.SettingsFragment;
 import io.paperdb.Paper;
@@ -49,11 +46,13 @@ import io.paperdb.Paper;
 public class MainActivity extends AppCompatActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
-    private static ArrayList<Integer> roomList;
+    private static ArrayList<Integer> menuIds;
+    private static ArrayList<String> roomNames;
+    private static ArrayList<Drawable> roomIcons;
     private static NavigationView navigationView;
     private static NotificationCompat.Builder builder;
     private static Context context;
-    private TemperatureNotifier tempNotifier;
+    private Notifications tempNotifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +100,7 @@ public class MainActivity extends AppCompatActivity{
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     long temperature = snapshot.getValue(long.class);
-                    TemperatureNotifier temperatureNotifier = new TemperatureNotifier(temperature);
+                    Notifications temperatureNotifier = new Notifications(temperature);
                 }
 
                 @Override
@@ -121,93 +120,39 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-        Menu menu = navigationView.getMenu();
-        MenuItem home = menu.findItem(R.id.nav_home);
-        MenuItem settings = menu.findItem(R.id.nav_settings);
-
-        ArrayList<MenuItem> items = new ArrayList<>();
-
-
-        menu.add(R.id.drawer_list, 1, 0, "test").setCheckable(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                RoomFragment rF = new RoomFragment();
-                Toolbar toolbarText = findViewById(R.id.toolbar);
-                toolbarText.setTitle(item.getTitle());
-
-                if(savedInstanceState == null){
-                    FragmentTransaction fT = getSupportFragmentManager().beginTransaction();
-                    fT.replace(R.id.nav_host_fragment, rF);
-                    fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    fT.addToBackStack(item.getTitle().toString());
-                    fT.commit();
-                }
-
-                drawer.closeDrawer(Gravity.LEFT);
-                home.setChecked(false);
-                settings.setChecked(false);
-                item.setChecked(true);
-                items.add(item);
-                uncheckOtherItems(item, items);
-
-                return false;
-            }
-        });
-
-        menu.add(R.id.drawer_list, 2, 0, "test2").setCheckable(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                RoomFragment rF = new RoomFragment();
-                Toolbar toolbarText = findViewById(R.id.toolbar);
-                toolbarText.setTitle(item.getTitle());
-
-                if(savedInstanceState == null){
-                    FragmentTransaction fT = getSupportFragmentManager().beginTransaction();
-                    fT.replace(R.id.nav_host_fragment, rF);
-                    fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    fT.addToBackStack(item.getTitle().toString());
-                    fT.commit();
-                }
-
-                drawer.closeDrawer(Gravity.LEFT);
-                home.setChecked(false);
-                settings.setChecked(false);
-                item.setChecked(true);
-                items.add(item);
-                uncheckOtherItems(item, items);
-
-                return false;
-            }
-        });
-
-        menu.add(R.id.drawer_list, 3, 0, "test3").setCheckable(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                RoomFragment rF = new RoomFragment();
-                Toolbar toolbarText = findViewById(R.id.toolbar);
-                toolbarText.setTitle(item.getTitle());
-
-                if(savedInstanceState == null){
-                    FragmentTransaction fT = getSupportFragmentManager().beginTransaction();
-                    fT.replace(R.id.nav_host_fragment, rF);
-                    fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    fT.addToBackStack(item.getTitle().toString());
-                    fT.commit();
-                }
-
-                drawer.closeDrawer(Gravity.LEFT);
-                home.setChecked(false);
-                settings.setChecked(false);
-                item.setChecked(true);
-                items.add(item);
-                uncheckOtherItems(item, items);
-
-                return false;
-            }
-        });
+//        Menu menu = navigationView.getMenu();
+//        MenuItem home = menu.findItem(R.id.nav_home);
+//        MenuItem settings = menu.findItem(R.id.nav_settings);
+//
+//        ArrayList<MenuItem> items = new ArrayList<>();
+//
+//
+//        menu.add(R.id.drawer_list, 1, 0, "test").setCheckable(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//
+//                RoomFragment rF = new RoomFragment();
+//                Toolbar toolbarText = findViewById(R.id.toolbar);
+//                toolbarText.setTitle(item.getTitle());
+//
+//                if(savedInstanceState == null){
+//                    FragmentTransaction fT = getSupportFragmentManager().beginTransaction();
+//                    fT.replace(R.id.nav_host_fragment, rF);
+//                    fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                    fT.addToBackStack(item.getTitle().toString());
+//                    fT.commit();
+//                }
+//
+//                drawer.closeDrawer(Gravity.LEFT);
+//                home.setChecked(false);
+//                settings.setChecked(false);
+//                item.setChecked(true);
+//                items.add(item);
+//                uncheckOtherItems(item, items);
+//
+//                return false;
+//            }
+//        });
 
 
 //***************************************TEST*******************************************************
@@ -225,23 +170,45 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-//        RoomState roomState = RoomState.getInstance(this);
-//
-//        roomList = roomState.getRoomIds();
-//
-//        if(roomState.getRoomStateChanged() || roomState.getStateSaved()){
-//
-//            for(int i = 0; i < roomState.getNumRooms(); i++){
-//
-//                setRoomNameAndIcon(roomState.getRoomIds().get(i), roomState.getRoomNames().get(i), roomState.getRoomIcons().get(i));
-//            }
-//
-//            roomState.setRoomStateChanged(false);
-//        }
+        RoomState roomState = RoomState.getInstance(this);
+
+        menuIds = roomState.getMenuIds();
+        roomNames = roomState.getRoomNames();
+        roomIcons = roomState.getRoomIcons();
+
+        if(roomNames.isEmpty() || roomNames == null){
+
+            Intent roomManager = new Intent(MainActivity.this,RoomManagerActivity.class);
+            startActivity(roomManager);
+        }
+
+        roomState.resetMenuItems();
+        RoomBuilder rB = new RoomBuilder(navigationView, savedInstanceState, drawer, getSupportFragmentManager());
+
+        for(int i = 0; i < roomNames.size(); i++){
+
+            rB.buildRoom(roomNames.get(i), roomIcons.get(i), i);
+            roomState.changeMenuIds(i, i);
+        }
+
+        roomState.save();
+
+
+        if(roomState.getRoomStateChanged() || !roomState.getStateSaved()){
+
+            for(int i = 0; i < roomState.getNumRooms(); i++){
+
+                setRoomNameAndIcon(roomState.getMenuIds().get(i), roomState.getRoomNames().get(i), roomState.getRoomIcons().get(i));
+            }
+
+            roomState.setRoomStateChanged(false);
+        }
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        fragmentSwitch(R.id.nav_home);
 
 
 
@@ -380,8 +347,8 @@ public class MainActivity extends AppCompatActivity{
         toolbar.setTitle(item.getTitle());
     }
 
-    public static ArrayList<Integer> getRoomList(){
-        return roomList;
+    public static ArrayList<Integer> getMenuIds(){
+        return menuIds;
     }
 
     public static NavigationView getNavigationView(){return navigationView;}
@@ -395,17 +362,6 @@ public class MainActivity extends AppCompatActivity{
         return builder;
     }
 
-
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//        getSupportFragmentManager().beginTransaction().setReorderingAllowed(true)
-//                .add(R.id.nav_host_fragment, RoomFragment.class, null, item.getTitle().toString()).commit();
-//
-//        fragmentSwitch(item.getItemId());
-//
-//        return false;
-//    }
 
     public void fragmentSwitch(int id){
 
@@ -444,19 +400,14 @@ public class MainActivity extends AppCompatActivity{
         toolbarText.setTitle(title);
         navLoad.setChecked(true);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.landing_layout, fragment,
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment,
                 null).setReorderingAllowed(true).commit();
 
     }
 
-    private void uncheckOtherItems(MenuItem menuItem, ArrayList<MenuItem> list){
+    public void setToolbarTitle(String title){
 
-        for(MenuItem  item: list){
-
-            if(!(item.getItemId() == menuItem.getItemId())){
-
-                item.setChecked(false);
-            }
-        }
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(title);
     }
 }

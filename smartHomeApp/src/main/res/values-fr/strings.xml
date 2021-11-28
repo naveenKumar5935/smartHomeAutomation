@@ -155,5 +155,6 @@
     <string name="full_name">Full Name</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="phone_no">Phone No</string>
+    <string name="sensor_data"> Sensor Data Readings</string>
 
 </resources>

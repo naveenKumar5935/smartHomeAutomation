@@ -14,16 +14,16 @@ import androidx.core.app.NotificationManagerCompat;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
-public class TemperatureNotifier {
+public class Notifications {
 
     private int notificationId;
     private long temperature;
     private NotificationCompat.Builder builder;
     private Context context;
 
-    public TemperatureNotifier(){}
+//    public TemperatureNotifier(){}
 
-    public TemperatureNotifier(long temperature){
+    public Notifications(long temperature){
 
         this.temperature = temperature;
         context = MainActivity.getMainActivityContext();

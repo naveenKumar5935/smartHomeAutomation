@@ -34,12 +34,13 @@ public class RoomManagerActivity extends AppCompatActivity {
     private ArrayList<String> roomNames;
     private ArrayList<EditText> newRoomNames;
     private ArrayList<Drawable> roomIcons, newRoomIcons;
-    private int[] drawableId;
+    private ArrayList<Integer> drawableIds;
     private Drawable[] editedRoomIcons;
-    EditText[] editedRoomNames;
+    private EditText[] editedRoomNames;
     private RoomState roomState;
     private int numRows;
     private LinearLayout linearLayout;
+    private boolean deleted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +56,15 @@ public class RoomManagerActivity extends AppCompatActivity {
 
         roomState = RoomState.getInstance(null);
 
+        deleted = false;
+
         roomNames = roomState.getRoomNames();
         roomIcons = roomState.getRoomIcons();
 
         newRoomNames = new ArrayList<>();
         newRoomIcons = new ArrayList<>();
 
-        drawableId = roomState.getDrawableId();
+        drawableIds = roomState.getDrawableIds();
         numRows = roomState.getNumRooms();
 
         editedRoomNames = new EditText[numRows];
@@ -85,8 +88,9 @@ public class RoomManagerActivity extends AppCompatActivity {
 
                 for(int i = 0; i < numRows; i++){
 
-                    if(i < roomState.getNumRooms()){
+                    if(i < editedRoomNames.length){
                         if (!editedRoomNames[i].getText().toString().isEmpty())
+                        if(editedRoomNames[i] != null)
                             roomState.changeRoomName(editedRoomNames[i].getText().toString(), i);
 
                         if (editedRoomIcons[i] != null)
@@ -95,18 +99,24 @@ public class RoomManagerActivity extends AppCompatActivity {
                     else{
 
                         if(newRoomNames.get(counter).getText().toString().isEmpty()){
-                            roomNames.set(i, "Room " +(counter + 1));
-                            roomIcons.set(i, getDrawable(R.drawable.bedroom));
+//                            roomNames.set(i, "Room");
+//                            roomIcons.set(i, getDrawable(R.drawable.bedroom));
+                            roomState.changeRoomName("Room " + i, i);
+                            roomState.changeRoomIcons(getDrawable(R.drawable.bedroom), i);
                         }
                         else{
-                            roomNames.set(i, newRoomNames.get(counter).getText().toString());
-                            roomIcons.set(i, newRoomIcons.get(counter));
+//                            roomNames.set(i, newRoomNames.get(counter).getText().toString());
+//                            roomIcons.set(i, newRoomIcons.get(counter));
+                            roomState.changeRoomName(newRoomNames.get(counter).getText().toString(), i);
+                            roomState.changeRoomIcons(newRoomIcons.get(counter), i);
                         }
                         counter++;
                     }
 
 
                 }
+
+                roomState.save();
 
                 Intent intent = new Intent(RoomManagerActivity.this, ManageDeviceActivity.class);
                 startActivity(intent);
@@ -118,6 +128,7 @@ public class RoomManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(numRows < 10){
+                    deleted = false;
                     newRoomNames.add(null);
                     roomNames.add(null);
                     newRoomIcons.add(null);
@@ -140,14 +151,15 @@ public class RoomManagerActivity extends AppCompatActivity {
                         newRoomNames.clear();
                         newRoomIcons.clear();
                     }
-
-                    if (roomIcons.size() > roomState.getNumRooms()) {
                         roomIcons.remove(roomIcons.size() - 1);
                         roomNames.remove(roomNames.size() - 1);
-                    }
 
                     linearLayout = buildLayout();
+
+                    deleted = true;
+
                     display();
+
                 }
             }
         });
@@ -269,14 +281,24 @@ public class RoomManagerActivity extends AppCompatActivity {
                 if(resource != null) {
 
                     if(index == null){
-                        newRoomIcons.set(newRoomIcons.size() - 1, getResources().getDrawable(resource.intValue()));
+                        newRoomIcons.set(newRoomIcons.size() - 1, getResources().getDrawable(resource));
                     }
                     else{
-                        editedRoomIcons[index] = getResources().getDrawable(resource.intValue());
-                        drawableId[index] = resource.intValue();
+                        editedRoomIcons[index] = getResources().getDrawable(resource);
+
+                    }
+                    if(index != null){
+                        if (drawableIds.size() <= index)
+                            drawableIds.add(resource);
+                        else
+                            drawableIds.set(index, resource);
+                    }
+                    else{
+                        drawableIds.add(resource);
                     }
 
                 }
+
 
             }
 
@@ -291,12 +313,14 @@ public class RoomManagerActivity extends AppCompatActivity {
         entryRow.addView(spinner);
 
         //save changes
-        if(index != null){
-            editedRoomNames[index] = editText;
+        if(!deleted) {
+            if (index != null) {
+                editedRoomNames[index] = editText;
+            } else {
+                newRoomNames.set(newRoomNames.size() - 1, editText);
+            }
         }
-        else{
-            newRoomNames.set(newRoomNames.size() - 1, editText);
-        }
+
 
         return entryRow;
     }

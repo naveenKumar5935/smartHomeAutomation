@@ -154,6 +154,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="phone_no">Phone No</string>
     <string name="enter_card_no">Enter card no</string>
+    <string name="sensor_data"> Sensor Data Readings</string>
 
     <string-array name="rooms">
         <item>Select Type</item>

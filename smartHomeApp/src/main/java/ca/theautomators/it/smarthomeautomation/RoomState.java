@@ -25,13 +25,15 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
     private int numRooms;
     private ArrayList<String> roomNames;
     private boolean roomStateChanged, stateSaved;
-    private ArrayList<Integer> roomIds;
+    private ArrayList<Integer> menuIds;
     private ArrayList<Drawable> roomIcons;
-    private int[] drawableId;
+    private ArrayList<Integer> drawableIds;
     private Context context;
-    private MenuItem menuItem;
+    private ArrayList<MenuItem> menuItems;
     private SharedPreferences state;
     private String[] identifiers;
+    private NavigationView navView;
+    private Menu menu;
 
 
     private RoomState(Context context){
@@ -39,22 +41,24 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         if(context != null)
             this.context = context;
 
-//        state = context.getSharedPreferences("room_state", Context.MODE_PRIVATE);
+        state = context.getSharedPreferences("room_state", Context.MODE_PRIVATE);
         roomStateChanged = false;
-        stateSaved = false;
+        stateSaved = state.getBoolean("stateSaved", false);
 
         loadState();
 
-        NavigationView navView = MainActivity.getNavigationView();
-        Menu menu = navView.getMenu();
+        navView = MainActivity.getNavigationView();
+        menu = navView.getMenu();
+
+        //to help with setting dynamically created menu items as checked or not checked when selected
+        menuItems = new ArrayList<>();
 
 
-        for(int i = 0; i < roomIds.size(); i++){
-
-            menuItem = menu.findItem(roomIds.get(i));
-            roomNames.add((String)menuItem.getTitle());
-            roomIcons.add(menuItem.getIcon());
-        }
+//        for(int i = 0; i < roomNames.size(); i++){
+//
+//            roomNames.add((String)menu.findItem(menuIds.get(i)).getTitle());
+//            roomIcons.add(menu.findItem(menuIds.get(i)).getIcon());
+//        }
 
     }
 
@@ -75,14 +79,45 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
 
         roomNames.set(index, name);
         roomStateChanged = true;
-        doInBackground();
+        numRooms = roomNames.size();
+//        doInBackground();
     }
 
     public void changeRoomIcons(Drawable icon, int index){
 
         roomIcons.set(index, icon);
         roomStateChanged = true;
-        doInBackground();
+//        doInBackground();
+    }
+
+    public void changeMenuIds(int id, int index){
+
+        if(menuIds.size() <= index)
+            menuIds.add(id);
+        else
+            menuIds.set(index, id);
+        roomStateChanged = true;
+    }
+
+    public void addMenuItem(MenuItem item){
+
+        menuItems.add(item);
+    }
+
+    public void resetMenuItems(){
+        menuItems.clear();
+    }
+
+    public void uncheckOtherItems(MenuItem item){
+
+        for(MenuItem  index: menuItems){
+
+            if(!(item.getItemId() == index.getItemId())){
+
+                index.setChecked(false);
+            }
+
+        }
     }
 
     public ArrayList<String> getRoomNames(){
@@ -95,9 +130,9 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         return roomIcons;
     }
 
-    public ArrayList<Integer> getRoomIds(){
+    public ArrayList<Integer> getMenuIds(){
 
-        return roomIds;
+        return menuIds;
     }
 
     public void setRoomStateChanged(boolean bit){
@@ -117,55 +152,55 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
     }
 
     public int getNumRooms(){
+
+        numRooms = roomNames.size();
+
         return numRooms;
     }
 
 
-    public int[] getDrawableId(){
-        return drawableId;
+    public ArrayList<Integer> getDrawableIds(){
+
+        return drawableIds;
     }
 
     private void loadState(){
 
         //TODO This function will need to be modified once add and remove functionality developed
 
-//        stateSaved = state.getBoolean("stateSaved", false);
+        stateSaved = state.getBoolean("stateSaved", false);
 
 
         if(stateSaved){
 
             numRooms = state.getInt("numRooms", 0);
-            drawableId = new int[numRooms];
 
+            drawableIds = new ArrayList<>();
             roomNames = new ArrayList<>();
-            roomIds = new ArrayList<>();
+            menuIds = new ArrayList<>();
             roomIcons = new ArrayList<>();
 
             for(int i = 0; i < numRooms; i++) {
                 roomNames.add(state.getString("roomName_" + i, null));
-                roomIds.add(state.getInt("roomId_" + i, 0));
-                roomIcons.add(context.getResources().getDrawable(context.getResources().getIdentifier(state.getString("roomIcon_" + i, "home"),
+                menuIds.add(state.getInt("roomId_" + i, 0));
+                roomIcons.add(context.getResources().getDrawable(context.getResources().getIdentifier(state.getString("roomIcon_" + i, "bedroom"),
                         "drawable", context.getPackageName())));
+                drawableIds.add(context.getResources().getIdentifier(state.getString("roomIcon_" + i, "bedroom"), "drawable", context.getPackageName()));
             }
 
         }
         else {
 
-            roomNames = new ArrayList<>();
-            roomIds = new ArrayList<>();
-            roomIcons = new ArrayList<>();
+            if(roomNames == null){
 
-            roomIds.clear();
-//            roomIds.add(R.id.nav_bedroom);
-//            roomIds.add(R.id.nav_kitchen);
-//            roomIds.add(R.id.nav_livingroom);
+                roomNames = new ArrayList<>();
+                menuIds = new ArrayList<>();
+                roomIcons = new ArrayList<>();
+                drawableIds = new ArrayList<>();
+            }
 
-            numRooms = roomIds.size();
-            drawableId = new int[numRooms];
 
-//            drawableId[0] = R.drawable.bedroom;
-//            drawableId[1] = R.drawable.kitchen;
-//            drawableId[2] = R.drawable.living_room;
+            numRooms = getNumRooms();
 
         }
     }
@@ -173,20 +208,34 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
     private void saveState(){
 
         SharedPreferences.Editor editor = state.edit();
-        editor.putInt("numRooms", numRooms);
-        editor.putBoolean("stateSaved", stateSaved);
+        int counter = 0;
+
+        numRooms = roomNames.size();
 
         for(int i = 0; i < numRooms; i++){
 
-            editor.putInt("roomId_" + i, roomIds.get(i));
-            if(drawableId[i] != 0)
-                editor.putString("roomIcon_" + i, context.getResources().getResourceEntryName(drawableId[i]));
+            if(menuIds.size() == numRooms)
+                editor.putInt("roomId_" + i, menuIds.get(i));
+            if(i < drawableIds.size() && drawableIds.size() > 0) {
+                editor.putString("roomIcon_" + i, context.getResources().getResourceEntryName(drawableIds.get(i)));
+                counter++;
+            }
+
             editor.putString("roomName_" + i, roomNames.get(i));
         }
 
-        editor.apply();
         stateSaved = true;
 
+        editor.putInt("numRooms", numRooms);
+        editor.putBoolean("stateSaved", stateSaved);
+        editor.apply();
+
+
+    }
+
+    public void save(){
+
+        doInBackground();
     }
 
 
@@ -195,6 +244,7 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
 
         saveState();
+        stateSaved = true;
 
         return null;
     }
@@ -223,6 +273,49 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
     public String[] loadIdentifiers(){
 
         return state.getString("identifiers", "").split(":");
+    }
+
+    public void saveBuiltRooms(ArrayList<Room> rooms){
+
+        SharedPreferences.Editor editor = state.edit();
+
+        for(int i = 0; i < rooms.size(); i++){
+
+            String builtRoom = rooms.get(i).getTitle();
+            ArrayList<String> identifierList = rooms.get(i).getDeviceIdentifierList();
+
+            for(int j = 0; j < identifierList.size(); j++){
+
+                builtRoom += ":" + identifierList.get(j);
+            }
+
+            editor.putString("builtRoom_" + i, builtRoom);
+        }
+
+        editor.putInt("numBuiltRooms", rooms.size());
+        editor.apply();
+    }
+
+    public ArrayList<Room> loadBuiltRooms(){
+
+        ArrayList<Room> rooms = new ArrayList<>();
+
+        for(int i = 0; i < state.getInt("numBuiltRooms", 0); i++){
+
+            String temp = state.getString("builtRoom_" + i, "_x_");
+            String[] tempSplit = temp.split(":");
+
+            Room tempRoom = new Room(tempSplit[0]);
+
+            for(int j = 1; j < tempSplit.length; j++){
+
+                tempRoom.addDevice(tempSplit[j]);
+            }
+
+            rooms.add(tempRoom);
+        }
+
+        return rooms;
     }
 }
 
