@@ -116,7 +116,22 @@ public class RoomFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                //TODO send control data to firebase
+                if(device.getType().equals("LIGHT")){
+                    if(isChecked){
+                        device.sendControlData("1:000000");
+                    }
+                    else{
+                        device.sendControlData("0:000000");
+                    }
+                }
+                else{
+                    if(isChecked){
+                        device.sendControlData("1");
+                    }
+                    else{
+                        device.sendControlData("0");
+                    }
+                }
             }
         });
         control.setLayoutParams(params);
