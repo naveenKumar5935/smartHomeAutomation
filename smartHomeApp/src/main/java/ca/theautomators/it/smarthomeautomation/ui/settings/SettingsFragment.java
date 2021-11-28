@@ -9,19 +9,15 @@ package ca.theautomators.it.smarthomeautomation.ui.settings;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -39,7 +35,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -50,8 +45,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.squareup.picasso.Picasso;
-
-import java.util.HashMap;
 
 import ca.theautomators.it.smarthomeautomation.LoginActivity;
 import ca.theautomators.it.smarthomeautomation.R;
@@ -70,6 +63,8 @@ public class SettingsFragment extends Fragment {
     FirebaseAuth auth;
     StorageReference storageReference;
     GoogleSignInAccount gUser;
+    AlertDialog.Builder alertDialog1 = null;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -124,25 +119,13 @@ public class SettingsFragment extends Fragment {
         accessCardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                final EditText input = new EditText(getActivity());
-                alertDialog.setTitle(R.string.alert_card);
-                alertDialog.setMessage(R.string.enter_card);
-                alertDialog.setView(input);
-                alertDialog.setPositiveButton(R.string.alert_text, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if(!input.getText().toString().matches("")){
-                            HashMap<String, Object> accessCard = new HashMap<>();
-                            accessCard.put("Access Card",input.getText().toString().trim());
-                            FirebaseDatabase.getInstance().getReference("AccessCards").setValue(accessCard);
+            Intent intent = new Intent(getActivity().getApplicationContext(),AccessCardActivity.class);
+            getActivity().startActivity(intent);
 
-                        }
-                    }
-                });
-                alertDialog.show();
             }
         });
+
+
 
         binding.chooseBackgroundBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,5 +276,9 @@ public class SettingsFragment extends Fragment {
     }
 
 
+
+
 }
+
+
 
