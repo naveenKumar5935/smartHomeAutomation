@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity{
     private static NavigationView navigationView;
     private static NotificationCompat.Builder builder;
     private static Context context;
-    private TemperatureNotifier tempNotifier;
+    private Notifications tempNotifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity{
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     long temperature = snapshot.getValue(long.class);
-                    TemperatureNotifier temperatureNotifier = new TemperatureNotifier(temperature);
+                    Notifications temperatureNotifier = new Notifications(temperature);
                 }
 
                 @Override
