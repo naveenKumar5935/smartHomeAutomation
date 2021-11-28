@@ -86,7 +86,12 @@ public class RoomFragment extends Fragment {
 
         for(String device : thisRoom.getDeviceIdentifierList()){
 
-            deviceControllers.addView(buildController(new Device(device)));
+            Device dev = new Device(device);
+
+            if(!(dev.getType().equals("HUMID") || dev.getType().equals("TEMP"))){
+
+                deviceControllers.addView(buildController(dev));
+            }
         }
     }
 

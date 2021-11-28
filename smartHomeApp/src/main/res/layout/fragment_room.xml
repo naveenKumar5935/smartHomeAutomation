@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.RoomFragment"
     android:padding="@dimen/fragment_padding"
-    style="@style/ScreenBackground">
+    style="@style/ScreenBackground"
+    android:theme="@style/SwitchColour">
 
     <TextView
         android:id="@+id/room_data_title"
