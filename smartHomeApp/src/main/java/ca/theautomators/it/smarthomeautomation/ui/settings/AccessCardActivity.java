@@ -52,6 +52,7 @@ public class AccessCardActivity extends AppCompatActivity {
         accessList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                gettingData();
                 AlertDialog.Builder alert = new AlertDialog.Builder(AccessCardActivity.this);
                 alert.setIcon(android.R.drawable.ic_dialog_alert);
                 alert.setTitle(R.string.alert_title);
@@ -84,7 +85,6 @@ public class AccessCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String count = String.valueOf(arrayList.size()+1);
                 if(accessET.getText().toString().trim()!=null){
 
                     if(arrayList.contains(accessET.getText().toString())){
@@ -106,6 +106,8 @@ public class AccessCardActivity extends AppCompatActivity {
 
     public void gettingData(){
         adapter.clear();
+        keylist.clear();
+        arrayList.clear();
         FirebaseDatabase.getInstance().getReference().child("AccessCards").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
