@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 public class Device {
@@ -30,23 +31,9 @@ public class Device {
         type = fC.getDeviceType(identifier);
     }
 
-    private String getSensorData(){
+    public DatabaseReference getSensorData(){
 
-        fC.getSensorDataRef(identifier).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                long dataRead = snapshot.getValue(long.class);
-                data = String.valueOf(dataRead);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        return data;
+        return fC.getSensorDataRef(identifier);
     }
 
     public void sendControlData(String controlData){
@@ -63,16 +50,5 @@ public class Device {
 
         return identifier;
     }
-
-    public String getData(){
-
-        if(data.isEmpty()){
-
-            return "No Data Available";
-        }
-
-        return data;
-    }
-
 
 }

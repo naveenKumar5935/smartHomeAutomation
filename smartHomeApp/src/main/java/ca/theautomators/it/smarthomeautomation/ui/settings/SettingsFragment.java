@@ -93,6 +93,7 @@ public class SettingsFragment extends Fragment {
         Paper.init(getActivity());
 
         gUser = GoogleSignIn.getLastSignedInAccount(getActivity());
+
         if(gUser!=null){
 
             storageReference.child(gUser.getId()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

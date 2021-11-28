@@ -17,24 +17,25 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class Notifications {
 
     private int notificationId;
-    private long temperature;
+    private String temperature;
     private NotificationCompat.Builder builder;
     private Context context;
 
-//    public TemperatureNotifier(){}
+    public Notifications(){}
 
-    public Notifications(long temperature){
+    public Notifications(String temperature){
 
         this.temperature = temperature;
+        temperature = temperature.split(":")[0];
         context = MainActivity.getMainActivityContext();
         builder = MainActivity.getBuilder();
 
-        if(temperature < 10){
+        if(Integer.valueOf(temperature) < 10){
             //send low temp notification
             builder.setContentText("Low Temperature Warning!");
             triggerNotification();
         }
-        else if(temperature > 25){
+        else if(Integer.valueOf(temperature) > 25){
             //send high temp notification
             builder.setContentText("High Temperature Warning!");
             triggerNotification();

@@ -37,7 +37,12 @@
         android:gravity="left"
         android:lineSpacingMultiplier="1.5"
         android:padding="@dimen/data_padding"
-        android:textSize="@dimen/data_text_size"/>
+        android:textSize="@dimen/data_text_size"
+        android:scrollbars="vertical"
+        android:background="@color/white"
+        android:alpha="0.65"
+        android:layout_margin="10dp"
+        android:maxHeight="400dp"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -45,7 +50,7 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp">
+        android:layout_marginBottom="20dp">
     </LinearLayout>
 
 

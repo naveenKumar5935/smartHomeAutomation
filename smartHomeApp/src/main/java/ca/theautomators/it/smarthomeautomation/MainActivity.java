@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity{
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    long temperature = snapshot.getValue(long.class);
-                    Notifications temperatureNotifier = new Notifications(temperature);
+                    String temperature = snapshot.getValue(String.class);
+                    new Notifications(temperature);
                 }
 
                 @Override
@@ -116,52 +116,6 @@ public class MainActivity extends AppCompatActivity{
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
 
-//***************************************TEST*******************************************************
-
-
-
-//        Menu menu = navigationView.getMenu();
-//        MenuItem home = menu.findItem(R.id.nav_home);
-//        MenuItem settings = menu.findItem(R.id.nav_settings);
-//
-//        ArrayList<MenuItem> items = new ArrayList<>();
-//
-//
-//        menu.add(R.id.drawer_list, 1, 0, "test").setCheckable(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//
-//                RoomFragment rF = new RoomFragment();
-//                Toolbar toolbarText = findViewById(R.id.toolbar);
-//                toolbarText.setTitle(item.getTitle());
-//
-//                if(savedInstanceState == null){
-//                    FragmentTransaction fT = getSupportFragmentManager().beginTransaction();
-//                    fT.replace(R.id.nav_host_fragment, rF);
-//                    fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                    fT.addToBackStack(item.getTitle().toString());
-//                    fT.commit();
-//                }
-//
-//                drawer.closeDrawer(Gravity.LEFT);
-//                home.setChecked(false);
-//                settings.setChecked(false);
-//                item.setChecked(true);
-//                items.add(item);
-//                uncheckOtherItems(item, items);
-//
-//                return false;
-//            }
-//        });
-
-
-//***************************************TEST*******************************************************
-
-
-//        mAppBarConfiguration = new AppBarConfiguration.Builder(
-//                R.id.nav_bedroom, R.id.nav_home, R.id.nav_livingroom, R.id.nav_kitchen, R.id.nav_settings)
-//                .setDrawerLayout(drawer)
-//                .build();
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_settings)
