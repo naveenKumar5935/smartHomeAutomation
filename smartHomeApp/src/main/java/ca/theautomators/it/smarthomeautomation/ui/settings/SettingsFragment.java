@@ -27,12 +27,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
+import com.androidstudy.networkmanager.Monitor;
+import com.androidstudy.networkmanager.Tovuti;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
@@ -64,6 +67,7 @@ public class SettingsFragment extends Fragment {
     StorageReference storageReference;
     GoogleSignInAccount gUser;
     AlertDialog.Builder alertDialog1 = null;
+    FloatingActionButton fab;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -91,6 +95,7 @@ public class SettingsFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         Paper.init(getActivity());
+        fab = view.findViewById(R.id.settingfab);
 
         gUser = GoogleSignIn.getLastSignedInAccount(getActivity());
 
@@ -126,6 +131,23 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        Tovuti.from(getContext()).monitor(new Monitor.ConnectivityListener() {
+            @Override
+            public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast) {
+                if(isConnected){
+                   Toast.makeText(getActivity().getApplicationContext(),"connected",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getActivity().getApplicationContext(),"disconnected",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
 
         binding.chooseBackgroundBtn.setOnClickListener(new View.OnClickListener() {

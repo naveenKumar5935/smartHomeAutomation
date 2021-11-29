@@ -22,6 +22,20 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/ButtonText"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/settingfab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/white"
+        android:contentDescription="@string/submit"
+        android:src="@drawable/ic_baseline_wifi_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/accessCardButton"
         android:layout_width="@dimen/settings_button_width"
