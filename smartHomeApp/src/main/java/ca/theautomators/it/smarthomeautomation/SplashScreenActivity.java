@@ -61,10 +61,10 @@ public class SplashScreenActivity extends Activity {
     private void createTempAlarmNotificationChannel(){
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            CharSequence name = getString(R.string.temp_alarm);
-            String description = getString(R.string.temp_alarm_description);
+            CharSequence name = getString(R.string.notifier);
+            String description = getString(R.string.alarm_description);
             int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("TEMPERATURE", name, importance);
+            NotificationChannel channel = new NotificationChannel("NOTIFICATIONS", name, importance);
             channel.setDescription(description);
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);

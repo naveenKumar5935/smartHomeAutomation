@@ -74,21 +74,25 @@ public class MainActivity extends AppCompatActivity{
 
         FirebaseConnect fC = FirebaseConnect.getInstance();
         String[] identifiers = fC.getIdentifiers();
-        String tempIdentifier = "";
+        String notificationIdentifier = "";
         DatabaseReference tempRef;
 
+        label:
         for(int i = 0; i < identifiers.length; i++){
             String type = fC.getDeviceType(identifiers[i]);
-            if(type.equals("TEMP")){
-                tempIdentifier = identifiers[i];
-                break;
+            //Add more cases for other notifications
+            switch (type) {
+                case "TEMP":
+                    notificationIdentifier = identifiers[i];
+                    break label;
             }
         }
 
-        if(!tempIdentifier.isEmpty()){
-            tempRef = fC.getSensorDataRef(tempIdentifier);
+        //Add more blocks of code just like this one for the other notifications
+        if(!notificationIdentifier.isEmpty()){
+            tempRef = fC.getSensorDataRef(notificationIdentifier);
 
-            builder = new NotificationCompat.Builder(this, "TEMPERATURE")
+            builder = new NotificationCompat.Builder(this, "NOTIFICATIONS")
                     .setSmallIcon(R.drawable.thermostat)
                     .setContentText("Temperature Alarm")
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -100,7 +104,8 @@ public class MainActivity extends AppCompatActivity{
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     String temperature = snapshot.getValue(String.class);
-                    new Notifications(temperature);
+                    if(temperature != null)
+                        new Notifications(temperature, "TEMP");
                 }
 
                 @Override

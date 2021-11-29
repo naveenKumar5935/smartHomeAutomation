@@ -17,29 +17,27 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class Notifications {
 
     private int notificationId;
-    private String temperature;
+    private String value, type;
     private NotificationCompat.Builder builder;
     private Context context;
 
+    //Must keep default constructor to protect from null pointer exception
     public Notifications(){}
 
-    public Notifications(String temperature){
+    public Notifications(String value, String type){
 
-        this.temperature = temperature;
-        temperature = temperature.split(":")[0];
+        this.value = value;
+        this.type = type;
+
         context = MainActivity.getMainActivityContext();
         builder = MainActivity.getBuilder();
 
-        if(Integer.valueOf(temperature) < 10){
-            //send low temp notification
-            builder.setContentText("Low Temperature Warning!");
-            triggerNotification();
+        switch(type){
+            case "TEMP":
+                buildTempNotification();
+            //Add more switch cases here for different types of sensor notifications
         }
-        else if(Integer.valueOf(temperature) > 25){
-            //send high temp notification
-            builder.setContentText("High Temperature Warning!");
-            triggerNotification();
-        }
+
 
     }
 
@@ -50,6 +48,25 @@ public class Notifications {
         NotificationManagerCompat notification = NotificationManagerCompat.from(context);
         notification.notify(notificationId, builder.build());
 
+    }
+
+    //Add more methods for different notifications based on this one, except customize them per type
+    private void buildTempNotification(){
+
+        //Keep the colon in the string so that firebase send the value as a string and not a long
+        value = value.split(":")[0];
+
+        if(Integer.valueOf(value) < 10){
+            //send low temp notification
+            builder.setContentText("Low Temperature Warning!");
+            //Last step must be to call this method
+            triggerNotification();
+        }
+        else if(Integer.valueOf(value) > 25){
+            //send high temp notification
+            builder.setContentText("High Temperature Warning!");
+            triggerNotification();
+        }
     }
 
     public int getNotificationId(){
