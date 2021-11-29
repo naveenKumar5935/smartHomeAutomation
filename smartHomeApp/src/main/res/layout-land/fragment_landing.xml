@@ -76,4 +76,6 @@
             android:text="@string/settings"
             style="@style/ButtonText"/>
     </LinearLayout>
+
+
 </RelativeLayout>

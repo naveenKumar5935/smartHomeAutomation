@@ -170,7 +170,6 @@ public class ReviewAcitivity extends AppCompatActivity {
                                     if (progressDialog.getProgress() == progressDialog.getMax()) {
                                         progressDialog.dismiss();
                                     }
-                                    Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
 
                                 }
                             } catch (Exception e) {
@@ -178,6 +177,7 @@ public class ReviewAcitivity extends AppCompatActivity {
                             }
                         }
                     }).start();
+                    Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
 
                 }
             }
