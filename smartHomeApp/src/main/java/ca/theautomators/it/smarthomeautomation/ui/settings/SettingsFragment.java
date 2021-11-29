@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.androidstudy.networkmanager.Monitor;
@@ -61,7 +62,7 @@ public class SettingsFragment extends Fragment {
     FragmentSettingsBinding binding;
     Button logoutBtn,accessCardBtn;
     Switch orientationSwitch;
-
+    Boolean connection;
     View view;
     FirebaseAuth auth;
     StorageReference storageReference;
@@ -131,13 +132,16 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
         Tovuti.from(getContext()).monitor(new Monitor.ConnectivityListener() {
             @Override
             public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast) {
                 if(isConnected){
-                   Toast.makeText(getActivity().getApplicationContext(),"connected",Toast.LENGTH_SHORT).show();
+                    connection=true;
+                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.ic_baseline_wifi_24));
                 }else {
-                    Toast.makeText(getActivity().getApplicationContext(),"disconnected",Toast.LENGTH_SHORT).show();
+                    connection=false;
+                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.ic_baseline_signal_wifi_off_24));
                 }
             }
         });
@@ -145,7 +149,11 @@ public class SettingsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(connection){
+                    Toast.makeText(getActivity().getApplicationContext(),"Internet connected",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getActivity().getApplicationContext(),"Internet not connected",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -218,6 +226,8 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+
+
 
         return root;
     }
