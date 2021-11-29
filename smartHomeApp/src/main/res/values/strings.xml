@@ -156,6 +156,8 @@
     <string name="enter_card_no">Enter card no</string>
     <string name="sensor_data"> Sensor Data Readings</string>
     <string name="submit">submit</string>
+    <string name="internet_connected">Internet connected</string>
+    <string name="internet_not_connected">Internet not connected</string>
 
     <string-array name="rooms">
         <item>Select Type</item>

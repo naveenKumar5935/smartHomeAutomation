@@ -150,9 +150,9 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(connection){
-                    Toast.makeText(getActivity().getApplicationContext(),"Internet connected",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.internet_connected,Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(getActivity().getApplicationContext(),"Internet not connected",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.internet_not_connected,Toast.LENGTH_SHORT).show();
                 }
             }
         });
