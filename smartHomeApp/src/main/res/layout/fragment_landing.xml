@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".ui.landing.LandingFragment"
     android:orientation="vertical"
-    android:gravity="center"
-    android:id="@+id/landing_layout"
     style="@style/ScreenBackground">
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingTop="80dp">
 
     <ImageView
         android:layout_width="171dp"
@@ -28,12 +30,16 @@
         android:id="@+id/landing_logo"/>
 
     <LinearLayout
+        android:id="@+id/landing_button_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/button_list"
         android:layout_below="@+id/landing_logo"
-        android:layout_marginTop="200dp"/>
+        android:layout_marginTop="30dp"
+
+        android:orientation="vertical"
+        android:padding="30dp">
+
+    </LinearLayout>
 
 <!--    <LinearLayout-->
 <!--        android:id="@+id/top_button_row"-->
@@ -59,10 +65,10 @@
 <!--            android:id="@+id/button_bedroom"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="10dp"-->
+<!--            android:layout_margin="@dimen/landing_button_margin"-->
 <!--            android:layout_weight="1"-->
-<!--            android:width="150dp"-->
-<!--            android:height="150dp"-->
+<!--            android:width="@dimen/landing_button_width"-->
+<!--            android:height="@dimen/landing_button_height"-->
 <!--            android:text="@string/bedroom"-->
 <!--            style="@style/ButtonText"/>-->
 
@@ -97,5 +103,5 @@
 <!--            android:width="150dp"-->
 <!--            style="@style/ButtonText"/>-->
 <!--    </LinearLayout>-->
-
 </RelativeLayout>
+</ScrollView>

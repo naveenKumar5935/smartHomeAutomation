@@ -48,4 +48,7 @@
     <dimen name="button_text_medium">18sp</dimen>
     <dimen name="settings_margin_top">39dp</dimen>
     <dimen name="device_manager_icon">10dp</dimen>
+    <dimen name="landing_button_width">150dp</dimen>
+    <dimen name="landing_button_height">150dp</dimen>
+    <dimen name="landing_button_margin">10dp</dimen>
 </resources>

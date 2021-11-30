@@ -7,6 +7,7 @@
 
 package ca.theautomators.it.smarthomeautomation.ui.landing;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -17,10 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
@@ -35,7 +34,8 @@ public class LandingFragment extends Fragment {
 
     private View root;
     private ArrayList<Room> rooms;
-    private ArrayList<AppCompatButton> buttons;
+    private ArrayList<Button> buttons;
+    LinearLayout buttonList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,11 +45,13 @@ public class LandingFragment extends Fragment {
 
         RoomState rS = RoomState.getInstance(null);
         FirebaseConnect fC = FirebaseConnect.getInstance();
+        buttons = new ArrayList<>();
+        buttonList = root.findViewById(R.id.landing_button_list);
 
         rooms = rS.loadBuiltRooms();
 
         if(!(rooms.isEmpty())){
-//            buildLayout();
+            buildLayout();
         }
 
 
@@ -71,38 +73,37 @@ public class LandingFragment extends Fragment {
 
     private void buildLayout(){
 
-        LinearLayout buttonList = root.findViewById(R.id.button_list);
         int numRows;
 
         if(rooms.size() % 2 == 0){
 
             numRows = (rooms.size() / 2) + 1;
 
-            addRow(buttonList, numRows);
+            addRows(buttonList, numRows);
+
+            LinearLayout row = newRow();
+            row.addView(addSettingsButton());
+            buttonList.addView(row);
 
         }
         else{
 
             numRows = (rooms.size() + 1) / 2;
 
-            addRowWithSettings(buttonList, numRows);
+            addRowWithSettingsInline(buttonList, numRows);
 
         }
 
 
     }
 
-        private LinearLayout addRow(LinearLayout buttonList, int numRows){
-
-        LinearLayout row = new LinearLayout(getContext());
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        row.setPadding(20, 20, 20, 20);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER;
+    private void addRows(LinearLayout buttonList, int numRows){
 
         int counter = 0;
 
         for(int i = 0; i < (numRows - 1); i++){
+
+            LinearLayout row = newRow();
 
             for(int j = 0; j < 2; j++){
 
@@ -113,33 +114,93 @@ public class LandingFragment extends Fragment {
             buttonList.addView(row);
         }
 
+
+
+    }
+
+    private void addRowWithSettingsInline(LinearLayout buttonList, int numRows){
+
+        int counter = 0;
+
+        for(int i = 0; i < (numRows - 1); i++){
+
+            LinearLayout row = newRow();
+
+            for(int j = 0; j < 2; j++){
+
+                row.addView(addRoomButton(rooms.get(counter)));
+                counter++;
+            }
+
+            buttonList.addView(row);
+        }
+
+        LinearLayout row = newRow();
+        row.addView(addRoomButton(rooms.get(rooms.size() - 1)));
         row.addView(addSettingsButton());
         buttonList.addView(row);
 
-        return null;
     }
 
-    private LinearLayout addRowWithSettings(LinearLayout buttonList, int numRows){
+    private Button addRoomButton(Room room){
+
+
+        int dimen = convertToDP(150, root.getContext());
+        int margin = convertToDP(10, root.getContext());
+
+        Button button = new Button(getContext());
+        button.setText(room.getTitle());
+        button.setBackground(getResources().getDrawable(R.drawable.ripple));
+        button.setTextColor(getResources().getColor(R.color.white));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dimen, dimen);
+        params.weight = 1;
+        params.setMargins(margin, margin, margin, margin);
+        button.setLayoutParams(params);
+        buttons.add(button);
+
+        return button;
+    }
+
+    private Button addSettingsButton(){
+
+        int dimen = convertToDP(150, root.getContext());
+        int margin = convertToDP(10, root.getContext());
+
+        Button settingsButton = new Button(getContext());
+        settingsButton.setText(getString(R.string.settings));
+        settingsButton.setBackground(getResources().getDrawable(R.drawable.ripple));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dimen, dimen);
+        params.weight = 1;
+        params.setMargins(margin, margin, margin, margin);
+        settingsButton.setLayoutParams(params);
+        settingsButton.setTextColor(getResources().getColor(R.color.white));
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_settings);
+            }
+        });
+
+        return settingsButton;
+    }
+
+    private LinearLayout newRow(){
 
         LinearLayout row = new LinearLayout(getContext());
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setPadding(20, 20, 20, 20);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER;
+        params.weight = 1;
+        row.setLayoutParams(params);
 
-        return null;
+        return row;
     }
 
-    private AppCompatButton addRoomButton(Room room){
-
-        return null;
+    public static int convertToDP(int dp, Context context) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * scale);
     }
-
-    private AppCompatButton addSettingsButton(){
-
-        return null;
-    }
-
 
 }
 
