@@ -133,6 +133,18 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+        FirebaseDatabase.getInstance().getReference().child("Devices").child("105").child("DATA").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String humidValue = snapshot.getValue().toString().split(":")[0];
+                new Notifications(humidValue,"HUMID");
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         FirebaseDatabase.getInstance().getReference().child("Devices").child("100").child("DATA").addValueEventListener(new ValueEventListener() {
             @Override

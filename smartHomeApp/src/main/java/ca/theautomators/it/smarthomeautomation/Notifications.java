@@ -42,6 +42,8 @@ public class Notifications {
             case "SMOKE":
                 buildSmokeAlarmnotification();
                 break;
+            case "HUMID":
+                buildHumidnotification();
         }
 
 
@@ -83,8 +85,14 @@ public class Notifications {
 
     private void buildSmokeAlarmnotification(){
         if(Integer.valueOf(value) > 999){
-            //send high smoke notification
             builder.setContentText("Smoke detected");
+            triggerNotification();
+        }
+    }
+    private void buildHumidnotification(){
+        if(Integer.valueOf(value) <10){
+            //send high smoke notification
+            builder.setContentText("Himidity level is very low");
             triggerNotification();
         }
     }
