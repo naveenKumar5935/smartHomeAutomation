@@ -39,6 +39,9 @@ public class Notifications {
                 break;
             case "RFID":
                 buildRFIDnotification();
+                break;
+            case "SMOKE":
+                buildSmokenotification();
             //Add more switch cases here for different types of sensor notifications
         }
 
@@ -81,6 +84,17 @@ public class Notifications {
             //send high temp notification
             builder.setContentText(value);
             triggerNotification();
+
+
+
+    }
+    private void buildSmokenotification(){
+
+        if(Integer.valueOf(value) > 1000){
+            //send high smoke notification
+            builder.setContentText("Smoke detected");
+            triggerNotification();
+        }
 
 
 
