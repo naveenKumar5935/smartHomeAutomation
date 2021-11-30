@@ -45,13 +45,10 @@ public class Notifications {
             case "HUMID":
                 buildHumidnotification();
             case "MOTION":
-                buildMotionnotification();    
+                buildMotionnotification();
         }
 
 
-    }
-
-    private void buildMotionnotification() {
     }
 
     private void triggerNotification(){
@@ -102,6 +99,23 @@ public class Notifications {
             builder.setContentText("Humidity level is very low");
             triggerNotification();
         }
+    }
+
+    private void buildMotionnotification(){
+        value = value.split(":")[0];
+
+        if(Integer.valueOf(value) < 12){
+            //send low temp notification
+            builder.setContentText("Motion detected!");
+            //Last step must be to call this method
+            triggerNotification();
+        }
+        else if(Integer.valueOf(value) > 5){
+            //send high temp notification
+            builder.setContentText("Motion detected!");
+            triggerNotification();
+        }
+
     }
 
     public int getNotificationId(){
