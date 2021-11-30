@@ -42,6 +42,7 @@ public class Notifications {
                 break;
             case "SMOKE":
                 buildSmokenotification();
+                break;
             //Add more switch cases here for different types of sensor notifications
         }
 
