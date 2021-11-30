@@ -106,8 +106,5 @@ public class LandingFragment extends Fragment {
         button.setText(span);
     }
 
-    private void createButton(String title, String data){
 
-
-    }
 }

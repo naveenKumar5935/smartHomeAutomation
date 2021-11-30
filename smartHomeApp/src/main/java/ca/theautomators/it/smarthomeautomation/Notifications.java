@@ -84,7 +84,9 @@ public class Notifications {
     }
 
     private void buildSmokeAlarmnotification(){
-        if(Integer.valueOf(value) > 999){
+        value = value.split(":")[1];
+
+        if(Integer.valueOf(value) == 1){
             builder.setContentText("Smoke detected");
             triggerNotification();
         }
@@ -92,7 +94,7 @@ public class Notifications {
     private void buildHumidnotification(){
         if(Integer.valueOf(value) <10){
             //send high smoke notification
-            builder.setContentText("Himidity level is very low");
+            builder.setContentText("Humidity level is very low");
             triggerNotification();
         }
     }
