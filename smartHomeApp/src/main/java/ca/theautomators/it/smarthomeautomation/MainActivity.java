@@ -172,13 +172,6 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
-
-
-
-
-
-
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
 
@@ -263,36 +256,13 @@ public class MainActivity extends AppCompatActivity{
         });
         alert.show();
 
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.main,menu);
-        MenuItem menuItem=menu.findItem(R.id.search);
-        SearchView searchView=(SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Type here");
-
-        SearchView.OnQueryTextListener queryTextListener=new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
-                searchView.clearFocus();
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        };
-
-        searchView.setOnQueryTextListener(queryTextListener);
-
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -340,9 +310,6 @@ public class MainActivity extends AppCompatActivity{
                 alert.show();
                 break;
 
-            case R.id.search:
-
-                break;
         }
 
         return super.onOptionsItemSelected(item);
