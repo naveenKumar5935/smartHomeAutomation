@@ -146,21 +146,7 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        FirebaseDatabase.getInstance().getReference().child("Devices").child("103").child("DATA").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String smokeValue = snapshot.getValue().toString().split(":")[1];
-                        new Notifications(smokeValue,"SMOKE");
 
-
-                }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
 
