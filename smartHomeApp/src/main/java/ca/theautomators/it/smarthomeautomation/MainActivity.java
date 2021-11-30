@@ -55,13 +55,15 @@ public class MainActivity extends AppCompatActivity{
     private static NotificationCompat.Builder builder;
     private static Context context;
     private Notifications tempNotifier;
-
+    ArrayList<String> arrayList ;
+    boolean rfidChange=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        gettingData();
 
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){
@@ -116,19 +118,34 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
 
-            FirebaseDatabase.getInstance().getReference().child("Devices").child("100").child("DATA").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String value = snapshot.getValue().toString();
-                    new Notifications(value,"RFID");
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
         }
+
+        FirebaseDatabase.getInstance().getReference().child("Devices").child("100").child("DATA").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue().toString();
+                String rfidValue = snapshot.getValue().toString().split(":")[1];
+
+                if(rfidChange){
+                    if(arrayList.contains(rfidValue)){
+                        new Notifications("Rfid scanned","RFID");
+                    }else {
+                        new Notifications("Wrong Rfid scanned","RFID");
+                    }
+                }else {
+                    rfidChange=true;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
 
 
@@ -383,5 +400,23 @@ public class MainActivity extends AppCompatActivity{
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(title);
+    }
+
+    public void gettingData(){
+        arrayList = new ArrayList<>();
+        arrayList.clear();
+        FirebaseDatabase.getInstance().getReference().child("AccessCards").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    arrayList.add(dataSnapshot.getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

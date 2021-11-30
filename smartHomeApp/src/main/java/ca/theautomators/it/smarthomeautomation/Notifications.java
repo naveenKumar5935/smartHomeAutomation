@@ -76,10 +76,13 @@ public class Notifications {
     private void buildRFIDnotification(){
 
         //Keep the colon in the string so that firebase send the value as a string and not a long
-        value = value.split(":")[0];
+
+            Log.e("value",value);
             //send high temp notification
-            builder.setContentText("RFID scanned");
+            builder.setContentText(value);
             triggerNotification();
+
+
 
     }
 

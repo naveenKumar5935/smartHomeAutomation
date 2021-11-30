@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import ca.theautomators.it.smarthomeautomation.MainActivity;
+import ca.theautomators.it.smarthomeautomation.Notifications;
 import ca.theautomators.it.smarthomeautomation.R;
 
 public class AccessCardActivity extends AppCompatActivity {
@@ -98,6 +99,8 @@ public class AccessCardActivity extends AppCompatActivity {
 
             }
         });
+
+
 
 
 
