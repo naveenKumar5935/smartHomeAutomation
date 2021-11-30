@@ -54,12 +54,6 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         menuItems = new ArrayList<>();
 
 
-//        for(int i = 0; i < roomNames.size(); i++){
-//
-//            roomNames.add((String)menu.findItem(menuIds.get(i)).getTitle());
-//            roomIcons.add(menu.findItem(menuIds.get(i)).getIcon());
-//        }
-
     }
 
     public static RoomState getInstance(@Nullable Context context){

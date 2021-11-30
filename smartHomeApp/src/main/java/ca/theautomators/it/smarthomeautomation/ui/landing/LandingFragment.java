@@ -11,84 +11,47 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
+import ca.theautomators.it.smarthomeautomation.FirebaseConnect;
 import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
+import ca.theautomators.it.smarthomeautomation.Room;
 import ca.theautomators.it.smarthomeautomation.RoomState;
 
 public class LandingFragment extends Fragment {
 
-    private String kitchenData, bedroomData, livingRoomData;
-    View root;
+    private View root;
+    private ArrayList<Room> rooms;
+    private ArrayList<AppCompatButton> buttons;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        //Temp dummy data***********************************************************
-        kitchenData = getString(R.string.kitchen_data);
-        bedroomData = getString(R.string.bedroom_data);
-        livingRoomData = getString(R.string.living_room_data);
-        //**************************************************************************
 
         root = inflater.inflate(R.layout.fragment_landing, container, false);
 
-        RoomState roomState = RoomState.getInstance(null);
+        RoomState rS = RoomState.getInstance(null);
+        FirebaseConnect fC = FirebaseConnect.getInstance();
 
-        Button kitchenButton = (Button) root.findViewById(R.id.button_kitchen);
-        //TODO temporary set text, will be removed once add and remove room functionality developed
-//        kitchenButton.setText(roomState.getRoomNames().get(1));
-        setButtonData(kitchenButton, kitchenData);
+        rooms = rS.loadBuiltRooms();
 
-        Button bedroomButton = (Button) root.findViewById(R.id.button_bedroom);
-        //TODO temporary set text, will be removed once add and remove room functionality developed
-//        bedroomButton.setText(roomState.getRoomNames().get(0));
-        setButtonData(bedroomButton, bedroomData);
+        if(!(rooms.isEmpty())){
+//            buildLayout();
+        }
 
-        Button livingRoomButton = (Button) root.findViewById(R.id.button_living_room);
-        //TODO temporary set text, will be removed once add and remove room functionality developed
-//        livingRoomButton.setText(roomState.getRoomNames().get(2));
-        setButtonData(livingRoomButton, livingRoomData);
-
-        Button settingsButton = (Button) root.findViewById(R.id.button_settings);
-
-        kitchenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_kitchen);
-            }
-        });
-
-        bedroomButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_bedroom);
-            }
-        });
-
-        livingRoomButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_livingroom);
-            }
-        });
-
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_settings);
-            }
-        });
 
 
         return root;
@@ -106,5 +69,86 @@ public class LandingFragment extends Fragment {
         button.setText(span);
     }
 
+    private void buildLayout(){
+
+        LinearLayout buttonList = root.findViewById(R.id.button_list);
+        int numRows;
+
+        if(rooms.size() % 2 == 0){
+
+            numRows = (rooms.size() / 2) + 1;
+
+            addRow(buttonList, numRows);
+
+        }
+        else{
+
+            numRows = (rooms.size() + 1) / 2;
+
+            addRowWithSettings(buttonList, numRows);
+
+        }
+
+
+    }
+
+        private LinearLayout addRow(LinearLayout buttonList, int numRows){
+
+        LinearLayout row = new LinearLayout(getContext());
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setPadding(20, 20, 20, 20);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER;
+
+        int counter = 0;
+
+        for(int i = 0; i < (numRows - 1); i++){
+
+            for(int j = 0; j < 2; j++){
+
+                row.addView(addRoomButton(rooms.get(counter)));
+                counter++;
+            }
+
+            buttonList.addView(row);
+        }
+
+        row.addView(addSettingsButton());
+        buttonList.addView(row);
+
+        return null;
+    }
+
+    private LinearLayout addRowWithSettings(LinearLayout buttonList, int numRows){
+
+        LinearLayout row = new LinearLayout(getContext());
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setPadding(20, 20, 20, 20);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER;
+
+        return null;
+    }
+
+    private AppCompatButton addRoomButton(Room room){
+
+        return null;
+    }
+
+    private AppCompatButton addSettingsButton(){
+
+        return null;
+    }
+
 
 }
+
+
+
+
+
+
+
+
+
+

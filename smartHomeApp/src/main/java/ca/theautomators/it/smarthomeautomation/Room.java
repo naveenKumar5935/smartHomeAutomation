@@ -22,7 +22,6 @@ public class Room {
 
     public void addDevice(String identifier){
 
-//        removeDevice(identifier);
         devices.add(identifier);
     }
 
