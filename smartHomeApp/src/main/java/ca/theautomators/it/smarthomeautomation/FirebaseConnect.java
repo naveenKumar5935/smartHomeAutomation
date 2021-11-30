@@ -7,10 +7,14 @@
 
 package ca.theautomators.it.smarthomeautomation;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
+import com.androidstudy.networkmanager.Monitor;
+import com.androidstudy.networkmanager.Tovuti;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +40,7 @@ public class FirebaseConnect {
         deviceRef = FirebaseDatabase.getInstance().getReference().child("Devices");
         loadNumDevices();
     }
+
 
     public static FirebaseConnect getInstance(){
 
@@ -76,6 +81,8 @@ public class FirebaseConnect {
         return deviceRef.child(identifier).child("DATA");
 
     }
+
+
 
     public void loadNumDevices(){
 

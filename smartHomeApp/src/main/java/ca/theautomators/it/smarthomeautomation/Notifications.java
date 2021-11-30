@@ -7,6 +7,7 @@
 package ca.theautomators.it.smarthomeautomation;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -35,6 +36,9 @@ public class Notifications {
         switch(type){
             case "TEMP":
                 buildTempNotification();
+                break;
+            case "RFID":
+                buildRFIDnotification();
             //Add more switch cases here for different types of sensor notifications
         }
 
@@ -67,6 +71,16 @@ public class Notifications {
             builder.setContentText("High Temperature Warning!");
             triggerNotification();
         }
+    }
+
+    private void buildRFIDnotification(){
+
+        //Keep the colon in the string so that firebase send the value as a string and not a long
+        value = value.split(":")[0];
+            //send high temp notification
+            builder.setContentText("RFID scanned");
+            triggerNotification();
+
     }
 
     public int getNotificationId(){
