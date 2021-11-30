@@ -10,13 +10,6 @@
 <!--        android:actionLayout="@layout/toolbar_layout"/>-->
 
     <item
-        app:showAsAction="ifRoom|collapseActionView"
-        android:id="@+id/search"
-        android:title="@string/search"
-        android:icon="@drawable/search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
-
-    <item
         app:showAsAction="always"
         android:id="@+id/menutab"
         android:title=""

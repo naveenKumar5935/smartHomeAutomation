@@ -155,6 +155,10 @@
     <string name="full_name">Full Name</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="phone_no">Phone No</string>
+    <string name="enter_card_no">Enter card no</string>
     <string name="sensor_data"> Sensor Data Readings</string>
+    <string name="submit">submit</string>
+    <string name="internet_connected">Internet connected</string>
+    <string name="internet_not_connected">Internet not connected</string>
 
 </resources>
