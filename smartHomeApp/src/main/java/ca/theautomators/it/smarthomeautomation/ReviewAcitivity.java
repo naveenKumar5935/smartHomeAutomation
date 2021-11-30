@@ -142,7 +142,6 @@ public class ReviewAcitivity extends AppCompatActivity {
                     String email1 = email.getText().toString().trim();
                     String phone = phonenumber.getText().toString().trim();
                     String feedback = mFeedback.getText().toString();
-                 //   float rating = mRatingBar.getRating();
                     String modelNo = getDeviceName();
 
                     firebaseConnect.setUserFeedback(name,email1,phone,feedback,rating,modelNo);

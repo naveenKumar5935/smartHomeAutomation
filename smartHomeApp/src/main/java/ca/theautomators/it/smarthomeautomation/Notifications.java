@@ -22,7 +22,6 @@ public class Notifications {
     private NotificationCompat.Builder builder;
     private Context context;
 
-    //Must keep default constructor to protect from null pointer exception
     public Notifications(){}
 
     public Notifications(String value, String type){
@@ -43,8 +42,6 @@ public class Notifications {
             case "SMOKE":
                 buildSmokeAlarmnotification();
                 break;
-
-            //Add more switch cases here for different types of sensor notifications
         }
 
 
@@ -59,10 +56,8 @@ public class Notifications {
 
     }
 
-    //Add more methods for different notifications based on this one, except customize them per type
     private void buildTempNotification(){
 
-        //Keep the colon in the string so that firebase send the value as a string and not a long
         value = value.split(":")[0];
 
         if(Integer.valueOf(value) < 10){
@@ -79,9 +74,6 @@ public class Notifications {
     }
 
     private void buildRFIDnotification(){
-
-        //Keep the colon in the string so that firebase send the value as a string and not a long
-
             Log.e("value",value);
             //send high temp notification
             builder.setContentText(value);
@@ -90,16 +82,12 @@ public class Notifications {
     }
 
     private void buildSmokeAlarmnotification(){
-
         if(Integer.valueOf(value) > 999){
             //send high smoke notification
             builder.setContentText("Smoke detected");
             triggerNotification();
         }
     }
-
-
-
 
     public int getNotificationId(){
         return notificationId;
