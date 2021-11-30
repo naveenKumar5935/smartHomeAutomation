@@ -44,9 +44,14 @@ public class Notifications {
                 break;
             case "HUMID":
                 buildHumidnotification();
+            case "MOTION":
+                buildMotionnotification();    
         }
 
 
+    }
+
+    private void buildMotionnotification() {
     }
 
     private void triggerNotification(){
