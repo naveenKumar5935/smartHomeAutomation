@@ -51,6 +51,7 @@ public class RoomFragment extends Fragment {
     private String data;
     private ArrayList<SwitchCompat> controls;
     private String title;
+    private boolean smokeDetected;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +69,7 @@ public class RoomFragment extends Fragment {
         RoomState rS = RoomState.getInstance(null);
 
         title = "";
+        smokeDetected = false;
 
         //Load room data from arguments
         Bundle bundle = this.getArguments();
@@ -145,11 +147,15 @@ public class RoomFragment extends Fragment {
                     }
                 }
                 else if(device.getType().equals("SMOKE")){
-                    if(isChecked){
+                    if(isChecked && !smokeDetected){
                         device.sendControlData("1:0");
+                    }
+                    else if(isChecked && smokeDetected){
+                        device.sendControlData("1:1");
                     }
                     else{
                         device.sendControlData("0:0");
+                        smokeDetected = false;
                     }
                 }
                 else if(device.getType().equals("RFID")){
@@ -224,12 +230,13 @@ public class RoomFragment extends Fragment {
                         data += "Smoke detector: OFF";
                         setControlState(false, "SMOKE");
                     }
-                    else if(dataRead.equals("1:0")){
+                    else if(dataRead.split(":")[0].equals("1")){
                         data += "Smoke detector: ON";
                         setControlState(true, "SMOKE");
                     }
-                    else if(dataRead.equals("1:1")){
+                    else if(dataRead.split(":")[1].equals("1")){
                         data += "Smoke Alarm On!";
+                        smokeDetected = true;
                         setControlState(true, "SMOKE");
                     }
                 }
