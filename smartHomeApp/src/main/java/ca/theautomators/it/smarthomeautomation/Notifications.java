@@ -106,7 +106,7 @@ public class Notifications {
         value = value.split(":")[1];
 
         if(Integer.valueOf(value)  ==1 ){
-            builder.setContentText("Motion detected");
+            builder.setContentText("Motion detected!");
             triggerNotification();
         }
 
