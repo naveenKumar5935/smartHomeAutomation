@@ -376,44 +376,45 @@ public class MainActivity extends AppCompatActivity{
         DatabaseReference reference = fC.getSensorDataRef(identifier);
 
 
+        if(!identifier.isEmpty()){
+            reference.child("DATA").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String value = snapshot.getValue().toString().split(":")[1];
+                    Log.e("rfid", value);
+                    if (rfidChange) {
 
-        reference.child("DATA").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String value = snapshot.getValue().toString().split(":")[1];
-                Log.e("rfid",value);
-                if(rfidChange){
+                        if (arrayList.contains(value)) {
+                            builder = new NotificationCompat.Builder(context, "NOTIFICATIONS")
+                                    .setSmallIcon(R.drawable.thermostat)
+                                    .setContentText("Access Card Scanned")
+                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                    .setContentIntent(pendingIntent)
+                                    .setAutoCancel(true);
+                            new Notifications("Access Card Scanned", "RFID");
 
-                    if(arrayList.contains(value)){
-                        builder = new NotificationCompat.Builder(context, "NOTIFICATIONS")
-                                .setSmallIcon(R.drawable.thermostat)
-                                .setContentText("Access Card Scanned")
-                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                .setContentIntent(pendingIntent)
-                                .setAutoCancel(true);
-                        new Notifications("Access Card Scanned","RFID");
+                        } else {
+                            builder = new NotificationCompat.Builder(context, "NOTIFICATIONS")
+                                    .setSmallIcon(R.drawable.thermostat)
+                                    .setContentText("Wrong Access Card Scanned")
+                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                    .setContentIntent(pendingIntent)
+                                    .setAutoCancel(true);
+                            new Notifications("Wrong Access Card Scanned", "RFID");
 
-                    }else {
-                        builder = new NotificationCompat.Builder(context, "NOTIFICATIONS")
-                                .setSmallIcon(R.drawable.thermostat)
-                                .setContentText("Wrong Access Card Scanned")
-                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                .setContentIntent(pendingIntent)
-                                .setAutoCancel(true);
-                        new Notifications("Wrong Access Card Scanned","RFID");
+                        }
+
 
                     }
-
+                    rfidChange = true;
 
                 }
-                rfidChange=true;
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+                }
+            });
+        }
     }
 }
