@@ -88,18 +88,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chooseBackgroundBtn" />
 
-    <Switch
-        android:id="@+id/darkModeSwitch"
-        android:layout_width="280dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/dark_mode"
-        android:textSize="21sp"
-        android:theme="@style/SwitchColour"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orientationSwitch" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/settingProfileImg"
@@ -111,7 +99,7 @@
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/darkModeSwitch" />
+        app:layout_constraintTop_toBottomOf="@+id/orientationSwitch" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
