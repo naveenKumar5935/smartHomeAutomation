@@ -45,8 +45,8 @@ public class Notifications {
             case "HUMID":
                 buildHumidnotification();
                 break;
-////            case "MOTION":
-//                buildMotionnotification();
+            case "MOTION":
+                buildMotionnotification();
         }
 
 
@@ -102,7 +102,7 @@ public class Notifications {
         }
     }
 
-//    private void buildMotionnotification(){
+    private void buildMotionnotification(){
 //        value = value.split(":")[0];
 //
 //        if(Integer.valueOf(value) < 12){
@@ -117,7 +117,7 @@ public class Notifications {
 //            triggerNotification();
 //        }
 //
-//    }
+    }
 
     public int getNotificationId(){
         return notificationId;
