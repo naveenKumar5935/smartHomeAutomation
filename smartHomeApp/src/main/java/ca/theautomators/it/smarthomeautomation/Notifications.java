@@ -44,7 +44,8 @@ public class Notifications {
                 break;
             case "HUMID":
                 buildHumidnotification();
-//            case "MOTION":
+                break;
+////            case "MOTION":
 //                buildMotionnotification();
         }
 
@@ -88,14 +89,15 @@ public class Notifications {
     private void buildSmokeAlarmnotification(){
         value = value.split(":")[1];
 
-        if(Integer.valueOf(value) == 1){
+        if(Integer.valueOf(value)  == 1){
             builder.setContentText("Smoke detected");
             triggerNotification();
         }
     }
     private void buildHumidnotification(){
-        if(Integer.valueOf(value) <10){
-            //send high smoke notification
+        value = value.split(":")[0];
+
+        if(Integer.valueOf(value) < 10){
             builder.setContentText("Humidity level is very low");
             triggerNotification();
         }

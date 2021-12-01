@@ -65,4 +65,5 @@ public class KitchenFragment extends Fragment {
         });
         return root;
     }
+
 }
