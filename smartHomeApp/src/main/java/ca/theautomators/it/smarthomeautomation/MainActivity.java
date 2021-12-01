@@ -348,7 +348,7 @@ public class MainActivity extends AppCompatActivity{
             DatabaseReference reference = fC.getSensorDataRef(notificationIdentifier);
 
             builder = new NotificationCompat.Builder(this, "NOTIFICATIONS")
-                    .setSmallIcon(R.drawable.thermostat)
+                    .setSmallIcon(android.R.drawable.ic_dialog_alert)
                     .setContentText(alarmType)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)
@@ -373,11 +373,10 @@ public class MainActivity extends AppCompatActivity{
 
     public void rfidExists(String identifier, FirebaseConnect fC, Context context){
 
-        DatabaseReference reference = fC.getSensorDataRef(identifier);
-
 
         if(!identifier.isEmpty()){
-            reference.child("DATA").addValueEventListener(new ValueEventListener() {
+            DatabaseReference reference = fC.getSensorDataRef(identifier);
+            reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String value = snapshot.getValue().toString().split(":")[1];
@@ -386,7 +385,7 @@ public class MainActivity extends AppCompatActivity{
 
                         if (arrayList.contains(value)) {
                             builder = new NotificationCompat.Builder(context, "NOTIFICATIONS")
-                                    .setSmallIcon(R.drawable.thermostat)
+                                    .setSmallIcon(android.R.drawable.ic_dialog_alert)
                                     .setContentText("Access Card Scanned")
                                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                                     .setContentIntent(pendingIntent)
@@ -395,7 +394,7 @@ public class MainActivity extends AppCompatActivity{
 
                         } else {
                             builder = new NotificationCompat.Builder(context, "NOTIFICATIONS")
-                                    .setSmallIcon(R.drawable.thermostat)
+                                    .setSmallIcon(android.R.drawable.ic_dialog_alert)
                                     .setContentText("Wrong Access Card Scanned")
                                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                                     .setContentIntent(pendingIntent)
