@@ -121,7 +121,6 @@ public class SettingsFragment extends Fragment {
         }
 
         Button manageRooms = (Button) root.findViewById(R.id.manageRooms);
-        Switch darkMode = (Switch)root.findViewById(R.id.darkModeSwitch);
 
         accessCardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,12 +169,6 @@ public class SettingsFragment extends Fragment {
             orientationSwitch.setChecked(true);
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-        if(Paper.book().read("darkMode", "").equals("ON")){
-            darkMode.setChecked(true);
-        }
-        else{
-            darkMode.setChecked(false);
-        }
 
         orientationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -212,22 +205,6 @@ public class SettingsFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-        darkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    Paper.book().write("darkMode", "ON");
-                }
-                else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    Paper.book().write("darkMode", "OFF");
-                }
-            }
-        });
-
-
 
         return root;
     }
