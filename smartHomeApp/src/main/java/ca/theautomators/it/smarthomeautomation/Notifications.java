@@ -103,19 +103,26 @@ public class Notifications {
     }
 
     private void buildMotionnotification(){
-        value = value.split(":")[0];
+        value = value.split(":")[1];
 
-        if(Integer.valueOf(value) < 12){
-            //send low temp notification
-            builder.setContentText("Motion detected!");
-            //Last step must be to call this method
+        if(Integer.valueOf(value)  ==1 ){
+            builder.setContentText("Motion detected");
             triggerNotification();
         }
-        else if(Integer.valueOf(value) > 5){
-            //send high temp notification
-            builder.setContentText("Motion detected!");
-            triggerNotification();
-        }
+
+//        value = value.split(":")[0];
+//
+//        if(Integer.valueOf(value) < 12){
+//            //send low temp notification
+//            builder.setContentText("Motion detected!");
+//            //Last step must be to call this method
+//            triggerNotification();
+//        }
+//        else if(Integer.valueOf(value) > 5){
+//            //send high temp notification
+//            builder.setContentText("Motion detected!");
+//            triggerNotification();
+//        }
 
     }
 
