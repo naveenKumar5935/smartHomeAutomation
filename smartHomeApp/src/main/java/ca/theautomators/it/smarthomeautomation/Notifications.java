@@ -79,8 +79,7 @@ public class Notifications {
     }
 
     private void buildRFIDnotification(){
-            Log.e("value",value);
-            //send high temp notification
+
             builder.setContentText(value);
             triggerNotification();
 

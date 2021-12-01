@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -101,6 +102,31 @@ public class MainActivity extends AppCompatActivity{
 
             }
         }
+
+        FirebaseDatabase.getInstance().getReference().child("Devices").child("100").child("DATA").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue().toString().split(":")[1];
+                Log.e("rfid",value);
+                if(rfidChange){
+
+                    if(arrayList.contains(value)){
+                        new Notifications("Access Card Scanned","RFID");
+                    }else {
+                        new Notifications("Wrong Access Card Scanned","RFID");
+                    }
+
+
+                }
+                rfidChange=true;
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -337,6 +363,8 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
+
+
 
     public void buildNotification(String alarmType, String notificationIdentifier, PendingIntent pendingIntent, FirebaseConnect fC){
 

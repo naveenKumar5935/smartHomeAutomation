@@ -29,7 +29,7 @@ import io.paperdb.Paper;
 public class ReviewAcitivity extends AppCompatActivity {
     private TextView mTextView;
     FirebaseConnect firebaseConnect;
-
+    RatingBar mRatingBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +44,15 @@ public class ReviewAcitivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        RatingBar mRatingBar = findViewById(R.id.ratingBar);
+       mRatingBar = findViewById(R.id.ratingBar);
         TextView mRatingScale =findViewById(R.id.tvRatingScale);
         EditText mFeedback =  findViewById(R.id.etFeedback);
         Button mSendFeedback = findViewById(R.id.btnSubmit);
         EditText Name = findViewById(R.id.Name);
         EditText phonenumber = findViewById(R.id.Phoneno);
         EditText email = findViewById(R.id.email);
+
+
 
         firebaseConnect = FirebaseConnect.getInstance();
 
@@ -92,12 +94,12 @@ public class ReviewAcitivity extends AppCompatActivity {
         mSendFeedback.setOnClickListener(new View.OnClickListener() {
             ProgressDialog progressDialog =null ;
 
-            Handler handle = new Handler() {
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    progressDialog.incrementProgressBy(10); // Incremented By Value 2
-                }
-            };
+//            Handler handle = new Handler() {
+//                public void handleMessage(Message msg) {
+//                    super.handleMessage(msg);
+//                    progressDialog.incrementProgressBy(10); // Incremented By Value 2
+//                }
+//            };
 
             @Override
             public void onClick(View view) {
@@ -159,23 +161,23 @@ public class ReviewAcitivity extends AppCompatActivity {
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL); // Progress Dialog Style Horizontal
                     progressDialog.show(); // Display Progress Dialog
                     progressDialog.setCancelable(false);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                while (progressDialog.getProgress() <= progressDialog.getMax()) {
-                                    Thread.sleep(200);
-                                    handle.sendMessage(handle.obtainMessage());
-                                    if (progressDialog.getProgress() == progressDialog.getMax()) {
-                                        progressDialog.dismiss();
-                                    }
-
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }).start();
+//                    new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            try {
+//                                while (progressDialog.getProgress() <= progressDialog.getMax()) {
+//                                    Thread.sleep(200);
+//                                    handle.sendMessage(handle.obtainMessage());
+//                                    if (progressDialog.getProgress() == progressDialog.getMax()) {
+//                                        progressDialog.dismiss();
+//                                    }
+//
+//                                }
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }).start();
                     Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
 
                 }
