@@ -12,17 +12,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-
 import ca.theautomators.it.smarthomeautomation.ui.RoomFragment;
 
 public class RoomBuilder{
 
-    NavigationView navView;
-    Bundle savedInstanceState;
-    DrawerLayout drawer;
-    FragmentManager fragMan;
-    RoomState rS;
+    private NavigationView navView;
+    private Bundle savedInstanceState;
+    private DrawerLayout drawer;
+    private FragmentManager fragMan;
+    private RoomState rS;
 
     public RoomBuilder(NavigationView navView, Bundle savedInstanceState, DrawerLayout drawer, FragmentManager fragMan){
 
@@ -34,32 +32,36 @@ public class RoomBuilder{
 
     }
 
+
     public void buildRoom(String roomName, Drawable roomIcon, int navId){
 
         Menu menu = navView.getMenu();
         MenuItem home = menu.findItem(R.id.nav_home);
         MenuItem settings = menu.findItem(R.id.nav_settings);
 
-        ArrayList<MenuItem> items = new ArrayList<>();
+//        if(savedInstanceState == null){
+//
+//            fragMan.beginTransaction()
+//                    .setReorderingAllowed(true)
+//                    .add(R.id.nav_host_fragment, RoomFragment.class, null)
+//                    .addToBackStack(roomName)
+//                    .commit();
+//        }
 
-        if(savedInstanceState == null){
+        RoomFragment rF = new RoomFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("title", roomName);
+        rF.setArguments(bundle);
 
-            fragMan.beginTransaction()
+        fragMan.beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.nav_host_fragment, RoomFragment.class, null)
+                    .add(R.id.nav_host_fragment, rF, roomName)
                     .addToBackStack(roomName)
                     .commit();
-        }
 
         menu.add(R.id.drawer_list, navId, 0, roomName).setCheckable(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
-                RoomFragment rF = new RoomFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("title", roomName);
-                bundle.putInt("id", navId);
-                rF.setArguments(bundle);
 
                 FragmentTransaction fT = fragMan.beginTransaction();
                 fT.replace(R.id.nav_host_fragment, rF);

@@ -131,6 +131,10 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         return menuIds;
     }
 
+    public ArrayList<MenuItem> getMenuItems(){
+        return menuItems;
+    }
+
     public void setRoomStateChanged(boolean bit){
 
         roomStateChanged = bit;

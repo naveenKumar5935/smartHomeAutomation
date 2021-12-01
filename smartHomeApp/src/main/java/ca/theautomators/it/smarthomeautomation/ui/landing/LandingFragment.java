@@ -13,6 +13,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,7 +35,8 @@ public class LandingFragment extends Fragment {
     private View root;
     private ArrayList<Room> rooms;
     private ArrayList<Button> buttons;
-    LinearLayout buttonList;
+    private LinearLayout buttonList;
+    private int[] menuIds;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,20 +55,28 @@ public class LandingFragment extends Fragment {
             buildLayout();
         }
 
-        for(Button button : buttons){
-            setButtonClickListener(button);
+        menuIds = new int[rooms.size()];
+        ArrayList<MenuItem> menuItems = rS.getMenuItems();
+
+        for(int i = 0; i  < buttons.size(); i++){
+            setButtonClickListener(buttons.get(i), menuItems);
         }
 
 
         return root;
     }
 
-    private void setButtonClickListener(Button button){
+    private void setButtonClickListener(Button button, ArrayList<MenuItem> menuItems){
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = (String)button.getText();
+
+                for(int i = 0; i < menuItems.size(); i++){
+                    if(button.getText().equals(menuItems.get(i).getTitle())){
+                        ((MainActivity)getActivity()).fragmentSwitch(menuItems.get(i).getItemId());
+                    }
+                }
             }
         });
     }

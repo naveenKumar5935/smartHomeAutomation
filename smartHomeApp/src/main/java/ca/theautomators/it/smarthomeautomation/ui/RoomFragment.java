@@ -64,10 +64,13 @@ public class RoomFragment extends Fragment {
         title = "";
         smokeDetected = false;
 
+        ArrayList<Room> rooms = rS.loadBuiltRooms();
+
         //Load room data from arguments
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            title = bundle.getString("title", "Room");
+
+                title = bundle.getString("title", "Room");
         }
 
         ((MainActivity)getActivity()).setToolbarTitle(title);
@@ -75,8 +78,6 @@ public class RoomFragment extends Fragment {
         String sensorTitle = title + " " + getString(R.string.sensor_data);
         TextView roomTitle = root.findViewById(R.id.room_data_title);
         roomTitle.setText(sensorTitle);
-
-        ArrayList<Room> rooms = rS.loadBuiltRooms();
 
         for(Room room : rooms){
 
@@ -196,6 +197,7 @@ public class RoomFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                data = "";
                 String dataRead = snapshot.getValue(String.class);
                 TextView roomData = root.findViewById(R.id.room_data);
                 roomData.setMovementMethod(new ScrollingMovementMethod());

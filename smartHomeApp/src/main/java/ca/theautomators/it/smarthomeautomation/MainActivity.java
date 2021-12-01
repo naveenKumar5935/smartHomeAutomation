@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity{
     DatabaseReference firebaseDatabase;
     boolean rfidChange;
     PendingIntent pendingIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +135,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
         RoomBuilder rB = new RoomBuilder(navigationView, savedInstanceState, drawer, getSupportFragmentManager());
+
 
         for(int i = 0; i < roomNames.size(); i++){
 
@@ -310,6 +312,15 @@ public class MainActivity extends AppCompatActivity{
 
         toolbarText.setTitle(title);
         navLoad.setChecked(true);
+
+//        Bundle bundle = new Bundle();
+//
+//        for(int i = 0; i < menuIds.size(); i++){
+//
+//            bundle.putInt("menuId_" + i, menuIds.get(i));
+//        }
+//
+//        fragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment,
                 null).setReorderingAllowed(true).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
