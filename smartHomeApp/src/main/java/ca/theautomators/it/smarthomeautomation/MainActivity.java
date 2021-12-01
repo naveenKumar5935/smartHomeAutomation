@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity{
     private static Context context;
     private Notifications tempNotifier;
     ArrayList<String> arrayList ;
+    DatabaseReference firebaseDatabase;
     boolean rfidChange=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity{
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         gettingData();
+
+        firebaseDatabase =  FirebaseDatabase.getInstance().getReference();
 
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){
@@ -94,83 +97,83 @@ public class MainActivity extends AppCompatActivity{
             }
         }
 
-//        if(!notificationIdentifier.isEmpty()){
-//            tempRef = fC.getSensorDataRef(notificationIdentifier);
-//
-//            builder = new NotificationCompat.Builder(this, "NOTIFICATIONS")
-//                    .setSmallIcon(R.drawable.thermostat)
-//                    .setContentText("Temperature Alarm")
-//                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                    .setContentIntent(pendingIntent)
-//                    .setAutoCancel(true);
-//
-//            tempRef.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                    String temperature = snapshot.getValue(String.class);
-//                    if(temperature != null)
-//                        new Notifications(temperature, "TEMP");
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//
-//
-//        }
-//
-//        FirebaseDatabase.getInstance().getReference().child("Devices").child("103").child("DATA").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                String smokeValue = snapshot.getValue().toString().split(":")[1];
-//                new Notifications(smokeValue,"SMOKE");
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//
-//        FirebaseDatabase.getInstance().getReference().child("Devices").child("105").child("DATA").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                String humidValue = snapshot.getValue().toString().split(":")[0];
-//                new Notifications(humidValue,"HUMID");
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//
-//
-//        FirebaseDatabase.getInstance().getReference().child("Devices").child("100").child("DATA").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                String value = snapshot.getValue().toString();
-//                String rfidValue = snapshot.getValue().toString().split(":")[1];
-//
-//                if(rfidChange){
-//                    if(arrayList.contains(rfidValue)){
-//                        new Notifications("Rfid scanned","RFID");
-//                    }else {
-//                        new Notifications("Wrong Rfid scanned","RFID");
-//                    }
-//                }else {
-//                    rfidChange=true;
-//                }
-//
-//            }
-//
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+        if(!notificationIdentifier.isEmpty()){
+            tempRef = fC.getSensorDataRef(notificationIdentifier);
+
+            builder = new NotificationCompat.Builder(this, "NOTIFICATIONS")
+                    .setSmallIcon(R.drawable.thermostat)
+                    .setContentText("Temperature Alarm")
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+
+            tempRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    String temperature = snapshot.getValue(String.class);
+                    if(temperature != null)
+                        new Notifications(temperature, "TEMP");
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+        }
+
+        firebaseDatabase.child("Devices").child("103").child("DATA").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String smokeValue = snapshot.getValue().toString().split(":")[1];
+                new Notifications(smokeValue,"SMOKE");
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        firebaseDatabase.child("Devices").child("105").child("DATA").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String humidValue = snapshot.getValue().toString().split(":")[0];
+                new Notifications(humidValue,"HUMID");
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        firebaseDatabase.child("Devices").child("100").child("DATA").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue().toString();
+                String rfidValue = snapshot.getValue().toString().split(":")[1];
+
+                if(rfidChange){
+                    if(arrayList.contains(rfidValue)){
+                        new Notifications("Rfid scanned","RFID");
+                    }else {
+                        new Notifications("Wrong Rfid scanned","RFID");
+                    }
+                }else {
+                    rfidChange=true;
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
