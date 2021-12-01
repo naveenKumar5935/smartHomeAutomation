@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -55,13 +56,15 @@ public class MainActivity extends AppCompatActivity{
     private Notifications tempNotifier;
     ArrayList<String> arrayList ;
     DatabaseReference firebaseDatabase;
-    boolean rfidChange=false;
+    boolean rfidChange;
+    PendingIntent pendingIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        rfidChange = false;
         gettingData();
 
         firebaseDatabase =  FirebaseDatabase.getInstance().getReference();
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity{
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         FirebaseConnect fC = FirebaseConnect.getInstance();
         String[] identifiers = fC.getIdentifiers();
@@ -99,34 +102,12 @@ public class MainActivity extends AppCompatActivity{
                     notificationIdentifier = identifiers[i];
                     buildNotification("Humidity alarm", notificationIdentifier, pendingIntent, fC);
                     break;
+                case "RFID":
+                    notificationIdentifier = identifiers[i];
+                    rfidExists(notificationIdentifier, fC, this);
 
             }
         }
-
-        FirebaseDatabase.getInstance().getReference().child("Devices").child("100").child("DATA").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String value = snapshot.getValue().toString().split(":")[1];
-                Log.e("rfid",value);
-                if(rfidChange){
-
-                    if(arrayList.contains(value)){
-                        new Notifications("Access Card Scanned","RFID");
-                    }else {
-                        new Notifications("Wrong Access Card Scanned","RFID");
-                    }
-
-
-                }
-                rfidChange=true;
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -152,7 +133,6 @@ public class MainActivity extends AppCompatActivity{
             startActivity(roomManager);
         }
 
-        roomState.resetMenuItems();
         RoomBuilder rB = new RoomBuilder(navigationView, savedInstanceState, drawer, getSupportFragmentManager());
 
         for(int i = 0; i < roomNames.size(); i++){
@@ -180,11 +160,7 @@ public class MainActivity extends AppCompatActivity{
 
         fragmentSwitch(R.id.nav_home);
 
-
-
     }
-
-
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -336,7 +312,7 @@ public class MainActivity extends AppCompatActivity{
         navLoad.setChecked(true);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment,
-                null).setReorderingAllowed(true).commit();
+                null).setReorderingAllowed(true).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
 
     }
 
@@ -393,5 +369,51 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
         }
+    }
+
+    public void rfidExists(String identifier, FirebaseConnect fC, Context context){
+
+        DatabaseReference reference = fC.getSensorDataRef(identifier);
+
+
+
+        reference.child("DATA").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue().toString().split(":")[1];
+                Log.e("rfid",value);
+                if(rfidChange){
+
+                    if(arrayList.contains(value)){
+                        builder = new NotificationCompat.Builder(context, "NOTIFICATIONS")
+                                .setSmallIcon(R.drawable.thermostat)
+                                .setContentText("Access Card Scanned")
+                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                .setContentIntent(pendingIntent)
+                                .setAutoCancel(true);
+                        new Notifications("Access Card Scanned","RFID");
+
+                    }else {
+                        builder = new NotificationCompat.Builder(context, "NOTIFICATIONS")
+                                .setSmallIcon(R.drawable.thermostat)
+                                .setContentText("Wrong Access Card Scanned")
+                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                .setContentIntent(pendingIntent)
+                                .setAutoCancel(true);
+                        new Notifications("Wrong Access Card Scanned","RFID");
+
+                    }
+
+
+                }
+                rfidChange=true;
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

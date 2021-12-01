@@ -58,6 +58,7 @@ public class RoomBuilder{
                 RoomFragment rF = new RoomFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("title", roomName);
+                bundle.putInt("id", navId);
                 rF.setArguments(bundle);
 
                 FragmentTransaction fT = fragMan.beginTransaction();

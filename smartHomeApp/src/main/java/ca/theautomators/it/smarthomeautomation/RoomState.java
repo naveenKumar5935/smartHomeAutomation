@@ -74,14 +74,14 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         roomNames.set(index, name);
         roomStateChanged = true;
         numRooms = roomNames.size();
-//        doInBackground();
+        doInBackground();
     }
 
     public void changeRoomIcons(Drawable icon, int index){
 
         roomIcons.set(index, icon);
         roomStateChanged = true;
-//        doInBackground();
+        doInBackground();
     }
 
     public void changeMenuIds(int id, int index){
@@ -90,6 +90,8 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
             menuIds.add(id);
         else
             menuIds.set(index, id);
+
+        doInBackground();
         roomStateChanged = true;
     }
 

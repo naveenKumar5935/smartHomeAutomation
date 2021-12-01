@@ -106,7 +106,6 @@ public class ManageDeviceActivity extends AppCompatActivity {
         });
 
 
-        //TODO add functionality to link devices to room objects
     }
 
     private void display(){

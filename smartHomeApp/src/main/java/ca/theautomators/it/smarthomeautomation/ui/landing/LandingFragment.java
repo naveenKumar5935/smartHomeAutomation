@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,9 +53,22 @@ public class LandingFragment extends Fragment {
             buildLayout();
         }
 
+        for(Button button : buttons){
+            setButtonClickListener(button);
+        }
 
 
         return root;
+    }
+
+    private void setButtonClickListener(Button button){
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = (String)button.getText();
+            }
+        });
     }
 
     private void setButtonData(Button button, String data){
