@@ -89,7 +89,7 @@ public class Notifications {
     private void buildSmokeAlarmnotification(){
         value = value.split(":")[1];
 
-        if(Integer.valueOf(value)  == 1){
+        if(Integer.valueOf(value)  ==1 ){
             builder.setContentText("Smoke detected");
             triggerNotification();
         }

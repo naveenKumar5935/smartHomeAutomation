@@ -89,15 +89,15 @@ public class MainActivity extends AppCompatActivity{
                 case "TEMP":
                     notificationIdentifier = identifiers[i];
                     buildNotification("Temperature alarm", notificationIdentifier, pendingIntent, fC);
-                    break label;
+                    break ;
                 case "SMOKE":
                     notificationIdentifier = identifiers[i];
                     buildNotification("Smoke alarm", notificationIdentifier, pendingIntent, fC);
-                    break label;
+                    break ;
                 case "HUMID":
                     notificationIdentifier = identifiers[i];
                     buildNotification("Humidity alarm", notificationIdentifier, pendingIntent, fC);
-                    break label;
+                    break;
 
             }
         }
