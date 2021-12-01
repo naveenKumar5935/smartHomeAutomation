@@ -45,7 +45,7 @@ public class Notifications {
             case "HUMID":
                 buildHumidnotification();
                 break;
-            case "MOTION":
+            case "PIR":
                 buildMotionnotification();
         }
 

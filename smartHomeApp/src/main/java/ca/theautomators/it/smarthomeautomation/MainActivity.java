@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity{
                     notificationIdentifier = identifiers[i];
                     buildNotification("Humidity alarm", notificationIdentifier, pendingIntent, fC);
                     break;
-                case "MOTION":
+                case "PIR":
                     notificationIdentifier = identifiers[i];
                     buildNotification("Motion detected", notificationIdentifier, pendingIntent, fC);
                     break;
