@@ -7,6 +7,8 @@
 
 package ca.theautomators.it.smarthomeautomation;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -288,5 +290,27 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(RegisterActivity.this);
+        alert.setIcon(android.R.drawable.ic_dialog_alert);
+        alert.setTitle(R.string.alert_title);
+        alert.setMessage(R.string.alert_message);
+        alert.setPositiveButton(R.string.alert_positive_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        alert.setNegativeButton(R.string.alert_negative_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alert.show();
+
+    }
 
 }
