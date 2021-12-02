@@ -45,6 +45,7 @@ public class RoomFragment extends Fragment {
     private ArrayList<String> dataList;
     private String title;
     private boolean smokeDetected;
+    private RoomState rS;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +61,7 @@ public class RoomFragment extends Fragment {
         controls = new ArrayList<>();
         dataList = new ArrayList<>();
 
-        RoomState rS = RoomState.getInstance(null);
+        rS = RoomState.getInstance(null);
 
         title = "";
         smokeDetected = false;
@@ -198,6 +199,9 @@ public class RoomFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     String data = "";
+                    dataList = rS.loadRoomData(thisRoom.getTitle());
+
+
                     String dataRead = snapshot.getValue(String.class);
                     TextView roomData = root.findViewById(R.id.room_data);
                     roomData.setMovementMethod(new ScrollingMovementMethod());
@@ -284,6 +288,8 @@ public class RoomFragment extends Fragment {
                         data += line;
                     }
                     roomData.setText(data);
+
+                    rS.saveRoomData(thisRoom.getTitle(), dataList);
                 }
 
                 @Override

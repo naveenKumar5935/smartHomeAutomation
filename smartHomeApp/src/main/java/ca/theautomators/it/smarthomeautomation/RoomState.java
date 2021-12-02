@@ -317,5 +317,33 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
 
         return rooms;
     }
+
+    public void saveRoomData(String roomName, ArrayList<String> data){
+
+        SharedPreferences.Editor editor = state.edit();
+
+        for(int i = 0; i < data.size(); i++){
+
+            editor.putString(roomName + "_data_row_" + i, data.get(i));
+        }
+
+        editor.putInt(roomName + "num_data_rows", data.size());
+
+        editor.apply();
+    }
+
+    public ArrayList<String> loadRoomData(String roomName){
+
+        ArrayList<String> data = new ArrayList<>();
+
+        int numRows = state.getInt(roomName + "num_data_rows", 0);
+
+        for(int i = 0; i < numRows; i++){
+
+            data.add(state.getString(roomName + "_data_row_" + i, "").trim() + "\n");
+        }
+
+        return data;
+    }
 }
 
