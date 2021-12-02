@@ -6,18 +6,12 @@
  */
 package ca.theautomators.it.smarthomeautomation;
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 public class Device {
 
     private final String type;
     private final String identifier;
-    private String data;
 
     FirebaseConnect fC;
 
@@ -25,10 +19,9 @@ public class Device {
     public Device(String identifier){
 
         fC = FirebaseConnect.getInstance();
-
-        data = "";
         this.identifier = identifier;
         type = fC.getDeviceType(identifier);
+
     }
 
     public DatabaseReference getSensorData(){

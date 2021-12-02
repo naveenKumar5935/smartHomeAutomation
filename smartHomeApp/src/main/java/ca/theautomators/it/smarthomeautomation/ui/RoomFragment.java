@@ -41,8 +41,8 @@ public class RoomFragment extends Fragment {
     private Room thisRoom;
     private LinearLayout deviceControllers;
     private View root;
-    private String data;
     private ArrayList<SwitchCompat> controls;
+    private ArrayList<String> dataList;
     private String title;
     private boolean smokeDetected;
 
@@ -58,6 +58,7 @@ public class RoomFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_room, container, false);
 
         controls = new ArrayList<>();
+        dataList = new ArrayList<>();
 
         RoomState rS = RoomState.getInstance(null);
 
@@ -88,10 +89,7 @@ public class RoomFragment extends Fragment {
 
         deviceControllers = root.findViewById(R.id.controls);
 
-        data = "";
-
         buildRoom();
-
 
         return root;
     }
@@ -104,12 +102,14 @@ public class RoomFragment extends Fragment {
 
             if(!(dev.getType().equals("HUMID") || dev.getType().equals("TEMP"))){
 
-                deviceControllers.addView(buildController(dev));
+                    deviceControllers.addView(buildController(dev));
+
             }
 
             if(!(dev.getType().equals("SERVO"))){
 
-                buildSensorReceiver(dev);
+                    buildSensorReceiver(dev);
+
             }
         }
     }
@@ -193,95 +193,105 @@ public class RoomFragment extends Fragment {
 
     private void buildSensorReceiver(Device device){
 
-        device.getSensorData().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            device.getSensorData().addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                data = "";
-                String dataRead = snapshot.getValue(String.class);
-                TextView roomData = root.findViewById(R.id.room_data);
-                roomData.setMovementMethod(new ScrollingMovementMethod());
-                final int scrollAmount = roomData.getLayout().getLineTop(roomData.getLineCount()) - roomData.getHeight();
-                if (scrollAmount > 0)
-                    roomData.scrollTo(0, scrollAmount);
-                else
-                    roomData.scrollTo(0, 0);
+                    String data = "";
+                    String dataRead = snapshot.getValue(String.class);
+                    TextView roomData = root.findViewById(R.id.room_data);
+                    roomData.setMovementMethod(new ScrollingMovementMethod());
+                    final int scrollAmount = roomData.getLayout().getLineTop(roomData.getLineCount()) - roomData.getHeight();
+                    if (scrollAmount > 0)
+                        roomData.scrollTo(0, scrollAmount);
+                    else
+                        roomData.scrollTo(0, 0);
 
-                if(device.getType().equals("LIGHT")){
-                    data += "Lights: ";
+                    if (device.getType().equals("LIGHT")) {
+                        data += "Lights: ";
 
-                    if(dataRead.split(":")[0].equals("0")){
-                        data += "OFF";
-                        setControlState(false, "LIGHT");
+                        if (dataRead.split(":")[0].equals("0")) {
+                            data += "OFF";
+                            setControlState(false, "LIGHT");
+                        } else {
+                            data += "ON";
+                            setControlState(true, "LIGHT");
+                        }
+                    } else if (device.getType().equals("SMOKE")) {
+
+                        if (dataRead.equals("0:0")) {
+                            data += "Smoke detector: OFF";
+                            setControlState(false, "SMOKE");
+                        } else if (dataRead.split(":")[0].equals("1")) {
+                            data += "Smoke detector: ON";
+                            setControlState(true, "SMOKE");
+                        } else if (dataRead.split(":")[1].equals("1")) {
+                            data += "Smoke Alarm On!";
+                            smokeDetected = true;
+                            setControlState(true, "SMOKE");
+                        }
+                    } else if (device.getType().equals("RFID")) {
+
+                        if (dataRead.equals("0:0")) {
+                            data += "RFID: OFF (Locked)";
+                            setControlState(false, "RFID");
+                        } else if (dataRead.split(":")[0].equals("1") && dataRead.split(":")[1].equals("0")) {
+                            data += "RFID: ON";
+                            setControlState(true, "RFID");
+                        } else if (dataRead.split(":")[0].equals("1") && !dataRead.split(":")[1].equals("0")) {
+                            data += "RFID scanned: " + dataRead.split(":")[1];
+                        }
+                    } else if (device.getType().equals("PIR")) {
+
+                        if (dataRead.equals("0:0")) {
+                            data += "Motion Detector: OFF";
+                            setControlState(false, "PIR");
+                        } else if (dataRead.equals("1:0")) {
+                            data += "Motion Detector: ON";
+                            setControlState(true, "PIR");
+                        } else if (dataRead.equals("1:1")) {
+                            data += "Motion detected in: " + title + "!";
+                        }
+                    } else if (device.getType().equals("TEMP") || device.getType().equals("HUMID")) {
+                        String[] tempArr = dataRead.split(":");
+                        String temp = device.getType().equals("TEMP") ? "Temperature: " : "Humidity: ";
+                        for (String string : tempArr) {
+                            temp += string;
+                        }
+
+                        data += temp;
                     }
-                    else{
-                        data += "ON";
-                        setControlState(true, "LIGHT");
+
+                    data += " - " + getCurrentTime() + "\n";
+
+                    if(dataList.size() == 0){
+                        dataList.add(data);
                     }
+
+                    for(int i = 0; i < dataList.size(); i++){
+
+                        if(dataList.get(i).equals(data)){
+                            dataList.remove(i);
+                        }
+                    }
+
+
+                    dataList.add(data);
+
+                    data = "";
+
+                    for (String line : dataList) {
+                        data += line;
+                    }
+                    roomData.setText(data);
                 }
-                else if(device.getType().equals("SMOKE")){
 
-                    if(dataRead.equals("0:0")){
-                        data += "Smoke detector: OFF";
-                        setControlState(false, "SMOKE");
-                    }
-                    else if(dataRead.split(":")[0].equals("1")){
-                        data += "Smoke detector: ON";
-                        setControlState(true, "SMOKE");
-                    }
-                    else if(dataRead.split(":")[1].equals("1")){
-                        data += "Smoke Alarm On!";
-                        smokeDetected = true;
-                        setControlState(true, "SMOKE");
-                    }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
-                else if(device.getType().equals("RFID")){
+            });
 
-                    if(dataRead.equals("0:0")){
-                        data += "RFID: OFF (Locked)";
-                        setControlState(false, "RFID");
-                    }
-                    else if(dataRead.split(":")[0].equals("1") && dataRead.split(":")[1].equals("0")){
-                        data += "RFID: ON";
-                        setControlState(true, "RFID");
-                    }
-                    else if(dataRead.split(":")[0].equals("1") && !dataRead.split(":")[1].equals("0")){
-                        data += "RFID scanned: " + dataRead.split(":")[1];
-                    }
-                }
-                else if(device.getType().equals("PIR")){
-
-                    if(dataRead.equals("0:0")){
-                        data += "Motion Detector: OFF";
-                        setControlState(false, "PIR");
-                    }
-                    else if(dataRead.equals("1:0")){
-                        data += "Motion Detector: ON";
-                        setControlState(true, "PIR");
-                    }
-                    else if(dataRead.equals("1:1")){
-                        data += "Motion detected in: " + title + "!";
-                    }
-                }
-                else if(device.getType().equals("TEMP") || device.getType().equals("HUMID")){
-                    String[] tempArr = dataRead.split(":");
-                    String temp = device.getType().equals("TEMP") ? "Temperature: " : "Humidity: ";
-                    for(String string : tempArr){
-                        temp += string;
-                    }
-
-                    data += temp;
-                }
-
-                data += " - " + getCurrentTime() + "\n";
-                roomData.setText(data);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     private Drawable getDrawable(String type){

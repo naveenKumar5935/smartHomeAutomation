@@ -39,34 +39,31 @@ public class RoomBuilder{
         MenuItem home = menu.findItem(R.id.nav_home);
         MenuItem settings = menu.findItem(R.id.nav_settings);
 
-//        if(savedInstanceState == null){
-//
-//            fragMan.beginTransaction()
-//                    .setReorderingAllowed(true)
-//                    .add(R.id.nav_host_fragment, RoomFragment.class, null)
-//                    .addToBackStack(roomName)
-//                    .commit();
-//        }
-
         RoomFragment rF = new RoomFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", roomName);
-        rF.setArguments(bundle);
 
-        fragMan.beginTransaction()
+        if(savedInstanceState == null){
+
+            Bundle bundle = new Bundle();
+            bundle.putString("title", roomName);
+            rF.setArguments(bundle);
+
+            fragMan.beginTransaction()
                     .setReorderingAllowed(true)
                     .add(R.id.nav_host_fragment, rF, roomName)
                     .addToBackStack(roomName)
                     .commit();
+        }
 
         menu.add(R.id.drawer_list, navId, 0, roomName).setCheckable(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                FragmentTransaction fT = fragMan.beginTransaction();
-                fT.replace(R.id.nav_host_fragment, rF);
-                fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fT.commit();
+                if(savedInstanceState == null){
+                    FragmentTransaction fT = fragMan.beginTransaction();
+                    fT.replace(R.id.nav_host_fragment, rF);
+                    fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    fT.commit();
+                }
 
 
                 drawer.closeDrawer(Gravity.LEFT);

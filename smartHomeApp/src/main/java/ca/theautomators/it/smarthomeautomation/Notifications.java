@@ -7,7 +7,6 @@
 package ca.theautomators.it.smarthomeautomation;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -105,7 +104,7 @@ public class Notifications {
     private void buildMotionnotification(){
         value = value.split(":")[1];
 
-        if(Integer.valueOf(value)  ==1 ){
+        if(Integer.valueOf(value)  == 1){
             builder.setContentText("Motion detected!");
             triggerNotification();
         }
