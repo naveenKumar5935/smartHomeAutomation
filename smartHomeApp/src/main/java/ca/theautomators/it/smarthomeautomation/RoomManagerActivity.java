@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,8 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import java.util.ArrayList;
 
@@ -48,12 +51,14 @@ public class RoomManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_manager);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Room Manager");
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        setTitle("Room Manager");
+
+
 
         roomState = RoomState.getInstance(null);
 
@@ -166,6 +171,8 @@ public class RoomManagerActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     private LinearLayout buildLayout(){
 
@@ -324,6 +331,14 @@ public class RoomManagerActivity extends AppCompatActivity {
 
 
         return entryRow;
+    }
+
+    @Override
+    public void onBackPressed() {
+//        Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
+//        startActivity(intent);
+        moveTaskToBack(false);
+
     }
 
 

@@ -94,18 +94,18 @@ public class ReviewAcitivity extends AppCompatActivity {
         mSendFeedback.setOnClickListener(new View.OnClickListener() {
             ProgressDialog progressDialog =null ;
 
-//            Handler handle = new Handler() {
-//                public void handleMessage(Message msg) {
-//                    super.handleMessage(msg);
-//                    progressDialog.incrementProgressBy(10); // Incremented By Value 2
-//                }
-//            };
+            Handler handle = new Handler() {
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    progressDialog.incrementProgressBy(10); // Incremented By Value 2
+                }
+            };
 
             @Override
             public void onClick(View view) {
                 float rating = mRatingBar.getRating();
 
-                if (rating < 0 ){
+                if (rating < 1 ){
                     Toast.makeText(ReviewAcitivity.this, "Please choose the rating", Toast.LENGTH_LONG).show();
                 }
 
@@ -161,24 +161,23 @@ public class ReviewAcitivity extends AppCompatActivity {
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL); // Progress Dialog Style Horizontal
                     progressDialog.show(); // Display Progress Dialog
                     progressDialog.setCancelable(false);
-//                    new Thread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            try {
-//                                while (progressDialog.getProgress() <= progressDialog.getMax()) {
-//                                    Thread.sleep(200);
-//                                    handle.sendMessage(handle.obtainMessage());
-//                                    if (progressDialog.getProgress() == progressDialog.getMax()) {
-//                                        progressDialog.dismiss();
-//                                    }
-//
-//                                }
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }).start();
-                    Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                while (progressDialog.getProgress() <= progressDialog.getMax()) {
+                                    Thread.sleep(200);
+                                    handle.sendMessage(handle.obtainMessage());
+                                    if (progressDialog.getProgress() == progressDialog.getMax()) {
+                                        progressDialog.dismiss();
+                                    }
+                                    Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
 
                 }
             }

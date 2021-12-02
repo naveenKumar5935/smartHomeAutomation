@@ -37,6 +37,7 @@ public class ManageDeviceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_device);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){
