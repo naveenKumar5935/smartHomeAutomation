@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +24,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.drawable.ColorDrawable;
 
 
 import io.paperdb.Paper;
@@ -92,14 +95,7 @@ public class ReviewAcitivity extends AppCompatActivity {
         });
 
         mSendFeedback.setOnClickListener(new View.OnClickListener() {
-            ProgressDialog progressDialog =null ;
 
-            Handler handle = new Handler() {
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    progressDialog.incrementProgressBy(10); // Incremented By Value 2
-                }
-            };
 
             @Override
             public void onClick(View view) {
@@ -153,37 +149,70 @@ public class ReviewAcitivity extends AppCompatActivity {
                     phonenumber.setText("");
                     email.setText("");
                     mRatingBar.setRating(0);
-
-                    progressDialog = new ProgressDialog(ReviewAcitivity.this);
-                    progressDialog.setMax(100); // Progress Dialog Max Value
-                    progressDialog.setMessage("Loading..."); // Setting Message
-                    progressDialog.setTitle("ProgressDialog"); // Setting Title
-                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL); // Progress Dialog Style Horizontal
-                    progressDialog.show(); // Display Progress Dialog
-                    progressDialog.setCancelable(false);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                while (progressDialog.getProgress() <= progressDialog.getMax()) {
-                                    Thread.sleep(200);
-                                    handle.sendMessage(handle.obtainMessage());
-                                    if (progressDialog.getProgress() == progressDialog.getMax()) {
-                                        progressDialog.dismiss();
-                                    }
-                                    Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }).start();
-
+                    new ProgressTask().execute();
                 }
             }
         });
 
     }
+
+    private class ProgressTask extends AsyncTask<Void,Void,Void> {
+        private int progressStatus=0;
+        private Handler handler = new Handler();
+        private ProgressDialog pd = new ProgressDialog(ReviewAcitivity.this);
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            pd.setIndeterminate(false);
+            pd.setMax(100);
+            pd.setMessage("Loading...");
+            pd.setTitle("ProgressDialog");
+            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            pd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+            pd.setCancelable(true);
+            pd.show();
+            onPostExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void...args){
+            progressStatus = 0;
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(progressStatus < 100){
+                        progressStatus +=1;
+
+                        try{
+                            Thread.sleep(20);
+                        }catch(InterruptedException e){
+                            e.printStackTrace();
+                        }
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                pd.setProgress(progressStatus);
+                                if(progressStatus == 100){
+                                    pd.dismiss();
+                                }
+                            }
+                        });
+                    }
+                }
+            }).start();
+
+            return null;
+        }
+
+        protected void onPostExecute(){
+            Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
+
+        }
+
+}
 
 
     //Get device model number and store in the database

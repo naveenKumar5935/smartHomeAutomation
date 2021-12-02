@@ -30,13 +30,13 @@ public class ReviewActivityTest {
 
     @Test
     public void performLogin(){
-      //  Espresso.onView(withId(R.id.ratingBar)).perform(reviewAcitivity.settingRatingBarForTesting(3));
+//        Espresso.onView(withId(R.id.ratingBar)).perform(ReviewAcitivity.settingRatingBarForTesting(3));
         Espresso.onView(withId(R.id.Name)).perform(typeText("naveen"));
         Espresso.closeSoftKeyboard();
         Espresso.onView(withId(R.id.Phoneno)).perform(typeText("6478096396"));
         Espresso.closeSoftKeyboard();
-      //  Espresso.onView(withId(R.id.email)).perform(typeText("naveenbti002@gmail.com"));
-       // Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(R.id.email)).perform(typeText("naveenbti002@gmail.com"));
+        Espresso.closeSoftKeyboard();
         Espresso.onView(withId(R.id.etFeedback)).perform(typeText("my name is naveen"));
         Espresso.closeSoftKeyboard();
         Espresso.onView(withId(R.id.btnSubmit)).perform(click());
