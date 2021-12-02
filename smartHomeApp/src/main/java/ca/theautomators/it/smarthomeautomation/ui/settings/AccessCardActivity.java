@@ -39,9 +39,13 @@ public class AccessCardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_access_card);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Manage Access Card");
+
         accessET = findViewById(R.id.accessCard_tb);
         accessBtn = findViewById(R.id.accessBtn);
         accessList = findViewById(R.id.access_listview);
+
 
         arrayList = new ArrayList<>();
         keylist = new ArrayList<>();
