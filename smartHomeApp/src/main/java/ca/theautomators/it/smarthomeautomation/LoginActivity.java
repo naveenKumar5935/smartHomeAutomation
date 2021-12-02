@@ -127,19 +127,19 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String getemail = email.getText().toString().trim();
                 String getpass = password.getText().toString().trim();
-                if (!getemail.contains("@") || !getemail.contains(".")){
+                if (!emailCheck(getemail)){
                     email.setError(getString(R.string.email_error));
                     return;
                 }
-                Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&=?])(?=\\S+$).{8,}$");
-                Matcher matcher = pattern.matcher(getpass);
-                if(matcher.matches()){
-                    //  Toast.makeText(RegisterActivity.this, "password matched",Toast.LENGTH_SHORT).show();
+
+                if(checkPassword(getpass)){
+
                 }else {
                     password.setError("Minimum 8 characters with atleast 1 upper case, 1 lowercase, 1 special character and 1 number");
                     Toast.makeText(LoginActivity.this, "Password does not satisfy requirements",Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 PasswordEncryption passwordEncryption = new PasswordEncryption(getpass);
 
                 String encryptedPassword = passwordEncryption.getHashedPassword();
@@ -159,6 +159,26 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public boolean checkPassword(String password){
+        Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&=?])(?=\\S+$).{8,}$");
+        Matcher matcher = pattern.matcher(password);
+        if(matcher.matches()){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean emailCheck(String email){
+        Pattern  pattern = Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$");
+        Matcher matcher = pattern.matcher(email);
+        if(matcher.matches()){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 
@@ -266,6 +286,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+
 
     @Override
     public void onBackPressed() {
