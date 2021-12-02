@@ -157,6 +157,10 @@
     <string name="submit">submit</string>
     <string name="internet_connected">Internet connected</string>
     <string name="internet_not_connected">Internet not connected</string>
+    <string name="ok">Ok</string>
+    <string name="no_sensors">No sensors in room</string>
+    <string name="double_check_sensors">Please double check that the sensors are connected and try again later</string>
+    <string name="no_sensors_found">No Sensors Found!</string>
 
     <string-array name="rooms">
         <item>Select Type</item>

@@ -70,7 +70,11 @@ public class ManageDeviceActivity extends AppCompatActivity {
         }
         else if(fC.getNumDevices() != identifiers.length){
             identifiers = fC.getIdentifiers();
-            rS.saveIdentifiers(identifiers);
+
+
+            if(FirebaseConnect.getInstance().getFirebaseConnectivity()){
+                rS.saveIdentifiers(identifiers);
+            }
         }
         //compares shared pref identifiers with database, if new devices found, gets new list
         //TODO uncomment once checkNewDevices has been adapted

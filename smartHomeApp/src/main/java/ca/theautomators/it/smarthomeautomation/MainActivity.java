@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -83,36 +84,55 @@ public class MainActivity extends AppCompatActivity{
 
         FirebaseConnect fC = FirebaseConnect.getInstance();
         String[] identifiers = fC.getIdentifiers();
-        String notificationIdentifier = "";
-        DatabaseReference tempRef;
+        final String[] notificationIdentifier = {""};
+        final Context tempContext = this;
 
-        label:
-        for(int i = 0; i < identifiers.length; i++){
-            String type = fC.getDeviceType(identifiers[i]);
-            //Add more cases for other notifications
-            switch (type) {
-                case "TEMP":
-                    notificationIdentifier = identifiers[i];
-                    buildNotification("Temperature alarm", notificationIdentifier, pendingIntent, fC);
-                    break ;
-                case "SMOKE":
-                    notificationIdentifier = identifiers[i];
-                    buildNotification("Smoke alarm", notificationIdentifier, pendingIntent, fC);
-                    break ;
-                case "HUMID":
-                    notificationIdentifier = identifiers[i];
-                    buildNotification("Humidity alarm", notificationIdentifier, pendingIntent, fC);
-                    break;
-                case "PIR":
-                    notificationIdentifier = identifiers[i];
-                    buildNotification("Motion detected", notificationIdentifier, pendingIntent, fC);
-                    break;
-                case "RFID":
-                    notificationIdentifier = identifiers[i];
-                    rfidExists(notificationIdentifier, fC, this);
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if(connected){
+
+                    for(int i = 0; i < identifiers.length; i++){
+                        String type = fC.getDeviceType(identifiers[i]);
+                        switch (type) {
+                            case "TEMP":
+                                notificationIdentifier[0] = identifiers[i];
+                                buildNotification("Temperature alarm", notificationIdentifier[0], pendingIntent, fC);
+                                break ;
+                            case "SMOKE":
+                                notificationIdentifier[0] = identifiers[i];
+                                buildNotification("Smoke alarm", notificationIdentifier[0], pendingIntent, fC);
+                                break ;
+                            case "HUMID":
+                                notificationIdentifier[0] = identifiers[i];
+                                buildNotification("Humidity alarm", notificationIdentifier[0], pendingIntent, fC);
+                                break;
+                            case "PIR":
+                                notificationIdentifier[0] = identifiers[i];
+                                buildNotification("Motion detected", notificationIdentifier[0], pendingIntent, fC);
+                                break;
+                            case "RFID":
+                                notificationIdentifier[0] = identifiers[i];
+                                rfidExists(notificationIdentifier[0], fC, tempContext);
+
+                        }
+                    }
+
+                }
+                else{
+
+                    Toast toast = Toast.makeText(tempContext, "No connection to sensors detected", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        }
+        });
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

@@ -33,7 +33,7 @@ public class SplashScreenActivity extends Activity {
         }
 
         FirebaseConnect fC = FirebaseConnect.getInstance();
-        createTempAlarmNotificationChannel();
+        createAlarmNotificationChannel();
 
         handler=new Handler();
 
@@ -50,7 +50,7 @@ public class SplashScreenActivity extends Activity {
 
     }
 
-    private void createTempAlarmNotificationChannel(){
+    private void createAlarmNotificationChannel(){
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             CharSequence name = getString(R.string.notifier);

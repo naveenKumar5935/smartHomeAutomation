@@ -20,7 +20,13 @@ public class Device {
 
         fC = FirebaseConnect.getInstance();
         this.identifier = identifier;
-        type = fC.getDeviceType(identifier);
+
+        if(fC.getFirebaseConnectivity()){
+            type = fC.getDeviceType(identifier);
+        }
+        else{
+            type = "No Data Available";
+        }
 
     }
 

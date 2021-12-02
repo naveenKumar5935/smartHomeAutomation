@@ -6,11 +6,11 @@
  */
 package ca.theautomators.it.smarthomeautomation;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,10 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 
 import java.util.ArrayList;
 
@@ -124,8 +123,108 @@ public class RoomManagerActivity extends AppCompatActivity {
 
                 roomState.save();
 
-                Intent intent = new Intent(RoomManagerActivity.this, ManageDeviceActivity.class);
-                startActivity(intent);
+                AlertDialog.Builder option = new AlertDialog.Builder(RoomManagerActivity.this);
+                AlertDialog.Builder alert = new AlertDialog.Builder(RoomManagerActivity.this);
+
+                if(FirebaseConnect.getInstance().getFirebaseConnectivity()){
+
+                    option.setIcon(R.drawable.home);
+                    option.setTitle("Rooms Saved!");
+                    option.setMessage("Would you like to save sensors to rooms now?");
+                    option.setPositiveButton(R.string.alert_positive_btn, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            Intent intent = new Intent(RoomManagerActivity.this, ManageDeviceActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    option.setNegativeButton(R.string.alert_negative_btn, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            alert.setIcon(R.drawable.home);
+                            alert.setTitle("Don't forget!");
+                            alert.setMessage("You can save sensors to rooms at any time by going to Settings - Manage rooms");
+                            alert.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ArrayList<Room> rooms = roomState.loadBuiltRooms();
+
+                                    if(rooms.size() > 0){
+                                        for (Room room : rooms) {
+                                            if (!roomNames.contains(room.getTitle())) {
+                                                rooms.remove(room);
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        for(String roomName : roomNames){
+
+                                            rooms.add(new Room(roomName));
+                                        }
+                                    }
+
+                                    roomState.saveBuiltRooms(rooms);
+
+                                    Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+
+                            alert.show();
+                        }
+                    });
+
+                    option.show();
+                }
+                else{
+                    option.setIcon(android.R.drawable.ic_dialog_alert);
+                    option.setTitle(R.string.no_sensors_found);
+                    option.setMessage(R.string.double_check_sensors);
+                    option.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            ArrayList<Room> rooms = roomState.loadBuiltRooms();
+
+                            //Check for rooms that need to be deleted
+                            for(Room room : rooms){
+                                if(!roomNames.contains(room.getTitle())){
+                                    rooms.remove(room);
+                                }
+                            }
+
+                            //check from rooms that need to be added
+                            for(int i = 0; i < roomNames.size(); i++){
+
+                                boolean found = false;
+
+                                for(int j = 0; j < rooms.size(); j++){
+
+                                    if(rooms.get(j).getTitle().equals(roomNames.get(i))){
+                                        found = true;
+                                        break;
+                                    }
+                                }
+
+                                if(!found){
+                                    rooms.add(new Room(roomNames.get(i)));
+                                }
+                            }
+
+                            roomState.saveBuiltRooms(rooms);
+
+                            Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    option.show();
+
+                }
+
+
 
             }
         });

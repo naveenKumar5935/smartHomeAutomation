@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import ca.theautomators.it.smarthomeautomation.Device;
+import ca.theautomators.it.smarthomeautomation.FirebaseConnect;
 import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.Room;
@@ -90,7 +91,13 @@ public class RoomFragment extends Fragment {
 
         deviceControllers = root.findViewById(R.id.controls);
 
-        buildRoom();
+        if(thisRoom.getDeviceIdentifierList().size() > 0){
+            buildRoom();
+        }
+        else{
+            TextView roomData = root.findViewById(R.id.room_data);
+            roomData.setText(R.string.no_sensors);
+        }
 
         return root;
     }
@@ -109,7 +116,9 @@ public class RoomFragment extends Fragment {
 
             if(!(dev.getType().equals("SERVO"))){
 
+                if(FirebaseConnect.getInstance().getFirebaseConnectivity()){
                     buildSensorReceiver(dev);
+                }
 
             }
         }
