@@ -22,8 +22,13 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
+import ca.theautomators.it.smarthomeautomation.Device;
 import ca.theautomators.it.smarthomeautomation.FirebaseConnect;
 import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
@@ -36,7 +41,7 @@ public class LandingFragment extends Fragment {
     private ArrayList<Room> rooms;
     private ArrayList<Button> buttons;
     private LinearLayout buttonList;
-    private int[] menuIds;
+    FirebaseConnect fC;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,7 +50,7 @@ public class LandingFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_landing, container, false);
 
         RoomState rS = RoomState.getInstance(null);
-        FirebaseConnect fC = FirebaseConnect.getInstance();
+        fC = FirebaseConnect.getInstance();
         buttons = new ArrayList<>();
         buttonList = root.findViewById(R.id.landing_button_list);
 
@@ -53,14 +58,16 @@ public class LandingFragment extends Fragment {
 
         if(!(rooms.isEmpty())){
             buildLayout();
+            setButtonSensorReceivers();
         }
 
-        menuIds = new int[rooms.size()];
+
         ArrayList<MenuItem> menuItems = rS.getMenuItems();
 
         for(int i = 0; i  < buttons.size(); i++){
             setButtonClickListener(buttons.get(i), menuItems);
         }
+
 
 
         return root;
@@ -73,7 +80,7 @@ public class LandingFragment extends Fragment {
             public void onClick(View v) {
 
                 for(int i = 0; i < menuItems.size(); i++){
-                    if(button.getText().equals(menuItems.get(i).getTitle())){
+                    if(button.getText().toString().split("\n")[0].equals(menuItems.get(i).getTitle())){
                         ((MainActivity)getActivity()).fragmentSwitch(menuItems.get(i).getItemId());
                     }
                 }
@@ -81,16 +88,107 @@ public class LandingFragment extends Fragment {
         });
     }
 
-    private void setButtonData(Button button, String data){
+    private void setButtonSensorReceivers(){
 
-        CharSequence buttonTitle = button.getText();
+        for(int i = 0; i < rooms.size(); i++){
+
+            ArrayList<Device> devices = new ArrayList<>();
+
+            if(rooms.get(i).getDeviceIdentifierList().size() > 0){
+
+                for(String device : rooms.get(i).getDeviceIdentifierList()){
+
+                    devices.add(new Device(device));
+                }
+
+                ArrayList<String> buttonData = new ArrayList<>();
+
+                for(Device device : devices){
+
+                    int finalI = i;
+                    device.getSensorData().addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            String dataRead = snapshot.getValue(String.class);
+                            String data = "";
+
+                            switch(device.getType()){
+
+                                case "LIGHT":
+                                    data += "Lights: ";
+                                    data += dataRead.split(":")[0].equals("0") ? "OFF" : "ON";
+                                    rooms.get(finalI).setData("LIGHT", data);
+                                    setButtonData(buttons.get(finalI), rooms.get(finalI));
+                                    break;
+
+                                case "SMOKE":
+                                    if(dataRead.equals("0:0"))
+                                        data += "Smoke Detector: OFF";
+                                    else if (dataRead.split(":")[0].equals("1"))
+                                        data += "Smoke Detector: ON";
+                                    else if (dataRead.split(":")[1].equals("1"))
+                                        data += "Smoke Alarm On!";
+                                    rooms.get(finalI).setData("SMOKE", data);
+                                    setButtonData(buttons.get(finalI), rooms.get(finalI));
+                                    break;
+
+                                case "RFID":
+                                    if(dataRead.equals("0:0"))
+                                        data += "RFID: OFF (Locked)";
+                                    else if(dataRead.split(":")[0].equals("1") && dataRead.split(":")[1].equals("0"))
+                                        data += "RFID: ON";
+                                    else if(dataRead.split(":")[0].equals("1") && !dataRead.split(":")[1].equals("0"))
+                                        data += "RFID scanned: " + dataRead.split(":")[1];
+                                    rooms.get(finalI).setData("RFID", data);
+                                    setButtonData(buttons.get(finalI), rooms.get(finalI));
+                                    break;
+
+                                case "PIR":
+                                    if(dataRead.equals("0:0"))
+                                        data += "Motion Detector: OFF";
+                                    else if(dataRead.equals("1:0"))
+                                        data += "Motion Detector: ON";
+                                    else if(dataRead.equals("1:1"))
+                                        data += "Motion Detected!";
+                                    rooms.get(finalI).setData("PIR", data);
+                                    setButtonData(buttons.get(finalI), rooms.get(finalI));
+                                    break;
+
+                                case "TEMP":
+                                case "HUMID":
+                                    data += device.getType().equals("TEMP") ? "TEMP: " : "HUMID: ";
+                                    data += dataRead.replace(":", "");
+                                    rooms.get(finalI).setData(device.getType().equals("TEMP") ? "TEMP" : "HUMID", data);
+                                    setButtonData(buttons.get(finalI), rooms.get(finalI));
+                                    break;
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+            }
+        }
+    }
+
+    private void setButtonData(Button button, Room room){
+
+        CharSequence buttonTitle = room.getTitle();
+
         int start = buttonTitle.length();
-        int end = start + data.length() + 2;
+        int end = start + room.getData().length() + 2;
 
         SpannableStringBuilder span = new SpannableStringBuilder(buttonTitle);
-        span.insert(buttonTitle.length(), "\n\n" + data);
+        span.insert(buttonTitle.length(), "\n\n" + room.getData());
         span.setSpan(new RelativeSizeSpan(0.6f), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         button.setText(span);
+
     }
 
     private void buildLayout(){
@@ -178,6 +276,9 @@ public class LandingFragment extends Fragment {
         params.weight = 1;
         params.setMargins(margin, margin, margin, margin);
         button.setLayoutParams(params);
+
+
+
         buttons.add(button);
 
         return button;

@@ -94,29 +94,31 @@ public class MainActivity extends AppCompatActivity{
                 boolean connected = snapshot.getValue(Boolean.class);
                 if(connected){
 
-                    for(int i = 0; i < identifiers.length; i++){
-                        String type = fC.getDeviceType(identifiers[i]);
-                        switch (type) {
-                            case "TEMP":
-                                notificationIdentifier[0] = identifiers[i];
-                                buildNotification("Temperature alarm", notificationIdentifier[0], pendingIntent, fC);
-                                break ;
-                            case "SMOKE":
-                                notificationIdentifier[0] = identifiers[i];
-                                buildNotification("Smoke alarm", notificationIdentifier[0], pendingIntent, fC);
-                                break ;
-                            case "HUMID":
-                                notificationIdentifier[0] = identifiers[i];
-                                buildNotification("Humidity alarm", notificationIdentifier[0], pendingIntent, fC);
-                                break;
-                            case "PIR":
-                                notificationIdentifier[0] = identifiers[i];
-                                buildNotification("Motion detected", notificationIdentifier[0], pendingIntent, fC);
-                                break;
-                            case "RFID":
-                                notificationIdentifier[0] = identifiers[i];
-                                rfidExists(notificationIdentifier[0], fC, tempContext);
+                    if(identifiers != null){
+                        for (int i = 0; i < identifiers.length; i++) {
+                            String type = fC.getDeviceType(identifiers[i]);
+                            switch (type) {
+                                case "TEMP":
+                                    notificationIdentifier[0] = identifiers[i];
+                                    buildNotification("Temperature alarm", notificationIdentifier[0], pendingIntent, fC);
+                                    break;
+                                case "SMOKE":
+                                    notificationIdentifier[0] = identifiers[i];
+                                    buildNotification("Smoke alarm", notificationIdentifier[0], pendingIntent, fC);
+                                    break;
+                                case "HUMID":
+                                    notificationIdentifier[0] = identifiers[i];
+                                    buildNotification("Humidity alarm", notificationIdentifier[0], pendingIntent, fC);
+                                    break;
+                                case "PIR":
+                                    notificationIdentifier[0] = identifiers[i];
+                                    buildNotification("Motion detected", notificationIdentifier[0], pendingIntent, fC);
+                                    break;
+                                case "RFID":
+                                    notificationIdentifier[0] = identifiers[i];
+                                    rfidExists(notificationIdentifier[0], fC, tempContext);
 
+                            }
                         }
                     }
 
