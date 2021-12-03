@@ -23,6 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.androidstudy.networkmanager.Monitor;
+import com.androidstudy.networkmanager.Tovuti;
 import com.developer.gbuttons.GoogleSignInButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -54,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth auth;
     GoogleSignInButton googleSignUpButton;
     private GoogleSignInClient mGoogleSignInClient;
+    Boolean connection=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +88,17 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        Tovuti.from(RegisterActivity.this).monitor(new Monitor.ConnectivityListener() {
+            @Override
+            public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast) {
+                if(isConnected){
+                    connection=true;
+                }else {
+                    connection=false;
+                }
+            }
+        });
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +127,14 @@ public class RegisterActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(getaccess)){
                     Toast.makeText(RegisterActivity.this, R.string.enter_access,Toast.LENGTH_SHORT).show();
                 }else {
-                    getAndMatchAccessCode(getaccess,getemail,encryptedPassword);
+
+                    if(connection){
+                        getAndMatchAccessCode(getaccess,getemail,encryptedPassword);
+                    }else {
+                        Toast.makeText(getApplicationContext(),R.string.check_connection,Toast.LENGTH_SHORT).show();
+                    }
+
+
                 }
             }
         });
@@ -127,7 +148,13 @@ public class RegisterActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(accessCodeEntered)){
                     Toast.makeText(RegisterActivity.this,R.string.enter_access,Toast.LENGTH_SHORT).show();
                 }else {
-                    getAndMatchAccessCode(accessCodeEntered,null,null);
+                    if(connection){
+                        getAndMatchAccessCode(accessCodeEntered,null,null);
+                    }else {
+                        Toast.makeText(getApplicationContext(),R.string.check_connection,Toast.LENGTH_SHORT).show();
+
+                    }
+
                 }
             }
         });

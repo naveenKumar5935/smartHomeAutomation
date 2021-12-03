@@ -23,7 +23,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import com.androidstudy.networkmanager.Monitor;
+import com.androidstudy.networkmanager.Tovuti;
 import com.developer.gbuttons.GoogleSignInButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -58,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInButton googleSignInButton;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth auth;
+    Boolean connection=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +104,17 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
+        Tovuti.from(LoginActivity.this).monitor(new Monitor.ConnectivityListener() {
+            @Override
+            public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast) {
+                if(isConnected){
+                    connection=true;
+                }else {
+                    connection=false;
+                }
+            }
+        });
+
         googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,7 +123,13 @@ public class LoginActivity extends AppCompatActivity {
                 }else {
                     Paper.book().write("googleSignIn","unchecked");
                 }
+
+                if(connection){
                     googleSignInRequest();
+                }else {
+                    Toast.makeText(getApplicationContext(), R.string.check_connection,Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -152,8 +173,11 @@ public class LoginActivity extends AppCompatActivity {
                     Paper.book().write("userpassword","");
                 }
 
-
-                getUserData(getemail,encryptedPassword);
+                    if(connection){
+                        getUserData(getemail,encryptedPassword);
+                    }else {
+                        Toast.makeText(getApplicationContext(),R.string.check_connection,Toast.LENGTH_SHORT).show();
+                    }
 
             }
         });
