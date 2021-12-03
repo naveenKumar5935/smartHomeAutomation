@@ -166,4 +166,8 @@
     <string name="double_check_sensors">Vérifiez que les capteurs sont connectés et réessayez plus tard</string>
     <string name="no_sensors_found">Aucun capteur trouvé!</string>
 
+    <string name="password_error_register">Minimum 8 characters with atleast 1 upper case, 1 lowercase, 1 special character and 1 number</string>
+    <string name="password_error_r">Password doesn\'t match</string>
+    <string name="check_connection">Please check your connection</string>
+
 </resources>
