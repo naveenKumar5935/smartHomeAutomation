@@ -62,6 +62,7 @@ public class LoginActivityTest {
     public void emailCheck5(){
         assertTrue(loginActivity.emailCheck("gaganajeet@gmail"));
 
+
     }
 
 
