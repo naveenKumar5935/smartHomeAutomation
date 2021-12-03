@@ -42,4 +42,29 @@ public class LoginActivityTest {
 
     }
 
+    @Test
+    public void emailCheck2(){
+        assertTrue(loginActivity.emailCheck("naveenbti002@yahoo.com"));
+
+    }
+    @Test
+    public void emailCheck3(){
+        assertFalse(loginActivity.emailCheck("naveenabc.com@"));
+
+    }
+
+    @Test
+    public void emailCheck4(){
+        assertTrue(loginActivity.emailCheck("naveen@abc.com"));
+
+    }
+    @Test
+    public void emailCheck5(){
+        assertTrue(loginActivity.emailCheck("gaganajeet@gmail"));
+
+    }
+
+
+
+
 }

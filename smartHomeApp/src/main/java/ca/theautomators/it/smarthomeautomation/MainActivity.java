@@ -408,8 +408,13 @@ public class MainActivity extends AppCompatActivity{
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String value = snapshot.getValue().toString().split(":")[1];
+                    String rfidState = snapshot.getValue().toString();
+
                     Log.e("rfid", value);
                     if (rfidChange) {
+                        if(rfidState.matches("0.0") || rfidState.matches("1.0")){
+                            return;
+                        }
 
                         if (arrayList.contains(value)) {
                             builder = new NotificationCompat.Builder(context, "NOTIFICATIONS")

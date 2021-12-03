@@ -35,14 +35,11 @@
             android:name=".ui.AboutAppActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".RoomManagerActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity" />
-        </activity>
+            android:name=".RoomManagerActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".ManageDeviceActivity"
-            android:parentActivityName=".RoomManagerActivity" />
+            android:parentActivityName=".RoomManagerActivity"/>
 
 
         <activity
