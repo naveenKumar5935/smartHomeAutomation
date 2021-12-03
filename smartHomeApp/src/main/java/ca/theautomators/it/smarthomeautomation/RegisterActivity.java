@@ -92,24 +92,21 @@ public class RegisterActivity extends AppCompatActivity {
                 String getpass = password.getText().toString().trim();
                 String getConfirmPassword = confirmPassword.getText().toString().trim();
                 if(!getpass.matches(getConfirmPassword)){
-                    confirmPassword.setError("Password doesn't match");
+                    confirmPassword.setError(getString(R.string.password_error_r));
                     return;
                 }
 
-                Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&=?])(?=\\S+$).{8,}$");
-                Matcher matcher = pattern.matcher(getpass);
-                if(matcher.matches()){
-                  //  Toast.makeText(RegisterActivity.this, "password matched",Toast.LENGTH_SHORT).show();
+                if (!emailCheck(getemail)){
+                    email.setError(getString(R.string.email_error));
+                    return;
+                }
+
+                if(checkPassword(getpass)){
+
                 }else {
-                    password.setError("Minimum 8 characters with atleast 1 upper case, 1 lowercase, 1 special character and 1 number");
-                    Toast.makeText(RegisterActivity.this, "Not matched",Toast.LENGTH_SHORT).show();
+                    password.setError(getString(R.string.password_error_register));
                     return;
                 }
-                if (!getemail.contains("@") || !getemail.contains(".")){
-                    email.setError(getString(R.string.pleasE_type_corrent_email));
-                    return;
-                }
-
                 PasswordEncryption passwordEncryption = new PasswordEncryption(getpass);
                 String encryptedPassword = passwordEncryption.getHashedPassword();
                 String getaccess = accessCode.getText().toString().trim();
@@ -120,6 +117,8 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+
+
 
         googleSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +132,26 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public boolean checkPassword(String password){
+        Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&=?])(?=\\S+$).{8,}$");
+        Matcher matcher = pattern.matcher(password);
+        if(matcher.matches()){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean emailCheck(String email){
+        Pattern  pattern = Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$");
+        Matcher matcher = pattern.matcher(email);
+        if(matcher.matches()){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public void getAndMatchAccessCode(String code, String email, String password){

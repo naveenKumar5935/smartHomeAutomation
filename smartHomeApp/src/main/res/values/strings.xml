@@ -161,6 +161,8 @@
     <string name="no_sensors">No sensors in room</string>
     <string name="double_check_sensors">Please double check that the sensors are connected and try again later</string>
     <string name="no_sensors_found">No Sensors Found!</string>
+    <string name="password_error_register">Minimum 8 characters with atleast 1 upper case, 1 lowercase, 1 special character and 1 number</string>
+    <string name="password_error_r">Password doesn\'t match</string>
 
     <string-array name="rooms">
         <item>Select Type</item>
