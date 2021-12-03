@@ -6,18 +6,18 @@
  */
 package ca.theautomators.it.smarthomeautomation;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Room {
 
     private ArrayList<String> devices;
-    private String title;
+    private String title, rfid, smoke, light, pir, temp, humid;
 
     public Room(String title){
 
         this.title = title;
         devices = new ArrayList<>();
+        rfid = smoke = light = pir = temp = humid = null;
     }
 
     public void addDevice(String identifier){
@@ -42,5 +42,55 @@ public class Room {
 
     public ArrayList<String> getDeviceIdentifierList() {
         return devices;
+    }
+
+    public void setData(String type, String data){
+
+        switch(type){
+            case "SMOKE":
+                smoke = data;
+                break;
+            case "RFID":
+                rfid = data;
+                break;
+            case "LIGHT":
+                light = data;
+                break;
+            case "PIR":
+                pir = data;
+                break;
+            case "TEMP":
+                temp = data;
+                break;
+            case "HUMID":
+                humid = data;
+
+        }
+    }
+
+    public String getData(){
+
+        String data = "";
+
+        if(rfid != null){
+            data += rfid + "\n";
+        }
+        if(smoke != null){
+            data += smoke + "\n";
+        }
+        if(light != null){
+            data += light + "\n";
+        }
+        if(pir != null){
+            data += pir + "\n";
+        }
+        if(temp != null){
+            data += temp + "\n";
+        }
+        if(humid != null){
+            data += humid + "\n";
+        }
+
+        return data;
     }
 }
