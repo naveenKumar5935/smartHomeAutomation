@@ -97,7 +97,9 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
 
     public void addMenuItem(MenuItem item){
 
-        menuItems.add(item);
+        if(!menuItems.contains(item)){
+            menuItems.add(item);
+        }
     }
 
     public void resetMenuItems(){

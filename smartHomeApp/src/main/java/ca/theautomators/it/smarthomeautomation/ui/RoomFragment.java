@@ -6,6 +6,7 @@
  */
 package ca.theautomators.it.smarthomeautomation.ui;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -311,28 +312,35 @@ public class RoomFragment extends Fragment {
 
     private Drawable getDrawable(String type){
 
-        switch (type) {
-            case "RFID":
-                return ContextCompat.getDrawable(getContext(), R.drawable.rfid_nobg);
-            case "PIR":
-                return ContextCompat.getDrawable(getContext(), R.drawable.motion_detection_nobg);
-            case "SERVO":
-                return ContextCompat.getDrawable(getContext(), R.drawable.door_closed_nobg);
-            case "SERVOOPEN":
-                return ContextCompat.getDrawable(getContext(), R.drawable.door_open_nobg);
-            case "SMOKE":
-                return ContextCompat.getDrawable(getContext(), R.drawable.smoke);
-            case "TEMP":
-                return ContextCompat.getDrawable(getContext(), R.drawable.thermostat);
-            case "HUMID":
-                return ContextCompat.getDrawable(getContext(), R.drawable.humidity);
-            case "LIGHT":
-                return ContextCompat.getDrawable(getContext(), R.drawable.lights_off_nobg);
-            case "LIGHTON":
-                return ContextCompat.getDrawable(getContext(), R.drawable.lights_on_nobg);
-            default:
-                return null;
+        Context context= getContext();
+
+
+        if(context != null){
+            switch (type) {
+                case "RFID":
+                    return ContextCompat.getDrawable(getContext(), R.drawable.rfid_nobg);
+                case "PIR":
+                    return ContextCompat.getDrawable(getContext(), R.drawable.motion_detection_nobg);
+                case "SERVO":
+                    return ContextCompat.getDrawable(getContext(), R.drawable.door_closed_nobg);
+                case "SERVOOPEN":
+                    return ContextCompat.getDrawable(getContext(), R.drawable.door_open_nobg);
+                case "SMOKE":
+                    return ContextCompat.getDrawable(getContext(), R.drawable.smoke);
+                case "TEMP":
+                    return ContextCompat.getDrawable(getContext(), R.drawable.thermostat);
+                case "HUMID":
+                    return ContextCompat.getDrawable(getContext(), R.drawable.humidity);
+                case "LIGHT":
+                    return ContextCompat.getDrawable(getContext(), R.drawable.lights_off_nobg);
+                case "LIGHTON":
+                    return ContextCompat.getDrawable(getContext(), R.drawable.lights_on_nobg);
+                default:
+                    return null;
+            }
         }
+
+        return null;
     }
 
     private void setControlState(boolean state, String name){
