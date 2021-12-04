@@ -44,7 +44,7 @@ public class SplashScreenActivity extends Activity {
                 Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class); //<--- Uncomment this line when working on Login
      //           Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class); //<--- Uncomment this line when you don't want login page to load
                 startActivity(intent);
-                finish();
+                SplashScreenActivity.this.finish();
             }
         },3000);
 

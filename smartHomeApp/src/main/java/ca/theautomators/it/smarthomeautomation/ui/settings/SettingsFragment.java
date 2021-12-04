@@ -209,7 +209,6 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RoomManagerActivity.class);
-                getActivity().finish();
                 startActivity(intent);
             }
         });
