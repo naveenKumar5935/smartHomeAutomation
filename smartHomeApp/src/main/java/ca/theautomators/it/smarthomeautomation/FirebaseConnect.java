@@ -159,7 +159,12 @@ public class FirebaseConnect {
 
         int index = Integer.parseInt(identifier) - 100;
 
-        return deviceTypes[index];
+        if(deviceTypes.length > 0){
+            return deviceTypes[index];
+        }
+        else{
+            return "NULL";
+        }
     }
 
     public void loadIdentifiers(){

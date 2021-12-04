@@ -35,13 +35,13 @@ import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.Room;
 import ca.theautomators.it.smarthomeautomation.RoomState;
 
-public class LandingFragment extends Fragment {
+public class LandingFragment extends Fragment{
 
     private View root;
     private ArrayList<Room> rooms;
     private ArrayList<Button> buttons;
     private LinearLayout buttonList;
-    FirebaseConnect fC;
+    private FirebaseConnect fC;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -57,8 +57,12 @@ public class LandingFragment extends Fragment {
         rooms = rS.loadBuiltRooms();
 
         if(!(rooms.isEmpty())){
+
             buildLayout();
-            setButtonSensorReceivers();
+
+            if(fC.getFirebaseConnectivity()){
+                setButtonSensorReceivers();
+            }
         }
 
 

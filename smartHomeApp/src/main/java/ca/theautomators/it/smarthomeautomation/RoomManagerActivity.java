@@ -56,7 +56,7 @@ public class RoomManagerActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-
+        FirebaseConnect fC = FirebaseConnect.getInstance();
 
 
         roomState = RoomState.getInstance(null);

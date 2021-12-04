@@ -48,6 +48,7 @@ public class RoomFragment extends Fragment {
     private String title;
     private boolean smokeDetected;
     private RoomState rS;
+    FirebaseConnect fC;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,6 +65,8 @@ public class RoomFragment extends Fragment {
         dataList = new ArrayList<>();
 
         rS = RoomState.getInstance(null);
+        fC = FirebaseConnect.getInstance();
+
 
         title = "";
         smokeDetected = false;
@@ -92,8 +95,24 @@ public class RoomFragment extends Fragment {
 
         deviceControllers = root.findViewById(R.id.controls);
 
-        if(thisRoom.getDeviceIdentifierList().size() > 0){
+        if((thisRoom.getDeviceIdentifierList().size() > 0) && fC.getFirebaseConnectivity()){
             buildRoom();
+        }
+        else if((thisRoom.getDeviceIdentifierList().size() > 0) && !fC.getFirebaseConnectivity()){
+            TextView roomData = root.findViewById(R.id.room_data);
+            ArrayList<String> dataList = rS.loadRoomData(thisRoom.getTitle());
+
+            String data = "";
+
+            for (String line : dataList) {
+                data += line;
+            }
+
+            data += "Connection Lost, no data available";
+
+            roomData.setText(data);
+
+            roomData.setMovementMethod(new ScrollingMovementMethod());
         }
         else{
             TextView roomData = root.findViewById(R.id.room_data);
@@ -109,18 +128,20 @@ public class RoomFragment extends Fragment {
 
             Device dev = new Device(device);
 
-            if(!(dev.getType().equals("HUMID") || dev.getType().equals("TEMP"))){
+            if(dev.getType() != null){
+                if (!(dev.getType().equals("HUMID") || dev.getType().equals("TEMP"))) {
 
                     deviceControllers.addView(buildController(dev));
 
-            }
-
-            if(!(dev.getType().equals("SERVO"))){
-
-                if(FirebaseConnect.getInstance().getFirebaseConnectivity()){
-                    buildSensorReceiver(dev);
                 }
 
+                if (!(dev.getType().equals("SERVO"))) {
+
+                    if (FirebaseConnect.getInstance().getFirebaseConnectivity()) {
+                        buildSensorReceiver(dev);
+                    }
+
+                }
             }
         }
     }

@@ -137,17 +137,20 @@ public class SettingsFragment extends Fragment {
         Tovuti.from(getContext()).monitor(new Monitor.ConnectivityListener() {
             @Override
             public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast) {
-                if(isConnected){
-                    connection=true;
-                    fab.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_baseline_wifi_24));
-                }else {
-                    connection=false;
-                    Drawable wifiOffImg = ContextCompat.getDrawable(getContext(),R.drawable.ic_baseline_signal_wifi_off_24);
-                    if(wifiOffImg!=null){
-                        fab.setImageDrawable(wifiOffImg);
+                try{
+                    if (isConnected) {
+                        connection = true;
+                        fab.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_wifi_24));
+                    } else {
+                        connection = false;
+                        Drawable wifiOffImg = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_signal_wifi_off_24);
+                        if (wifiOffImg != null) {
+                            fab.setImageDrawable(wifiOffImg);
+                        }
                     }
-
-
+                }
+                catch(IllegalStateException ex){
+                    ex.printStackTrace();
                 }
             }
         });
