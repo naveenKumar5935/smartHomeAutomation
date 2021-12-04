@@ -49,6 +49,8 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 import ca.theautomators.it.smarthomeautomation.LoginActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.RoomManagerActivity;
@@ -136,10 +138,10 @@ public class SettingsFragment extends Fragment {
             public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast) {
                 if(isConnected){
                     connection=true;
-                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.ic_baseline_wifi_24));
+                    fab.setImageDrawable(ContextCompat.getDrawable(requireActivity(),R.drawable.ic_baseline_wifi_24));
                 }else {
                     connection=false;
-                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.ic_baseline_signal_wifi_off_24));
+                    fab.setImageDrawable(ContextCompat.getDrawable(requireActivity(),R.drawable.ic_baseline_signal_wifi_off_24));
                 }
             }
         });

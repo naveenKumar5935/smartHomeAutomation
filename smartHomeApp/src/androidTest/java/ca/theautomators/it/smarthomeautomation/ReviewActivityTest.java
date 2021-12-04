@@ -26,10 +26,11 @@ public class ReviewActivityTest {
     public void setUp() throws Exception {
        // reviewAcitivity = new ReviewAcitivity();
         activity= activityActivityTestRule.getActivity();
+        activity.setRatingBarForTest(3);
     }
 
     @Test
-    public void performLogin(){
+    public void setEverything(){
 //        Espresso.onView(withId(R.id.ratingBar)).perform(ReviewAcitivity.settingRatingBarForTesting(3));
         Espresso.onView(withId(R.id.Name)).perform(typeText("naveen"));
         Espresso.closeSoftKeyboard();
@@ -42,6 +43,37 @@ public class ReviewActivityTest {
         Espresso.onView(withId(R.id.btnSubmit)).perform(click());
 
 
+
+    }
+
+    @Test
+    public void setName(){
+        Espresso.onView(withId(R.id.Name)).perform(typeText("naveen"));
+        Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(R.id.btnSubmit)).perform(click());
+
+    }
+
+    @Test
+    public void setPhone(){
+
+        Espresso.onView(withId(R.id.Phoneno)).perform(typeText("6478096396"));
+        Espresso.onView(withId(R.id.btnSubmit)).perform(click());
+    }
+
+    @Test
+    public void setEmail(){
+
+        Espresso.onView(withId(R.id.email)).perform(typeText("naveenbti002@gmail.com"));
+        Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(R.id.btnSubmit)).perform(click());
+    }
+
+    @Test
+    public void setReview(){
+        Espresso.onView(withId(R.id.etFeedback)).perform(typeText("my name is naveen"));
+        Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(R.id.btnSubmit)).perform(click());
 
     }
 

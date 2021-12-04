@@ -247,4 +247,8 @@ public class ReviewAcitivity extends AppCompatActivity {
         return phrase.toString();
     }
 
+    public void setRatingBarForTest(float star){
+        mRatingBar.setRating(star);
+    }
+
 }
