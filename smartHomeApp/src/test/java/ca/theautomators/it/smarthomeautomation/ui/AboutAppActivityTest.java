@@ -53,6 +53,21 @@ public class AboutAppActivityTest {
         assertEquals(Text,"Who We Are? We are a Home Automation Company Specializing in Custom Smart Home Solutions. We can't wait to be part of your project - reach out today and see how we can make your dreams a reality!");
     }
 
+    @Test
+    public void validateTextViewContent4(){
+        TextView result = (TextView) activity.findViewById(R.id.textView3);
+
+        String Text = (String) result.getText();
+        assertNotNull(Text);
+        assertEquals(Text,"Hello who are we");
+    }
+
+    @Test
+    public void validateImageView(){
+        ImageView imageview = (ImageView) activity.findViewById(R.id.imageView2);
+        assertEquals(R.drawable.splash, Shadows.shadowOf(imageview.getDrawable()).getCreatedFromResId());
+
+    }
 
 
 }
