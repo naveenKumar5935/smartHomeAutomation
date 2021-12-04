@@ -11,6 +11,7 @@ import static android.app.Activity.RESULT_OK;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -138,10 +139,15 @@ public class SettingsFragment extends Fragment {
             public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast) {
                 if(isConnected){
                     connection=true;
-                    fab.setImageDrawable(ContextCompat.getDrawable(requireActivity(),R.drawable.ic_baseline_wifi_24));
+                    fab.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_baseline_wifi_24));
                 }else {
                     connection=false;
-                    fab.setImageDrawable(ContextCompat.getDrawable(requireActivity(),R.drawable.ic_baseline_signal_wifi_off_24));
+                    Drawable wifiOffImg = ContextCompat.getDrawable(getContext(),R.drawable.ic_baseline_signal_wifi_off_24);
+                    if(wifiOffImg!=null){
+                        fab.setImageDrawable(wifiOffImg);
+                    }
+
+
                 }
             }
         });

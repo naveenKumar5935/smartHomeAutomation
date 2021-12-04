@@ -281,19 +281,14 @@ public class LoginActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Log.i("name",account.getDisplayName());
 
-            // Signed in successfully, show authenticated UI.
             FirebaseSignInWithGoogle();
         } catch (ApiException e) {
-
-            FirebaseSignInWithGoogle();
         }
     }
 
 
     public void FirebaseSignInWithGoogle(){
-        //   Log.i("name",account.getDisplayName());
 
         FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
