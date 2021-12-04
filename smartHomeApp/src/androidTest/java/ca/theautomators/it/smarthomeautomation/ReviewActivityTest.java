@@ -29,22 +29,7 @@ public class ReviewActivityTest {
         activity.setRatingBarForTest(3);
     }
 
-    @Test
-    public void setEverything(){
-//        Espresso.onView(withId(R.id.ratingBar)).perform(ReviewAcitivity.settingRatingBarForTesting(3));
-        Espresso.onView(withId(R.id.Name)).perform(typeText("naveen"));
-        Espresso.closeSoftKeyboard();
-        Espresso.onView(withId(R.id.Phoneno)).perform(typeText("6478096396"));
-        Espresso.closeSoftKeyboard();
-        Espresso.onView(withId(R.id.email)).perform(typeText("naveenbti002@gmail.com"));
-        Espresso.closeSoftKeyboard();
-        Espresso.onView(withId(R.id.etFeedback)).perform(typeText("my name is naveen"));
-        Espresso.closeSoftKeyboard();
-        Espresso.onView(withId(R.id.btnSubmit)).perform(click());
 
-
-
-    }
 
     @Test
     public void setName(){
@@ -74,6 +59,23 @@ public class ReviewActivityTest {
         Espresso.onView(withId(R.id.etFeedback)).perform(typeText("my name is naveen"));
         Espresso.closeSoftKeyboard();
         Espresso.onView(withId(R.id.btnSubmit)).perform(click());
+
+    }
+
+    @Test
+    public void setEverything(){
+//        Espresso.onView(withId(R.id.ratingBar)).perform(ReviewAcitivity.settingRatingBarForTesting(3));
+        Espresso.onView(withId(R.id.Name)).perform(typeText("naveen"));
+        Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(R.id.Phoneno)).perform(typeText("6478096396"));
+        Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(R.id.email)).perform(typeText("naveenbti002@gmail.com"));
+        Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(R.id.etFeedback)).perform(typeText("my name is naveen"));
+        Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(R.id.btnSubmit)).perform(click());
+
+
 
     }
 

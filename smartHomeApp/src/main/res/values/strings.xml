@@ -164,6 +164,8 @@
     <string name="password_error_register">Minimum 8 characters with atleast 1 upper case, 1 lowercase, 1 special character and 1 number</string>
     <string name="password_error_r">Password doesn\'t match</string>
     <string name="check_connection">Please check your connection</string>
+    <string name="login_error">Minimum 8 characters with atleast 1 upper case, 1 lowercase, 1 special character and 1 number</string>
+    <string name="password_error">Password does not satisfy requirements</string>
 
     <string-array name="rooms">
         <item>Select Type</item>

@@ -91,17 +91,31 @@ public class LoginActivity extends AppCompatActivity {
         if(googleRememberMeCheck.matches("checked")){
             GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
             if(gUser!=null){
-                FirebaseSignInWithGoogle();
+                if(connection){
+                    FirebaseSignInWithGoogle();
+                }else {
+                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         }
 
         //Log.d("user",userEmail);
 
         if(!TextUtils.isEmpty(userEmail)){
-          getUserData(userEmail,userpassword);
-            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-            startActivity(intent);
-            finish();
+            if(connection){
+                getUserData(userEmail,userpassword);
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }else {
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
         }
 
         Tovuti.from(LoginActivity.this).monitor(new Monitor.ConnectivityListener() {
@@ -156,8 +170,8 @@ public class LoginActivity extends AppCompatActivity {
                 if(checkPassword(getpass)){
 
                 }else {
-                    password.setError("Minimum 8 characters with atleast 1 upper case, 1 lowercase, 1 special character and 1 number");
-                    Toast.makeText(LoginActivity.this, "Password does not satisfy requirements",Toast.LENGTH_SHORT).show();
+                    password.setError(getString(R.string.login_error));
+                    Toast.makeText(LoginActivity.this, R.string.password_error,Toast.LENGTH_SHORT).show();
                     return;
                 }
 
