@@ -1,7 +1,7 @@
 package ca.theautomators.it.smarthomeautomation.ui;
 
-import android.app.Activity;
 import android.os.Build;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.junit.Before;
@@ -9,13 +9,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
-import org.w3c.dom.Text;
-
-import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
-
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
 @RunWith(RobolectricTestRunner.class)
@@ -33,8 +29,44 @@ public class AboutAppActivityTest {
     @Test
     public void validateTextViewContent(){
         TextView result = (TextView) activity.findViewById(R.id.textView2);
-        assertNotNull("TextView could not be found", result);
-        assertTrue("It's true","version1_0_copyright_2021".equals(result.getText().toString()));
+
+        String Text = (String) result.getText();
+        assertNotNull(Text);
+        assertNotEquals(Text,"Version1.0Copyright 2021");
+    }
+
+    @Test
+    public void validateTextViewContent2(){
+        TextView result = (TextView) activity.findViewById(R.id.textView2);
+
+        String Text = (String) result.getText();
+        assertNotNull(Text);
+        assertEquals(Text,"Version1.0 Copyright 2021");
+    }
+
+    @Test
+    public void validateTextViewContent3(){
+        TextView result = (TextView) activity.findViewById(R.id.textView3);
+
+        String Text = (String) result.getText();
+        assertNotNull(Text);
+        assertEquals(Text,"Who We Are? We are a Home Automation Company Specializing in Custom Smart Home Solutions. We can't wait to be part of your project - reach out today and see how we can make your dreams a reality!");
+    }
+
+    @Test
+    public void validateTextViewContent4(){
+        TextView result = (TextView) activity.findViewById(R.id.textView3);
+
+        String Text = (String) result.getText();
+        assertNotNull(Text);
+        assertEquals(Text,"Hello who are we");
+    }
+
+    @Test
+    public void validateImageView(){
+        ImageView imageview = (ImageView) activity.findViewById(R.id.imageView2);
+        assertEquals(R.drawable.splash, Shadows.shadowOf(imageview.getDrawable()).getCreatedFromResId());
+
     }
 
 
