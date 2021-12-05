@@ -206,7 +206,11 @@ public class MainActivity extends AppCompatActivity{
         alert.setPositiveButton(R.string.alert_positive_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+//                MainActivity.this.finish();
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
         alert.setNegativeButton(R.string.alert_negative_btn, new DialogInterface.OnClickListener() {
