@@ -75,6 +75,7 @@ public class SettingsFragment extends Fragment {
 
             container.removeAllViews();
         }
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
