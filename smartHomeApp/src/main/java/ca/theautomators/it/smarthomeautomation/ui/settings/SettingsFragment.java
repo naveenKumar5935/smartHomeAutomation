@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -67,9 +66,7 @@ public class SettingsFragment extends Fragment {
     FirebaseAuth auth;
     StorageReference storageReference;
     GoogleSignInAccount gUser;
-    AlertDialog.Builder alertDialog1 = null;
     FloatingActionButton fab;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -82,9 +79,6 @@ public class SettingsFragment extends Fragment {
                 .requestEmail()
                 .build();
         GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(getActivity(),gso);
-
-
-
 
 
         binding = FragmentSettingsBinding.inflate(inflater,container,false);
@@ -253,12 +247,7 @@ public class SettingsFragment extends Fragment {
                             }
                         });
             }
-
-
         }
-
-
-
     }
 
     void permissionHandle(){
@@ -291,11 +280,4 @@ public class SettingsFragment extends Fragment {
         startActivityForResult(intent,45);
 
     }
-
-
-
-
 }
-
-
-

@@ -47,14 +47,14 @@ public class ManageDeviceActivity extends AppCompatActivity {
         FirebaseConnect fC = FirebaseConnect.getInstance();
         RoomState rS = RoomState.getInstance(null);
 
-        setTitle("Detected Devices");
+        setTitle(getString(R.string.device_manager_title));
 
         //Get device identifiers from shared preferences
         identifiers = rS.loadIdentifiers();
 
         //Get Room names from RoomState
         roomNames = new ArrayList<>();
-        roomNames.add("Select Room");
+        roomNames.add(getString(R.string.select_room));
         roomNames.addAll(rS.getRoomNames());
 
         rooms = new ArrayList<>();
@@ -76,15 +76,9 @@ public class ManageDeviceActivity extends AppCompatActivity {
                 rS.saveIdentifiers(identifiers);
             }
         }
-        //compares shared pref identifiers with database, if new devices found, gets new list
-        //TODO uncomment once checkNewDevices has been adapted
-//        else if(fC.checkNewDevices(identifiers)){
-//
-//            identifiers = fC.getIdentifiers();
-//            rS.saveIdentifiers(identifiers);
-//        }
 
         devices = new ArrayList<>();
+
         //Creates array list of devices using identifiers
         for (String identifier : identifiers) {
 
@@ -109,7 +103,6 @@ public class ManageDeviceActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
     }
 
@@ -207,6 +200,5 @@ public class ManageDeviceActivity extends AppCompatActivity {
             return null;
         }
     }
-
 
 }

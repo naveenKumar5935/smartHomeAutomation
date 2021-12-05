@@ -6,8 +6,6 @@
  */
 package ca.theautomators.it.smarthomeautomation;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -16,6 +14,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import io.paperdb.Paper;
 
@@ -48,31 +48,26 @@ public class LegalActivity extends AppCompatActivity {
                 String value = (String) lv.getItemAtPosition(position);
 
                 if ("Google Terms of Service".equals(value)) {
-                    Uri uri = Uri.parse("https://policies.google.com/terms?hl=en-US");
+                    Uri uri = Uri.parse(getString(R.string.terms_link));
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
                 }
 
                 else if ( "Google Privacy Policy".equals(value)){
-                    Uri uri = Uri.parse("https://policies.google.com/privacy?hl=en-US");
+                    Uri uri = Uri.parse(getString(R.string.privacy_link));
                     Intent intent1 = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent1);
                 }
 
                 else if ( "Open Source Compliance".equals(value)){
-                    Uri uri = Uri.parse("https://github.com/naveenKumar5935/smartHomeAutomation.git");
+                    Uri uri = Uri.parse(getString(R.string.source_code_link));
                     Intent intent2 = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent2);
                 }
 
             }
 
-
         });
-
-
-
-
 
     }
 

@@ -33,7 +33,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
@@ -51,12 +50,12 @@ import io.paperdb.Paper;
 public class RegisterActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 1;
-    EditText email,password,accessCode, fullname, phone,confirmPassword;
-    Button loginBtn, registerBtn;
-    FirebaseAuth auth;
-    GoogleSignInButton googleSignUpButton;
+    private EditText email,password,accessCode, fullname, phone,confirmPassword;
+    private Button loginBtn, registerBtn;
+    private FirebaseAuth auth;
+    private GoogleSignInButton googleSignUpButton;
     private GoogleSignInClient mGoogleSignInClient;
-    Boolean connection=false;
+    private Boolean connection=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,8 +137,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
-
 
         googleSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,8 +221,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void setUserData(String email, String password){
 
-
-
         auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -252,8 +247,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
     }
 
 
@@ -299,7 +292,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public void FirebaseSignUpWithGoogle(){
-        //   Log.i("name",account.getDisplayName());
 
         FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -325,17 +317,13 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
 
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
 
-
-
     }
-
 
     @Override
     public void onBackPressed() {

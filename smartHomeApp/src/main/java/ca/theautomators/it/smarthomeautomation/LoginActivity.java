@@ -23,7 +23,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.androidstudy.networkmanager.Monitor;
 import com.androidstudy.networkmanager.Tovuti;
@@ -33,20 +32,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -101,8 +96,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         }
-
-        //Log.d("user",userEmail);
 
         if(!TextUtils.isEmpty(userEmail)){
             if(connection){
@@ -192,10 +185,8 @@ public class LoginActivity extends AppCompatActivity {
                     }else {
                         Toast.makeText(getApplicationContext(),R.string.check_connection,Toast.LENGTH_SHORT).show();
                     }
-
             }
         });
-
 
     }
 
@@ -309,18 +300,13 @@ public class LoginActivity extends AppCompatActivity {
 
             }
 
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
 
-
-
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -343,9 +329,5 @@ public class LoginActivity extends AppCompatActivity {
         alert.show();
 
     }
-
-
-
-
 
 }

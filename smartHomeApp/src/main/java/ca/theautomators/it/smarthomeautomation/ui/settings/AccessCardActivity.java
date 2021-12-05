@@ -1,8 +1,5 @@
 package ca.theautomators.it.smarthomeautomation.ui.settings;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -14,6 +11,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,8 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import ca.theautomators.it.smarthomeautomation.MainActivity;
-import ca.theautomators.it.smarthomeautomation.Notifications;
 import ca.theautomators.it.smarthomeautomation.R;
 
 public class AccessCardActivity extends AppCompatActivity {
@@ -40,7 +38,7 @@ public class AccessCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_access_card);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Manage Access Card");
+        setTitle(getString(R.string.access_card_title));
 
         accessET = findViewById(R.id.accessCard_tb);
         accessBtn = findViewById(R.id.accessBtn);
@@ -61,7 +59,7 @@ public class AccessCardActivity extends AppCompatActivity {
                 AlertDialog.Builder alert = new AlertDialog.Builder(AccessCardActivity.this);
                 alert.setIcon(android.R.drawable.ic_dialog_alert);
                 alert.setTitle(R.string.alert_title);
-                alert.setMessage("You want to delete it");
+                alert.setMessage(R.string.do_you_want_to_delete);
                 alert.setPositiveButton(R.string.alert_positive_btn, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -93,7 +91,7 @@ public class AccessCardActivity extends AppCompatActivity {
                 if(accessET.getText().toString().trim()!=null){
 
                     if(arrayList.contains(accessET.getText().toString())){
-                        Toast.makeText(getApplicationContext(),"Access Card already there",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.access_card_exists,Toast.LENGTH_SHORT).show();
                         return;
                     }
                     FirebaseDatabase.getInstance().getReference().child("AccessCards").child(accessET.getText().toString().trim()).setValue(accessET.getText().toString().trim());
@@ -103,12 +101,6 @@ public class AccessCardActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
     }
 
     public void gettingData(){
@@ -132,6 +124,5 @@ public class AccessCardActivity extends AppCompatActivity {
             }
         });
     }
-
 
 }

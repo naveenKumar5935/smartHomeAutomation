@@ -6,6 +6,8 @@
  */
 package ca.theautomators.it.smarthomeautomation;
 
+import android.content.res.Resources;
+
 import com.google.firebase.database.DatabaseReference;
 
 public class Device {
@@ -25,7 +27,7 @@ public class Device {
             type = fC.getDeviceType(identifier);
         }
         else{
-            type = "No Data Available";
+            type = Resources.getSystem().getString(R.string.no_data_available);
         }
 
     }

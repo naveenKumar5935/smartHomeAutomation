@@ -6,8 +6,6 @@
  */
 package ca.theautomators.it.smarthomeautomation;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -15,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -37,7 +37,6 @@ public class ReportIssue extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getString(R.string.reporttitle));
 
-
         EditText report = findViewById(R.id.issue);
         EditText email = findViewById(R.id.email_issue);
         Button sendFeedback = findViewById(R.id.button_issue);
@@ -53,8 +52,6 @@ public class ReportIssue extends AppCompatActivity {
             }
         }
 
-
-
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -65,12 +62,12 @@ public class ReportIssue extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(!email.getText().toString().trim().contains("@") || !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
-                    Toast.makeText(ReportIssue.this, "Enter valid Email Address", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ReportIssue.this, R.string.enter_valid_email, Toast.LENGTH_LONG).show();
 
                 }
 
                 else if (report.getText().toString().isEmpty()) {
-                    Toast.makeText(ReportIssue.this, "Please fill in report text box", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ReportIssue.this, R.string.fill_in_report_box, Toast.LENGTH_LONG).show();
                 }
 
                 else  {
@@ -85,7 +82,7 @@ public class ReportIssue extends AppCompatActivity {
                     report.setText("");
                     email.setText("");
 
-                    Toast.makeText(ReportIssue.this, "Thank you for sharing your concern", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReportIssue.this, R.string.thank_you_for_sharing_concern, Toast.LENGTH_SHORT).show();
                 }
 
             }

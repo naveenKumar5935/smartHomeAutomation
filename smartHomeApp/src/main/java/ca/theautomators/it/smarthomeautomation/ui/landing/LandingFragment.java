@@ -72,8 +72,6 @@ public class LandingFragment extends Fragment{
             setButtonClickListener(buttons.get(i), menuItems);
         }
 
-
-
         return root;
     }
 
@@ -104,8 +102,6 @@ public class LandingFragment extends Fragment{
 
                     devices.add(new Device(device));
                 }
-
-                ArrayList<String> buttonData = new ArrayList<>();
 
                 for(Device device : devices){
 
@@ -218,7 +214,6 @@ public class LandingFragment extends Fragment{
 
         }
 
-
     }
 
     private void addRows(LinearLayout buttonList, int numRows){
@@ -237,8 +232,6 @@ public class LandingFragment extends Fragment{
 
             buttonList.addView(row);
         }
-
-
 
     }
 
@@ -280,8 +273,6 @@ public class LandingFragment extends Fragment{
         params.weight = 1;
         params.setMargins(margin, margin, margin, margin);
         button.setLayoutParams(params);
-
-
 
         buttons.add(button);
 

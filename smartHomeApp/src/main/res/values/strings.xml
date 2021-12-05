@@ -166,6 +166,45 @@
     <string name="check_connection">Please check your connection</string>
     <string name="login_error">Minimum 8 characters with atleast 1 upper case, 1 lowercase, 1 special character and 1 number</string>
     <string name="password_error">Password does not satisfy requirements</string>
+    <string name="access_card_title">Manage Access Card</string>
+    <string name="do_you_want_to_delete">Do you want to delete it?</string>
+    <string name="access_card_exists">Access Card already exists</string>
+    <string name="about_title">About App</string>
+    <string name="connection_lost_no_data">Connection Lost, no data available</string>
+    <string name="no_data_available">No Data Available</string>
+    <string name="connected">connected</string>
+    <string name="not_connected">not connected</string>
+    <string name="terms_link">https://policies.google.com/terms?hl=en-US</string>
+    <string name="privacy_link">https://policies.google.com/privacy?hl=en-US</string>
+    <string name="source_code_link">https://github.com/naveenKumar5935/smartHomeAutomation.git</string>
+    <string name="no_connection_to_sensors">No connection to sensors detected</string>
+    <string name="access_card_scanned">Access Card Scanned</string>
+    <string name="wrong_access_card_scanned">Wrong Access Card Scanned</string>
+    <string name="device_manager_title">Detected Devices</string>
+    <string name="select_room">Select Room</string>
+    <string name="low_temp_warning">Low Temperature Warning!</string>
+    <string name="high_temp_warning">High Temperature Warning!</string>
+    <string name="smoke_detected">Smoke detected</string>
+    <string name="humid_level_low">Humidity level very low</string>
+    <string name="motion_detected">Motion Detected!</string>
+    <string name="enter_valid_email">Enter valid Email Address</string>
+    <string name="fill_in_report_box">Please fill in report text box</string>
+    <string name="thank_you_for_sharing_concern">Thank you for sharing your concern</string>
+    <string name="choose_rating">Please choose the rating</string>
+    <string name="fill_in_name">Please fill in Name text box</string>
+    <string name="fill_in_phone">Please fill in phone number text box</string>
+    <string name="fill_in_feedback">Please fill in feedback box</string>
+    <string name="loading">Loading...</string>
+    <string name="progress_dialog">Progress Dialog</string>
+    <string name="thanks_for_sharing_feedback">Thank you for sharing your feedback</string>
+    <string name="room_manager_title">Room Manager</string>
+    <string name="no_rooms_added">No Rooms Added</string>
+    <string name="add_at_least_one_room">Please add at least one room to continue</string>
+    <string name="room_saved">Rooms Saved!</string>
+    <string name="would_you_like_to_save_sensors">Would you like to save sensors to rooms now?</string>
+    <string name="dont_forget">Don\'t forget!</string>
+    <string name="save_sensors_any_time_instructions"><![CDATA[You can save sensors to rooms at any time by going to Settings -> Manage rooms]]></string>
+    <string name="enter_room_name">Enter room name</string>
 
     <string-array name="rooms">
         <item>Select Type</item>

@@ -31,8 +31,6 @@ public class RoomBuilder{
         rS = RoomState.getInstance(null);
 
     }
-
-
     public void buildRoom(String roomName, Drawable roomIcon, int navId){
 
         Menu menu = navView.getMenu();
