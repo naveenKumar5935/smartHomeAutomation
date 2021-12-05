@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.paperdb.Paper;
 
@@ -89,5 +91,15 @@ public class ReportIssue extends AppCompatActivity {
         });
 
 
+    }
+
+    public boolean emailCheck(String email){
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$");
+        Matcher matcher = pattern.matcher(email);
+        if(matcher.matches()){
+            return true;
+        }else {
+            return false;
+        }
     }
 }
