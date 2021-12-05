@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity{
     private static NavigationView navigationView;
     private static NotificationCompat.Builder builder;
     private static Context context;
-    private Notifications tempNotifier;
     ArrayList<String> arrayList ;
     DatabaseReference firebaseDatabase;
     boolean rfidChange;
@@ -125,7 +124,7 @@ public class MainActivity extends AppCompatActivity{
                 }
                 else{
 
-                    Toast toast = Toast.makeText(tempContext, "No connection to sensors detected", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(tempContext, R.string.no_connection_to_sensors, Toast.LENGTH_LONG);
                     toast.show();
                 }
             }
@@ -136,7 +135,6 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
 
@@ -146,11 +144,8 @@ public class MainActivity extends AppCompatActivity{
                 .setDrawerLayout(drawer)
                 .build();
 
-
-
         RoomState roomState = RoomState.getInstance(this);
 
-//        menuIds = roomState.getMenuIds();
         roomNames = roomState.getRoomNames();
         roomIcons = roomState.getRoomIcons();
 
@@ -206,7 +201,6 @@ public class MainActivity extends AppCompatActivity{
         alert.setPositiveButton(R.string.alert_positive_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-//                MainActivity.this.finish();
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -372,8 +366,6 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
-
-
     public void buildNotification(String alarmType, String notificationIdentifier, PendingIntent pendingIntent, FirebaseConnect fC){
 
         if(!notificationIdentifier.isEmpty()) {
@@ -423,7 +415,7 @@ public class MainActivity extends AppCompatActivity{
                         if (arrayList.contains(value)) {
                             builder = new NotificationCompat.Builder(context, "NOTIFICATIONS")
                                     .setSmallIcon(android.R.drawable.ic_dialog_alert)
-                                    .setContentText("Access Card Scanned")
+                                    .setContentText(getString(R.string.access_card_scanned))
                                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                                     .setContentIntent(pendingIntent)
                                     .setAutoCancel(true);
@@ -432,7 +424,7 @@ public class MainActivity extends AppCompatActivity{
                         } else {
                             builder = new NotificationCompat.Builder(context, "NOTIFICATIONS")
                                     .setSmallIcon(android.R.drawable.ic_dialog_alert)
-                                    .setContentText("Wrong Access Card Scanned")
+                                    .setContentText(getString(R.string.wrong_access_card_scanned))
                                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                                     .setContentIntent(pendingIntent)
                                     .setAutoCancel(true);

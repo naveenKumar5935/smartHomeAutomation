@@ -6,16 +6,14 @@
  */
 package ca.theautomators.it.smarthomeautomation;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
@@ -24,15 +22,15 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.graphics.drawable.ColorDrawable;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import io.paperdb.Paper;
 
 public class ReviewAcitivity extends AppCompatActivity {
     private TextView mTextView;
-    FirebaseConnect firebaseConnect;
-    RatingBar mRatingBar;
+    private FirebaseConnect firebaseConnect;
+    private RatingBar mRatingBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +53,7 @@ public class ReviewAcitivity extends AppCompatActivity {
         EditText phonenumber = findViewById(R.id.Phoneno);
         EditText email = findViewById(R.id.email);
 
-
-
         firebaseConnect = FirebaseConnect.getInstance();
-
-
 
         mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -96,17 +90,16 @@ public class ReviewAcitivity extends AppCompatActivity {
 
         mSendFeedback.setOnClickListener(new View.OnClickListener() {
 
-
             @Override
             public void onClick(View view) {
                 float rating = mRatingBar.getRating();
 
                 if (rating < 1 ){
-                    Toast.makeText(ReviewAcitivity.this, "Please choose the rating", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ReviewAcitivity.this, R.string.choose_rating, Toast.LENGTH_LONG).show();
                 }
 
                 else if (Name.getText().toString().isEmpty()) {
-                    Toast.makeText(ReviewAcitivity.this, "Please fill in Name text box", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ReviewAcitivity.this, R.string.fill_in_name, Toast.LENGTH_LONG).show();
 
                 }
 
@@ -115,7 +108,7 @@ public class ReviewAcitivity extends AppCompatActivity {
                 }
 
                 else if (phonenumber.getText().toString().isEmpty()) {
-                    Toast.makeText(ReviewAcitivity.this, "Please fill in phone number text box", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ReviewAcitivity.this, R.string.fill_in_phone, Toast.LENGTH_LONG).show();
 
                 }
 
@@ -126,11 +119,11 @@ public class ReviewAcitivity extends AppCompatActivity {
 
 
                 else if(!email.getText().toString().trim().contains("@") || !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
-                    Toast.makeText(ReviewAcitivity.this, "Enter valid Email Address", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ReviewAcitivity.this, R.string.enter_valid_email, Toast.LENGTH_LONG).show();
 
                 }
                 else if(mFeedback.getText().toString().isEmpty()){
-                    Toast.makeText(ReviewAcitivity.this, "Please fill in feedback box", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ReviewAcitivity.this, R.string.fill_in_feedback, Toast.LENGTH_LONG).show();
 
                 }
 
@@ -166,8 +159,8 @@ public class ReviewAcitivity extends AppCompatActivity {
             super.onPreExecute();
             pd.setIndeterminate(false);
             pd.setMax(100);
-            pd.setMessage("Loading...");
-            pd.setTitle("ProgressDialog");
+            pd.setMessage(getString(R.string.loading));
+            pd.setTitle(getString(R.string.progress_dialog));
             pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             pd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
             pd.setCancelable(true);
@@ -208,12 +201,10 @@ public class ReviewAcitivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(){
-            Toast.makeText(ReviewAcitivity.this, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReviewAcitivity.this, R.string.thanks_for_sharing_feedback, Toast.LENGTH_SHORT).show();
 
         }
-
 }
-
 
     //Get device model number and store in the database
     public static String getDeviceName() {

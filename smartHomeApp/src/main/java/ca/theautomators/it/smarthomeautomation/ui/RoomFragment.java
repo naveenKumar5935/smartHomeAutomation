@@ -108,7 +108,7 @@ public class RoomFragment extends Fragment {
                 data += line;
             }
 
-            data += "Connection Lost, no data available";
+            data += getString(R.string.connection_lost_no_data);
 
             roomData.setText(data);
 

@@ -7,6 +7,7 @@
 package ca.theautomators.it.smarthomeautomation;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -65,13 +66,13 @@ public class Notifications {
 
         if(Integer.valueOf(value) < 10){
             //send low temp notification
-            builder.setContentText("Low Temperature Warning!");
+            builder.setContentText(Resources.getSystem().getString(R.string.low_temp_warning));
             //Last step must be to call this method
             triggerNotification();
         }
         else if(Integer.valueOf(value) > 25){
             //send high temp notification
-            builder.setContentText("High Temperature Warning!");
+            builder.setContentText(Resources.getSystem().getString(R.string.high_temp_warning));
             triggerNotification();
         }
     }
@@ -87,7 +88,7 @@ public class Notifications {
         value = value.split(":")[1];
 
         if(Integer.valueOf(value)  ==1 ){
-            builder.setContentText("Smoke detected");
+            builder.setContentText(Resources.getSystem().getString(R.string.smoke_detected));
             triggerNotification();
         }
     }
@@ -95,7 +96,7 @@ public class Notifications {
         value = value.split(":")[0];
 
         if(Integer.valueOf(value) < 10){
-            builder.setContentText("Humidity level is very low");
+            builder.setContentText(Resources.getSystem().getString(R.string.humid_level_low));
             triggerNotification();
         }
     }
@@ -104,7 +105,7 @@ public class Notifications {
         value = value.split(":")[1];
 
         if(Integer.valueOf(value)  == 1){
-            builder.setContentText("Motion Detected!");
+            builder.setContentText(Resources.getSystem().getString(R.string.motion_detected));
             triggerNotification();
         }
 

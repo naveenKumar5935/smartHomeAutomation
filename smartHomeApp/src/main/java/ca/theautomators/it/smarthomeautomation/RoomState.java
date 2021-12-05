@@ -10,12 +10,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
-
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
@@ -31,10 +28,6 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
     private Context context;
     private ArrayList<MenuItem> menuItems;
     private SharedPreferences state;
-    private String[] identifiers;
-    private NavigationView navView;
-    private Menu menu;
-
 
     private RoomState(Context context){
 
@@ -47,12 +40,8 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
 
         loadState();
 
-        navView = MainActivity.getNavigationView();
-        menu = navView.getMenu();
-
         //to help with setting dynamically created menu items as checked or not checked when selected
         menuItems = new ArrayList<>();
-
 
     }
 
@@ -79,7 +68,6 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
 
     public void saveRoomIcon(int iconId, String roomName){
 
-//        roomIcons.set(index, icon);
         SharedPreferences.Editor editor = state.edit();
         editor.putInt(roomName, iconId);
         editor.apply();
@@ -104,10 +92,6 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         if(!menuItems.contains(item)){
             menuItems.add(item);
         }
-    }
-
-    public void resetMenuItems(){
-        menuItems.clear();
     }
 
     public void uncheckOtherItems(MenuItem item){
@@ -164,17 +148,9 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         return numRooms;
     }
 
-
-    public ArrayList<Integer> getDrawableIds(){
-
-        return drawableIds;
-    }
-
     private void loadState(){
 
-
         stateSaved = state.getBoolean("stateSaved", false);
-
 
         if(stateSaved){
 
@@ -184,17 +160,12 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
             roomNames = new ArrayList<>();
             menuIds = new ArrayList<>();
             roomIcons = new ArrayList<>();
-//            menuItems = new ArrayList<>();
 
             for(int i = 0; i < numRooms; i++) {
                 roomNames.add(state.getString("roomName_" + i, null));
                 menuIds.add(state.getInt("roomId_" + i, 0));
 
-//                roomIcons.add(context.getResources().getDrawable(context.getResources().getIdentifier(state.getString("roomIcon_" + i, "bedroom"),
-//                        "drawable", context.getPackageName())));
-
                 roomIcons.add(context.getDrawable(state.getInt(roomNames.get(i), R.drawable.bedroom)));
-//                drawableIds.add(context.getResources().getIdentifier(state.getString("roomIcon_" + i, "bedroom"), "drawable", context.getPackageName()));
             }
 
         }
@@ -217,7 +188,6 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
     private void saveState(){
 
         SharedPreferences.Editor editor = state.edit();
-        int counter = 0;
 
         numRooms = roomNames.size();
 
@@ -227,7 +197,6 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
                 editor.putInt("roomId_" + i, menuIds.get(i));
             if(i < drawableIds.size()) {
                 editor.putString("roomIcon_" + i, context.getResources().getResourceEntryName(drawableIds.get(i)));
-                counter++;
             }
 
             editor.putString("roomName_" + i, roomNames.get(i));
@@ -240,7 +209,6 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         editor.apply();
 
         loadState();
-
 
     }
 

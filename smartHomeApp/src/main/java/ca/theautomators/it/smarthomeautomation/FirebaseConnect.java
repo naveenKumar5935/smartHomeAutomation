@@ -61,8 +61,6 @@ public class FirebaseConnect {
 
             }
         });
-
-
     }
 
     private void start(){
@@ -121,8 +119,6 @@ public class FirebaseConnect {
         }
 
     }
-
-
 
     public void loadNumDevices(){
 
@@ -187,27 +183,6 @@ public class FirebaseConnect {
     public String[] getIdentifiers(){
 
         return identifiers;
-    }
-
-
-    //TODO needs to be reworked to properly handle asynchronous database calls
-    public boolean checkNewDevices(String[] identifierList){
-
-        loadIdentifiers();
-        String[] currIdentifiers = getIdentifiers();
-        boolean found = true;
-
-        for(String current : currIdentifiers){
-
-            for(String previous : identifierList){
-
-                if(current.equals(previous)){
-                    found = false;
-                }
-            }
-        }
-
-        return found;
     }
 
     public int getNumDevices(){

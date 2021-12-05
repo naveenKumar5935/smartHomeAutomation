@@ -44,7 +44,7 @@ public class RoomManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_manager);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Room Manager");
+        setTitle(getString(R.string.room_manager_title));
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -56,13 +56,12 @@ public class RoomManagerActivity extends AppCompatActivity {
 
         deleted = false;
 
-        //Store current state of roomnames and create displayed room names for editing
+        //Store current state of room names and create displayed room names for editing
         roomNames = roomState.getRoomNames();
         displayedRooms = new ArrayList<>(roomNames);
         editTexts = new ArrayList<>();
         numRooms = roomState.getNumRooms();
         totalRows = numRooms;
-
 
         linearLayout = findViewById(R.id.roommanager);
 
@@ -158,8 +157,8 @@ public class RoomManagerActivity extends AppCompatActivity {
                 if(roomState.getNumRooms() == 0){
 
                     noRooms.setIcon(R.drawable.home);
-                    noRooms.setTitle("No Rooms Added");
-                    noRooms.setMessage("Please add at least one room to continue");
+                    noRooms.setTitle(R.string.no_rooms_added);
+                    noRooms.setMessage(R.string.add_at_least_one_room);
                     noRooms.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -179,8 +178,8 @@ public class RoomManagerActivity extends AppCompatActivity {
                     if (FirebaseConnect.getInstance().getFirebaseConnectivity()) {
 
                         option.setIcon(R.drawable.home);
-                        option.setTitle("Rooms Saved!");
-                        option.setMessage("Would you like to save sensors to rooms now?");
+                        option.setTitle(R.string.room_saved);
+                        option.setMessage(R.string.would_you_like_to_save_sensors);
                         option.setPositiveButton(R.string.alert_positive_btn, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -194,8 +193,8 @@ public class RoomManagerActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 alert.setIcon(R.drawable.home);
-                                alert.setTitle("Don't forget!");
-                                alert.setMessage("You can save sensors to rooms at any time by going to Settings -> Manage rooms");
+                                alert.setTitle(R.string.dont_forget);
+                                alert.setMessage(R.string.save_sensors_any_time_instructions);
                                 alert.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -413,13 +412,13 @@ public class RoomManagerActivity extends AppCompatActivity {
         //Text entry setup
         EditText editText = new EditText(this);
         if(index == null){
-            editText.setHint("Enter room name");
+            editText.setHint(R.string.enter_room_name);
         }
         else{
             if(index < displayedRooms.size())
                 editText.setText(displayedRooms.get(index));
             else
-                editText.setHint("Enter room name");
+                editText.setHint(R.string.enter_room_name);
         }
         editText.setPadding(20, 20, 20, 20);
         editText.setLayoutParams(params);
@@ -445,6 +444,4 @@ public class RoomManagerActivity extends AppCompatActivity {
         Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
         startActivity(intent);
     }
-
-
 }
