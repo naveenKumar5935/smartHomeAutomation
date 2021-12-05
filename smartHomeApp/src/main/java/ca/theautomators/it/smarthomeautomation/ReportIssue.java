@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,8 +64,8 @@ public class ReportIssue extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (email.getText().toString().isEmpty()) {
-                    Toast.makeText(ReportIssue.this, "Please fill in Email text box", Toast.LENGTH_LONG).show();
+                if(!email.getText().toString().trim().contains("@") || !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+                    Toast.makeText(ReportIssue.this, "Enter valid Email Address", Toast.LENGTH_LONG).show();
 
                 }
 
