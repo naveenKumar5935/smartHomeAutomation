@@ -9,11 +9,9 @@ package ca.theautomators.it.smarthomeautomation;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,14 +31,10 @@ import io.paperdb.Paper;
 public class RoomManagerActivity extends AppCompatActivity {
 
 
-    private ArrayList<String> roomNames;
-    private ArrayList<EditText> newRoomNames;
-    private ArrayList<Drawable> roomIcons, newRoomIcons;
-    private ArrayList<Integer> drawableIds;
-    private Drawable[] editedRoomIcons;
-    private EditText[] editedRoomNames;
+    private ArrayList<String> roomNames, displayedRooms;
+    private ArrayList<EditText> editTexts;
     private RoomState roomState;
-    private int numRows;
+    private int numRooms, totalRows;
     private LinearLayout linearLayout;
     private boolean deleted;
 
@@ -58,22 +52,17 @@ public class RoomManagerActivity extends AppCompatActivity {
 
         FirebaseConnect fC = FirebaseConnect.getInstance();
 
-
         roomState = RoomState.getInstance(null);
 
         deleted = false;
 
+        //Store current state of roomnames and create displayed room names for editing
         roomNames = roomState.getRoomNames();
-        roomIcons = roomState.getRoomIcons();
+        displayedRooms = new ArrayList<>(roomNames);
+        editTexts = new ArrayList<>();
+        numRooms = roomState.getNumRooms();
+        totalRows = numRooms;
 
-        newRoomNames = new ArrayList<>();
-        newRoomIcons = new ArrayList<>();
-
-        drawableIds = roomState.getDrawableIds();
-        numRows = roomState.getNumRooms();
-
-        editedRoomNames = new EditText[numRows];
-        editedRoomIcons = new Drawable[numRows];
 
         linearLayout = findViewById(R.id.roommanager);
 
@@ -89,157 +78,237 @@ public class RoomManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int counter = 0;
 
-                for(int i = 0; i < numRows; i++){
+                displayedRooms = new ArrayList<>();
 
-                    if(i < editedRoomNames.length){
-                        if (!editedRoomNames[i].getText().toString().isEmpty())
-                        if(editedRoomNames[i] != null)
-                            roomState.changeRoomName(editedRoomNames[i].getText().toString(), i);
+                for(int i = 1; i < linearLayout.getChildCount(); i++){
 
-                        if (editedRoomIcons[i] != null)
-                            roomState.changeRoomIcons(editedRoomIcons[i], i);
-                    }
-                    else{
+                    LinearLayout temp = (LinearLayout) linearLayout.getChildAt(i);
 
-                        if(newRoomNames.get(counter).getText().toString().isEmpty()){
-//                            roomNames.set(i, "Room");
-//                            roomIcons.set(i, getDrawable(R.drawable.bedroom));
-                            roomState.changeRoomName("Room " + i, i);
-                            roomState.changeRoomIcons(getDrawable(R.drawable.bedroom), i);
-                        }
-                        else{
-//                            roomNames.set(i, newRoomNames.get(counter).getText().toString());
-//                            roomIcons.set(i, newRoomIcons.get(counter));
-                            roomState.changeRoomName(newRoomNames.get(counter).getText().toString(), i);
-                            roomState.changeRoomIcons(newRoomIcons.get(counter), i);
-                        }
-                        counter++;
+                    if(temp.getChildAt(0) instanceof EditText){
+
+                        String roomName = ((EditText) temp.getChildAt(0)).getText().toString();
+
+                        if(!roomName.isEmpty())
+                            displayedRooms.add(roomName);
                     }
 
+                    if(temp.getChildAt(1) instanceof Spinner){
+                        String roomName = ((EditText) temp.getChildAt(0)).getText().toString();
+                        int drawableID = getDrawableId(((Spinner) temp.getChildAt(1)).getSelectedItemPosition());
+                        if(drawableID != -1)
+                            roomState.saveRoomIcon(drawableID, roomName);
+                    }
+                }
 
+                if(displayedRooms.size() > totalRows){
+
+                    int delta = displayedRooms.size() - totalRows;
+
+                    for(int i = 0; i < delta; i++){
+
+                        displayedRooms.remove(displayedRooms.size() - 1);
+                    }
+                }
+
+                roomNames = displayedRooms;
+                roomState.saveRoomNames(displayedRooms);
+
+                ArrayList<Room> rooms = roomState.loadBuiltRooms();
+                ArrayList<Room> toRemove = new ArrayList<>();
+
+                if (rooms.size() > 0) {
+                    for (Room room : rooms) {
+                        if (!roomNames.contains(room.getTitle())) {
+                            toRemove.add(room);
+                        }
+                    }
+
+                    //check from rooms that need to be added
+                    for (int i = 0; i < roomNames.size(); i++) {
+
+                        boolean found = false;
+
+                        for (int j = 0; j < rooms.size(); j++) {
+
+                            if(rooms.get(j).getTitle() != null){
+                                if (rooms.get(j).getTitle().equals(roomNames.get(i))) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!found) {
+                            rooms.add(new Room(roomNames.get(i)));
+                        }
+                    }
+
+                } else {
+                    for (String roomName : roomNames) {
+
+                        rooms.add(new Room(roomName));
+                    }
                 }
 
                 roomState.save();
 
-                AlertDialog.Builder option = new AlertDialog.Builder(RoomManagerActivity.this);
-                AlertDialog.Builder alert = new AlertDialog.Builder(RoomManagerActivity.this);
+                AlertDialog.Builder noRooms = new AlertDialog.Builder(RoomManagerActivity.this);
 
-                if(FirebaseConnect.getInstance().getFirebaseConnectivity()){
+                if(roomState.getNumRooms() == 0){
 
-                    option.setIcon(R.drawable.home);
-                    option.setTitle("Rooms Saved!");
-                    option.setMessage("Would you like to save sensors to rooms now?");
-                    option.setPositiveButton(R.string.alert_positive_btn, new DialogInterface.OnClickListener() {
+                    noRooms.setIcon(R.drawable.home);
+                    noRooms.setTitle("No Rooms Added");
+                    noRooms.setMessage("Please add at least one room to continue");
+                    noRooms.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            Intent intent = new Intent(RoomManagerActivity.this, ManageDeviceActivity.class);
-                            startActivity(intent);
+                            dialog.dismiss();
+
                         }
                     });
 
-                    option.setNegativeButton(R.string.alert_negative_btn, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            alert.setIcon(R.drawable.home);
-                            alert.setTitle("Don't forget!");
-                            alert.setMessage("You can save sensors to rooms at any time by going to Settings - Manage rooms");
-                            alert.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    ArrayList<Room> rooms = roomState.loadBuiltRooms();
+                    noRooms.show();
 
-                                    if(rooms.size() > 0){
-                                        for (Room room : rooms) {
-                                            if (!roomNames.contains(room.getTitle())) {
-                                                rooms.remove(room);
-                                            }
-                                        }
-                                    }
-                                    else{
-                                        for(String roomName : roomNames){
-
-                                            rooms.add(new Room(roomName));
-                                        }
-                                    }
-
-                                    roomState.saveBuiltRooms(rooms);
-
-                                    Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
-
-                            alert.show();
-                        }
-                    });
-
-                    option.show();
                 }
                 else{
-                    option.setIcon(android.R.drawable.ic_dialog_alert);
-                    option.setTitle(R.string.no_sensors_found);
-                    option.setMessage(R.string.double_check_sensors);
-                    option.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                    AlertDialog.Builder option = new AlertDialog.Builder(RoomManagerActivity.this);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(RoomManagerActivity.this);
 
-                            ArrayList<Room> rooms = roomState.loadBuiltRooms();
+                    if (FirebaseConnect.getInstance().getFirebaseConnectivity()) {
 
-                            //Check for rooms that need to be deleted
-                            for(Room room : rooms){
-                                if(!roomNames.contains(room.getTitle())){
-                                    rooms.remove(room);
-                                }
+                        option.setIcon(R.drawable.home);
+                        option.setTitle("Rooms Saved!");
+                        option.setMessage("Would you like to save sensors to rooms now?");
+                        option.setPositiveButton(R.string.alert_positive_btn, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent intent = new Intent(RoomManagerActivity.this, ManageDeviceActivity.class);
+                                startActivity(intent);
                             }
+                        });
 
-                            //check from rooms that need to be added
-                            for(int i = 0; i < roomNames.size(); i++){
+                        option.setNegativeButton(R.string.alert_negative_btn, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                alert.setIcon(R.drawable.home);
+                                alert.setTitle("Don't forget!");
+                                alert.setMessage("You can save sensors to rooms at any time by going to Settings -> Manage rooms");
+                                alert.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ArrayList<Room> rooms = roomState.loadBuiltRooms();
+                                        ArrayList<Room> toRemove = new ArrayList<>();
 
-                                boolean found = false;
+                                        if (rooms.size() > 0) {
+                                            for (Room room : rooms) {
+                                                if (!roomNames.contains(room.getTitle())) {
+                                                    toRemove.add(room);
+                                                }
+                                            }
 
-                                for(int j = 0; j < rooms.size(); j++){
+                                            //check from rooms that need to be added
+                                            for (int i = 0; i < roomNames.size(); i++) {
 
-                                    if(rooms.get(j).getTitle().equals(roomNames.get(i))){
-                                        found = true;
-                                        break;
+                                                boolean found = false;
+
+                                                for (int j = 0; j < rooms.size(); j++) {
+
+                                                    if(rooms.get(j).getTitle() != null){
+                                                        if (rooms.get(j).getTitle().equals(roomNames.get(i))) {
+                                                            found = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+
+                                                if (!found) {
+                                                    rooms.add(new Room(roomNames.get(i)));
+                                                }
+                                            }
+
+                                        } else {
+                                            for (String roomName : roomNames) {
+
+                                                rooms.add(new Room(roomName));
+                                            }
+                                        }
+
+                                        rooms.removeAll(toRemove);
+                                        roomState.saveBuiltRooms(rooms);
+
+                                        Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                                alert.show();
+                            }
+                        });
+
+                        option.show();
+                    } else {
+                        option.setIcon(android.R.drawable.ic_dialog_alert);
+                        option.setTitle(R.string.no_sensors_found);
+                        option.setMessage(R.string.double_check_sensors);
+                        option.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                ArrayList<Room> rooms = roomState.loadBuiltRooms();
+                                ArrayList<Room> toRemove = new ArrayList<>();
+
+                                //Check for rooms that need to be deleted
+                                for (Room room : rooms) {
+                                    if (!roomNames.contains(room.getTitle())) {
+                                        toRemove.add(room);
                                     }
                                 }
 
-                                if(!found){
-                                    rooms.add(new Room(roomNames.get(i)));
+                                //check from rooms that need to be added
+                                for (int i = 0; i < roomNames.size(); i++) {
+
+                                    boolean found = false;
+
+                                    for (int j = 0; j < rooms.size(); j++) {
+
+                                        if (rooms.get(j).getTitle().equals(roomNames.get(i))) {
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!found) {
+                                        rooms.add(new Room(roomNames.get(i)));
+                                    }
                                 }
+
+                                rooms.removeAll(toRemove);
+                                roomState.saveBuiltRooms(rooms);
+
+                                Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
+                                startActivity(intent);
                             }
+                        });
 
-                            roomState.saveBuiltRooms(rooms);
-
-                            Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-
-                    option.show();
-
+                        option.show();
+                    }
                 }
-
-
-
             }
         });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numRows < 10){
-                    deleted = false;
-                    newRoomNames.add(null);
-                    roomNames.add(null);
-                    newRoomIcons.add(null);
-                    roomIcons.add(null);
-                    linearLayout.addView(addRow(null));
-                    numRows++;
+                if(totalRows < 10){
+                        if (displayedRooms.size() > 0)
+                            linearLayout.addView(addRow(linearLayout.getChildCount() - 1));
+                        else
+                            linearLayout.addView(addRow(null));
+
+                        totalRows++;
                 }
             }
         });
@@ -247,31 +316,15 @@ public class RoomManagerActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numRows > 0){
-                    numRows--;
-                    if (newRoomNames.size() > 1) {
-                        newRoomNames.remove(newRoomNames.size() - 1);
-                        newRoomIcons.remove(newRoomIcons.size() - 1);
-                    } else {
-                        newRoomNames.clear();
-                        newRoomIcons.clear();
-                    }
-                        roomIcons.remove(roomIcons.size() - 1);
-                        roomNames.remove(roomNames.size() - 1);
-
+                if(totalRows > 0){
+                    totalRows--;
                     linearLayout = buildLayout();
 
-                    deleted = true;
-
                     display();
-
                 }
             }
         });
-
     }
-
-
 
     private LinearLayout buildLayout(){
 
@@ -280,15 +333,15 @@ public class RoomManagerActivity extends AppCompatActivity {
 
         TextView text = new TextView(this);
         text.setText(R.string.edit_room_name_and_type);
-        text.setTextSize(20);
+        text.setTextSize(18);
         linearLayout.addView(text);
 
         return linearLayout;
     }
 
-    private Integer getDrawableId(int selection){
+    private int getDrawableId(int selection){
 
-        Integer resource;
+        int resource;
 
         switch(selection){
 
@@ -330,18 +383,16 @@ public class RoomManagerActivity extends AppCompatActivity {
 
         }
 
-        if(resource.intValue() != -1) {
-            return resource;
-        }
-        else
-            return null;
+        return resource;
     }
 
     private void display(){
 
-        for(int i = 0; i < numRows; i++) {
+        numRooms = displayedRooms.size();
+
+        for(int i = 0; i < totalRows; i++) {
             //add row to layout
-            if(i < roomState.getNumRooms()){
+            if(i < numRooms){
                 linearLayout.addView(addRow(i));
             }
             else{
@@ -365,7 +416,10 @@ public class RoomManagerActivity extends AppCompatActivity {
             editText.setHint("Enter room name");
         }
         else{
-            editText.setHint(roomNames.get(index));
+            if(index < displayedRooms.size())
+                editText.setText(displayedRooms.get(index));
+            else
+                editText.setHint("Enter room name");
         }
         editText.setPadding(20, 20, 20, 20);
         editText.setLayoutParams(params);
@@ -379,55 +433,9 @@ public class RoomManagerActivity extends AppCompatActivity {
         spinner.setPadding(20, 20, 20, 20);
         spinner.setLayoutParams(params);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                Integer resource = getDrawableId(position);
-
-                if(resource != null) {
-
-                    if(index == null){
-                        newRoomIcons.set(newRoomIcons.size() - 1, getResources().getDrawable(resource));
-                    }
-                    else{
-                        editedRoomIcons[index] = getResources().getDrawable(resource);
-
-                    }
-                    if(index != null){
-                        if (drawableIds.size() <= index)
-                            drawableIds.add(resource);
-                        else
-                            drawableIds.set(index, resource);
-                    }
-                    else{
-                        drawableIds.add(resource);
-                    }
-
-                }
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         //add text entry and spinner to row
         entryRow.addView(editText);
         entryRow.addView(spinner);
-
-        //save changes
-        if(!deleted) {
-            if (index != null) {
-                editedRoomNames[index] = editText;
-            } else {
-                newRoomNames.set(newRoomNames.size() - 1, editText);
-            }
-        }
-
 
         return entryRow;
     }
@@ -436,7 +444,6 @@ public class RoomManagerActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
         startActivity(intent);
-//        moveTaskToBack(false);
     }
 
 

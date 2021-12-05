@@ -150,11 +150,11 @@ public class MainActivity extends AppCompatActivity{
 
         RoomState roomState = RoomState.getInstance(this);
 
-        menuIds = roomState.getMenuIds();
+//        menuIds = roomState.getMenuIds();
         roomNames = roomState.getRoomNames();
         roomIcons = roomState.getRoomIcons();
 
-        if(roomNames.isEmpty() || roomNames == null){
+        if(roomNames.isEmpty()){
 
             Intent roomManager = new Intent(MainActivity.this,RoomManagerActivity.class);
             startActivity(roomManager);
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity{
         for(int i = 0; i < roomNames.size(); i++){
 
             rB.buildRoom(roomNames.get(i), roomIcons.get(i), i);
-            roomState.changeMenuIds(i, i);
+            roomState.setMenuIds(i, i);
         }
 
         roomState.save();
