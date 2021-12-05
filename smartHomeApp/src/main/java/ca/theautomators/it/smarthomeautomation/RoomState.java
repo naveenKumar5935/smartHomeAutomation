@@ -69,22 +69,26 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         return(INSTANCE);
     }
 
-    public void changeRoomName(String name, int index){
+    public void saveRoomNames(ArrayList<String> roomNames){
 
-        roomNames.set(index, name);
+        this.roomNames = new ArrayList<>(roomNames);
         roomStateChanged = true;
         numRooms = roomNames.size();
         doInBackground();
     }
 
-    public void changeRoomIcons(Drawable icon, int index){
+    public void saveRoomIcon(int iconId, String roomName){
 
-        roomIcons.set(index, icon);
+//        roomIcons.set(index, icon);
+        SharedPreferences.Editor editor = state.edit();
+        editor.putInt(roomName, iconId);
+        editor.apply();
+
         roomStateChanged = true;
         doInBackground();
     }
 
-    public void changeMenuIds(int id, int index){
+    public void setMenuIds(int id, int index){
 
         if(menuIds.size() <= index)
             menuIds.add(id);
@@ -168,7 +172,6 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
 
     private void loadState(){
 
-        //TODO This function will need to be modified once add and remove functionality developed
 
         stateSaved = state.getBoolean("stateSaved", false);
 
@@ -181,13 +184,17 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
             roomNames = new ArrayList<>();
             menuIds = new ArrayList<>();
             roomIcons = new ArrayList<>();
+//            menuItems = new ArrayList<>();
 
             for(int i = 0; i < numRooms; i++) {
                 roomNames.add(state.getString("roomName_" + i, null));
                 menuIds.add(state.getInt("roomId_" + i, 0));
-                roomIcons.add(context.getResources().getDrawable(context.getResources().getIdentifier(state.getString("roomIcon_" + i, "bedroom"),
-                        "drawable", context.getPackageName())));
-                drawableIds.add(context.getResources().getIdentifier(state.getString("roomIcon_" + i, "bedroom"), "drawable", context.getPackageName()));
+
+//                roomIcons.add(context.getResources().getDrawable(context.getResources().getIdentifier(state.getString("roomIcon_" + i, "bedroom"),
+//                        "drawable", context.getPackageName())));
+
+                roomIcons.add(context.getDrawable(state.getInt(roomNames.get(i), R.drawable.bedroom)));
+//                drawableIds.add(context.getResources().getIdentifier(state.getString("roomIcon_" + i, "bedroom"), "drawable", context.getPackageName()));
             }
 
         }
@@ -218,7 +225,7 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
 
             if(menuIds.size() == numRooms)
                 editor.putInt("roomId_" + i, menuIds.get(i));
-            if(i < drawableIds.size() && drawableIds.size() > 0) {
+            if(i < drawableIds.size()) {
                 editor.putString("roomIcon_" + i, context.getResources().getResourceEntryName(drawableIds.get(i)));
                 counter++;
             }
@@ -231,6 +238,8 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         editor.putInt("numRooms", numRooms);
         editor.putBoolean("stateSaved", stateSaved);
         editor.apply();
+
+        loadState();
 
 
     }
