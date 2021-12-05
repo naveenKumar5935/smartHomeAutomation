@@ -22,8 +22,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/settingfab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/white"
+        android:contentDescription="@string/submit"
+        android:src="@drawable/ic_baseline_wifi_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/logoutButton2"
+        android:id="@+id/accessCardButton"
         style="@style/ButtonText"
         android:layout_width="280dp"
         android:layout_height="67dp"
@@ -48,29 +62,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingLogoutBtn" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/manageRooms"
+        style="@style/ButtonText"
+        android:layout_width="@dimen/settings_button_width"
+        android:layout_height="@dimen/settings_button_height"
+        android:layout_marginTop="24dp"
+        android:text="Manage Rooms"
+        android:textSize="@dimen/button_text_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.878"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accessCardButton" />
+
     <Switch
         android:id="@+id/orientationSwitch"
         android:layout_width="280dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="8dp"
         android:text="@string/setting_switch_mode"
         android:textSize="21sp"
         android:theme="@style/SwitchColour"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.878"
+        app:layout_constraintHorizontal_bias="0.895"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoutButton2" />
+        app:layout_constraintTop_toBottomOf="@+id/manageRooms" />
 
     <Switch
         android:id="@+id/switch2"
-        android:layout_width="280dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="279dp"
+        android:layout_height="74dp"
         android:text="Dark Mode"
         android:textSize="21sp"
         android:theme="@style/SwitchColour"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.878"
+        app:layout_constraintHorizontal_bias="0.893"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/orientationSwitch" />
 
