@@ -133,7 +133,7 @@
     <string name="toast_login_check">Please check your credentials</string>
     <string name="Please_create_can_acc">Please Create an account</string>
     <string name="successlogin_toast">Successfully Logged In</string>
-    <string name="wlcm_back">Welcome Back</string>
+    <string name="wlcm_back">Welcome Back </string>
     <string name="pleasE_type_corrent_email">Please type correct email</string>
     <string name="minimum_length">Minimum length should be 8</string>
     <string name="enter_access">Please enter access code</string>
