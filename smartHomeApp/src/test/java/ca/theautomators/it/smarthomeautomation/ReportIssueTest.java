@@ -16,8 +16,12 @@ public class ReportIssueTest{
     }
 
     @Test
-    public void EmailCheck(){
-
+    public void emailCheck(){
+        assertTrue(reportIssue.emailCheck("kahlonsukhman18@gmail.com"));
     }
 
+    @Test
+    public void emailCheck2(){
+        assertFalse(reportIssue.emailCheck("k@'ursukhman18@gmail.com"));
+    }
 }
