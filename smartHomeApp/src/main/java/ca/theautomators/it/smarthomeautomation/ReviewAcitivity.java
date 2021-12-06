@@ -38,6 +38,8 @@ public class ReviewAcitivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getString(R.string.review_heading));
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         mTextView = findViewById(R.id.text);
 
         Paper.init(this);

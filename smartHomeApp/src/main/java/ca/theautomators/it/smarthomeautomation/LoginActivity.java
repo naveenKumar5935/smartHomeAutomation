@@ -62,6 +62,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         Paper.init(LoginActivity.this);
         email = findViewById(R.id.login_email_tb);
         password = findViewById(R.id.login_password_tb);

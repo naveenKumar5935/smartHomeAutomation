@@ -205,6 +205,7 @@
     <string name="dont_forget">Don\'t forget!</string>
     <string name="save_sensors_any_time_instructions"><![CDATA[You can save sensors to rooms at any time by going to Settings -> Manage rooms]]></string>
     <string name="enter_room_name">Enter room name</string>
+    <string name="legal_title">Legal</string>
 
     <string-array name="rooms">
         <item>Select Type</item>

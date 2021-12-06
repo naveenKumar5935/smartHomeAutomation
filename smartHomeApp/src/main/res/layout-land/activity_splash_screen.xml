@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/white">
+    android:background="@drawable/screen_background">
 
     <ImageView
         android:id="@+id/splash_img"
@@ -17,7 +17,8 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="45dp"
         android:layout_marginBottom="50dp"
-        android:src="@drawable/splash" />
+        android:background="@drawable/splash_logo_bg"
+        android:src="@drawable/splash_nobg" />
 
 
 </RelativeLayout>

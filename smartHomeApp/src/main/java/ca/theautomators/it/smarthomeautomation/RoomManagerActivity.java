@@ -44,6 +44,9 @@ public class RoomManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_manager);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         setTitle(getString(R.string.room_manager_title));
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){
