@@ -79,26 +79,14 @@
         android:id="@+id/orientationSwitch"
         android:layout_width="280dp"
         android:layout_height="59dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:text="@string/setting_switch_mode"
         android:textSize="21sp"
         android:theme="@style/SwitchColour"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.895"
+        app:layout_constraintHorizontal_bias="0.878"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/manageRooms" />
-
-    <Switch
-        android:id="@+id/switch2"
-        android:layout_width="279dp"
-        android:layout_height="74dp"
-        android:text="Dark Mode"
-        android:textSize="21sp"
-        android:theme="@style/SwitchColour"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.893"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orientationSwitch" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/settingProfileImg"
