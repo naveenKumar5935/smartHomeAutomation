@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -52,21 +53,21 @@ import com.squareup.picasso.Picasso;
 import ca.theautomators.it.smarthomeautomation.LoginActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.RoomManagerActivity;
-import ca.theautomators.it.smarthomeautomation.databinding.FragmentSettingsBinding;
+
 import io.paperdb.Paper;
 
 
 public class SettingsFragment extends Fragment {
 
-    FragmentSettingsBinding binding;
     Button logoutBtn,accessCardBtn;
-    Switch orientationSwitch;
     Boolean connection;
     View view;
     FirebaseAuth auth;
     StorageReference storageReference;
     GoogleSignInAccount gUser;
     FloatingActionButton fab;
+    ImageView profileImg;
+    Button bgButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -82,14 +83,14 @@ public class SettingsFragment extends Fragment {
         GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(getActivity(),gso);
 
 
-        binding = FragmentSettingsBinding.inflate(inflater,container,false);
-        View root = binding.getRoot();
-        view = root;
+      View view =  inflater.inflate(R.layout.fragment_settings,container,false);
+
         logoutBtn = view.findViewById(R.id.settingLogoutBtn);
-        orientationSwitch = view.findViewById(R.id.orientationSwitch);
         accessCardBtn = view.findViewById(R.id.accessCardButton);
         auth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+        profileImg = view.findViewById(R.id.settingProfileImg);
+        bgButton = view.findViewById(R.id.chooseBackgroundBtn);
         Paper.init(getActivity());
         fab = view.findViewById(R.id.settingfab);
 
@@ -100,7 +101,7 @@ public class SettingsFragment extends Fragment {
             storageReference.child(gUser.getId()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Picasso.get().load(uri).into(binding.settingProfileImg);
+                    Picasso.get().load(uri).into(profileImg);
                 }
             });
 
@@ -110,12 +111,12 @@ public class SettingsFragment extends Fragment {
             storageReference.child(auth.getCurrentUser().getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Picasso.get().load(uri).into(binding.settingProfileImg);
+                    Picasso.get().load(uri).into(profileImg);
                 }
             });
         }
 
-        Button manageRooms = (Button) root.findViewById(R.id.manageRooms);
+        Button manageRooms = (Button) view.findViewById(R.id.manageRooms);
 
         accessCardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,28 +161,11 @@ public class SettingsFragment extends Fragment {
         });
 
 
-        binding.chooseBackgroundBtn.setOnClickListener(new View.OnClickListener() {
+        bgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                permissionHandle();
 
-            }
-        });
-
-        if(Paper.book().read("orientationSwitch","").matches("selected")){
-            orientationSwitch.setChecked(true);
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
-
-        orientationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    Paper.book().write("orientationSwitch","selected");
-                }else {
-                    Paper.book().write("orientationSwitch","unselected");
-                }
             }
         });
 
@@ -208,7 +192,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        return root;
+        return view;
     }
 
 
@@ -219,7 +203,7 @@ public class SettingsFragment extends Fragment {
         if(requestCode == 45 && resultCode == RESULT_OK && data != null){
             Uri uri = data.getData();
 
-            binding.settingProfileImg.setImageURI(uri);
+            profileImg.setImageURI(uri);
 
             if(auth.getCurrentUser()!=null){
                 storageReference.child(auth.getCurrentUser().getUid()).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -258,13 +242,13 @@ public class SettingsFragment extends Fragment {
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                        Snackbar.make(view, R.string.permission_granted,Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), R.string.permission_granted,Snackbar.LENGTH_LONG).show();
                         chooseImage();
                     }
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                        Snackbar.make(view, R.string.permission_denied,Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), R.string.permission_denied,Snackbar.LENGTH_LONG).show();
                     }
 
                     @Override

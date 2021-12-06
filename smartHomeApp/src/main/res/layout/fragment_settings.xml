@@ -75,31 +75,18 @@
         app:layout_constraintTop_toBottomOf="@+id/chooseBackgroundBtn"
         style="@style/ButtonText"/>
 
-    <Switch
-        android:id="@+id/orientationSwitch"
-        android:layout_width="280dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="110dp"
-        android:text="@string/setting_switch_mode"
-        android:textSize="21sp"
-        android:theme="@style/SwitchColour"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chooseBackgroundBtn" />
-
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/settingProfileImg"
         android:layout_width="165dp"
         android:layout_height="157dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="99dp"
         android:src="@drawable/avatar"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orientationSwitch" />
+        app:layout_constraintTop_toBottomOf="@+id/manageRooms" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
