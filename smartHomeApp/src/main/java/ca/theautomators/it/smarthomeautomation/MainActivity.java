@@ -54,22 +54,23 @@ public class MainActivity extends AppCompatActivity{
     private static NavigationView navigationView;
     private static NotificationCompat.Builder builder;
     private static Context context;
-    ArrayList<String> arrayList ;
-    DatabaseReference firebaseDatabase;
-    boolean rfidChange;
-    PendingIntent pendingIntent;
+    private ArrayList<String> arrayList ;
+    private boolean rfidChange;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         rfidChange = false;
         gettingData();
-
-        firebaseDatabase =  FirebaseDatabase.getInstance().getReference();
 
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){
@@ -285,21 +286,6 @@ public class MainActivity extends AppCompatActivity{
         menuItem.setIcon(icon);
     }
 
-    public void loadRoomInfo(int id){
-
-        NavigationView navView = findViewById(R.id.nav_view);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        Menu menu = navView.getMenu();
-        MenuItem item = menu.findItem(id);
-        toolbar.setTitle(item.getTitle());
-    }
-
-    public static ArrayList<Integer> getMenuIds(){
-        return menuIds;
-    }
-
-    public static NavigationView getNavigationView(){return navigationView;}
-
     public static Context getMainActivityContext(){
 
         return context;
@@ -338,8 +324,10 @@ public class MainActivity extends AppCompatActivity{
         toolbarText.setTitle(title);
         navLoad.setChecked(true);
 
+
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment,
                 null).setReorderingAllowed(true).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+
 
     }
 
@@ -397,7 +385,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void rfidExists(String identifier, FirebaseConnect fC, Context context){
-
 
         if(!identifier.isEmpty()){
             DatabaseReference reference = fC.getSensorDataRef(identifier);

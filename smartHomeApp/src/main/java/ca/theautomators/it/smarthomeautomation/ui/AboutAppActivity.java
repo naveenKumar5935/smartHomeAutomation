@@ -22,6 +22,8 @@ public class AboutAppActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about_app);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         setTitle(getString(R.string.about_title));
         Paper.init(this);
 

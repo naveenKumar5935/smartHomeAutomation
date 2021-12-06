@@ -39,6 +39,8 @@ public class ManageDeviceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manage_device);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

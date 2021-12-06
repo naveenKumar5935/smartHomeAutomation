@@ -30,7 +30,9 @@ public class LegalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_legal);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Legal");
+        setTitle(getString(R.string.legal_title));
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){

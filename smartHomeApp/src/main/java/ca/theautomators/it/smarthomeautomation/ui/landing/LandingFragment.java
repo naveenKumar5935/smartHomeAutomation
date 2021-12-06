@@ -325,13 +325,3 @@ public class LandingFragment extends Fragment{
     }
 
 }
-
-
-
-
-
-
-
-
-
-
