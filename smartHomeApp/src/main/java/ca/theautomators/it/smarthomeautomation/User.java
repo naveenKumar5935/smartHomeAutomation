@@ -9,14 +9,25 @@ package ca.theautomators.it.smarthomeautomation;
 
 public class User {
 
-    String email, password, fullName, phone;
+    String email, password, fullName, phone, code, devices;
 
     public User(String email, String password, String fullName, String phone){
         this.email = email;
         this.password = password;
         this.fullName = fullName;
         this.phone = phone;
+        this.code="";
+        this.devices="";
     }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getDevices() {
+        return devices;
+    }
+
 
     public String getFullName() {
         return fullName;

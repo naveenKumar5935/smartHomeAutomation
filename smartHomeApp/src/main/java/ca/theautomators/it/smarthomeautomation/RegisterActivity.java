@@ -238,13 +238,19 @@ public class RegisterActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
                                                 Toast.makeText(RegisterActivity.this, R.string.successful_signedup,Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+
+                                                HashMap<String,String> pi = new HashMap<>();
+                                                pi.put("Devices","");
+                                                pi.put("Code","");
+
+                                                Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
                                                 startActivity(intent);
                                                 finish();
                                             }else {
                                             }
                                         }
                                     });
+
                         }else {
                         }
                     }
