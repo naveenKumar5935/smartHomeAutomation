@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -56,6 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
     private GoogleSignInButton googleSignUpButton;
     private GoogleSignInClient mGoogleSignInClient;
     private Boolean connection=false;
+    CheckBox rememberMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPassword = findViewById(R.id.register_confirmpassword_et);
         googleSignUpButton = findViewById(R.id.googleSignUpButton);
         auth = FirebaseAuth.getInstance();
+        rememberMe = findViewById(R.id.registerRememberMe);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,6 +241,14 @@ public class RegisterActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
                                                 Toast.makeText(RegisterActivity.this, R.string.successful_signedup,Toast.LENGTH_SHORT).show();
+
+                                                if(rememberMe.isChecked()){
+                                                    Paper.book().write("useremail",email);
+                                                    Paper.book().write("userpassword",password);
+                                                }else {
+                                                    Paper.book().write("useremail","");
+                                                    Paper.book().write("userpassword","");
+                                                }
 
                                                 HashMap<String,String> pi = new HashMap<>();
                                                 pi.put("Devices","");
