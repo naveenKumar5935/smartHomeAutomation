@@ -63,13 +63,13 @@ public class Notifications {
 
         value = value.split(":")[0];
 
-        if(Integer.valueOf(value) < 10){
+        if(Integer.valueOf(value) < 5){
             //send low temp notification
             builder.setContentText("Low Temperature Warning");
             //Last step must be to call this method
             triggerNotification();
         }
-        else if(Integer.valueOf(value) > 25){
+        else if(Integer.valueOf(value) > 35){
             //send high temp notification
             builder.setContentText("High Temperature Warning");
             triggerNotification();

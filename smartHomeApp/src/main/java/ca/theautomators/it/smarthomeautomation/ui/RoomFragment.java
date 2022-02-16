@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,6 +50,7 @@ public class RoomFragment extends Fragment {
     private boolean smokeDetected;
     private RoomState rS;
     FirebaseConnect fC;
+    private char hexValues[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -148,6 +150,20 @@ public class RoomFragment extends Fragment {
 
     private LinearLayout buildController(Device device){
 
+        final String[] currentVal = {"1:888888"};
+
+        device.getSensorData().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                currentVal[0] = "1:" + snapshot.getValue().toString().split(":")[1];
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         LinearLayout row = new LinearLayout(getContext());
         row.setOrientation(LinearLayout.HORIZONTAL);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(170, 170);
@@ -157,6 +173,8 @@ public class RoomFragment extends Fragment {
         icon.setImageDrawable(getDrawable(device.getType()));
         icon.setLayoutParams(params);
 
+        SeekBar intensity = new SeekBar(getContext());
+
         SwitchCompat control = new SwitchCompat(getContext());
         control.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -164,11 +182,16 @@ public class RoomFragment extends Fragment {
 
                 if(device.getType().equals("LIGHT")){
                     if(isChecked){
-                        device.sendControlData("1:000000");
+                        //TODO: read from sharedpref to get hex val
+                        String hex = rS.getHex(device);
+                        device.sendControlData("1:" + hex);
+                        intensity.setEnabled(true);
+                        intensity.setProgress(getIntensity(hex, false));
                         icon.setImageDrawable(getDrawable("LIGHTON"));
                     }
                     else{
                         device.sendControlData("0:000000");
+                        intensity.setEnabled(false);
                         icon.setImageDrawable(getDrawable("LIGHT"));
                     }
                 }
@@ -176,7 +199,7 @@ public class RoomFragment extends Fragment {
                     if(isChecked && !smokeDetected){
                         device.sendControlData("1:0");
                     }
-                    else if(isChecked && smokeDetected){
+                    else if(isChecked){
                         device.sendControlData("1:1");
                     }
                     else{
@@ -217,10 +240,52 @@ public class RoomFragment extends Fragment {
         control.setText(device.getType());
         controls.add(control);
 
-        row.addView(icon);
-        row.addView(control);
 
-        return row;
+        if(device.getType().equals("LIGHT")){
+            //Create slider and colour picker
+            LinearLayout vert = new LinearLayout(getContext());
+            vert.setOrientation(LinearLayout.VERTICAL);
+
+            intensity.setMax(15);
+
+            String currentHex = currentVal[0].split(":")[1];
+            intensity.setProgress(getIntensity(currentHex, false));
+
+            intensity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                    if(control.isChecked()){
+
+                        String intensityDelta = colourIntensity(currentHex, progress);
+                        device.sendControlData("1:" + intensityDelta);
+                        rS.saveHex(device, intensityDelta);
+                    }
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+
+            row.addView(icon);
+            row.addView(control);
+//            row.addView(colour);
+            vert.addView(row);
+            vert.addView(intensity);
+            return vert;
+        }
+        else {
+            row.addView(icon);
+            row.addView(control);
+            return row;
+        }
     }
 
     private void buildSensorReceiver(Device device){
@@ -381,4 +446,83 @@ public class RoomFragment extends Fragment {
 
         return formatter.format(date);
     }
+
+    public String colourIntensity(String currentHex, int intensity){
+
+        int currentIntensity = getIntensity(currentHex, false);
+        int delta;
+
+        if(intensity > currentIntensity) {
+            delta = intensity - currentIntensity;
+
+            for(int i = 0; i < delta; i++)
+                currentHex = colourIntensityWorker(currentHex, true);
+        }
+        else {
+            delta = currentIntensity - intensity;
+            for(int i = 0; i < delta; i++)
+                currentHex = colourIntensityWorker(currentHex, false);
+        }
+
+        return currentHex;
+    }
+
+    public String colourIntensityWorker(String currentHex, boolean increase){
+
+        currentHex = currentHex.toUpperCase();
+        String result = "";
+
+        if(currentHex.length() != 6)
+            return "888888";
+
+        for(char digit : currentHex.toCharArray()){
+
+            if((digit == 'F' && increase) || (digit == '0' && !increase))
+                return currentHex;
+
+
+            for(int i = 0; i < hexValues.length; i++){
+
+                if(digit == hexValues[i] && increase)
+                    result += hexValues[i+1];
+                else if(digit == hexValues[i] && !increase)
+                    result += hexValues[i-1];
+            }
+        }
+
+        return result;
+    }
+
+    public int getIntensity(String hex, boolean percentage){
+
+        if(hex.length() != 6)
+            return 50;
+
+        hex = hex.toUpperCase();
+
+        int baseline = 15;
+        double intensity = 0;
+
+        for(int i = 0; i < hex.length(); i++){
+
+            for(int j = 0; j < hexValues.length; j++){
+
+                if(hex.toCharArray()[i] == hexValues[j]){
+
+                    if(j < baseline){
+                        baseline = j;
+                    }
+                }
+            }
+        }
+
+        if(percentage){
+
+            intensity = baseline / 15.0 * 100;
+            return (int)intensity;
+        }
+
+        return baseline;
+    }
+
 }

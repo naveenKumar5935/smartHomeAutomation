@@ -311,6 +311,18 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         editor.apply();
     }
 
+    public void saveHex(Device device, String hex){
+        SharedPreferences.Editor editor = state.edit();
+
+        editor.putString(device.getIdentifier(), hex);
+        editor.apply();
+    }
+
+    public String getHex(Device device){
+
+        return state.getString(device.getIdentifier(), "888888");
+    }
+
     public ArrayList<String> loadRoomData(String roomName){
 
         ArrayList<String> data = new ArrayList<>();

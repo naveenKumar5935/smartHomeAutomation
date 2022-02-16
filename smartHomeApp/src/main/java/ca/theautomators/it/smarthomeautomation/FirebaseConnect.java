@@ -107,6 +107,10 @@ public class FirebaseConnect {
     public void sendControlData(String data, String identifier){
 
         deviceRef.child(identifier).child("DATA").setValue(data);
+        deviceRef.child(identifier).child("DATA").setValue(data);
+        deviceRef.child(identifier).child("DATA").setValue(data);
+        deviceRef.child(identifier).child("DATA").setValue(data);
+        deviceRef.child(identifier).child("DATA").setValue(data);
     }
 
     public DatabaseReference getSensorDataRef(String identifier){
