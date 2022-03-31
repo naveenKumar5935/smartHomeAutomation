@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     buildFeatures{
@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId "ca.theautomators.it.smarthomeautomation"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.github.nedimf:maildroid:v0.0.6-release'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
     androidTestImplementation 'com.android.support.test:rules:3.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

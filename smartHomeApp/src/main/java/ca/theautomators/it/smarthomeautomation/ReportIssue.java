@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
@@ -76,7 +77,8 @@ public class ReportIssue extends AppCompatActivity {
                     HashMap<String, Object> userReport = new HashMap<>();
                     userReport.put(getString(R.string.reportemail),email.getText().toString().trim());
                     userReport.put(getString(R.string.report), report.getText().toString());
-                    FirebaseDatabase.getInstance().getReference("UserReports").child(email.getText().toString().replace(".","")).setValue(userReport);
+                    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+                    FirebaseDatabase.getInstance().getReference("UserReports").child(currentFirebaseUser.getUid()).setValue(userReport);
 
 
                     report.setText("");

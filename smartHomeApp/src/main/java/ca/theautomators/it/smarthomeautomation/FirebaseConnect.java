@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -99,7 +101,9 @@ public class FirebaseConnect {
         userFeedback.put("rating",rating);
         userFeedback.put("Device",modelNo);
 
-        FirebaseDatabase.getInstance().getReference("UserFeedback").child(phone).setValue(userFeedback);
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+
+        FirebaseDatabase.getInstance().getReference("UserFeedback").child(currentFirebaseUser.getUid()).setValue(userFeedback);
 
     }
 

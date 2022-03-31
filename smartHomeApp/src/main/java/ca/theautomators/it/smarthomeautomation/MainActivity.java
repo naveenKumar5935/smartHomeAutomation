@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity{
     private boolean rfidChange;
     private PendingIntent pendingIntent;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +70,12 @@ public class MainActivity extends AppCompatActivity{
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        sendSMS sendSMS = new sendSMS();
+        sendSMS.sendSms();
+
         rfidChange = false;
         gettingData();
+
 
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){

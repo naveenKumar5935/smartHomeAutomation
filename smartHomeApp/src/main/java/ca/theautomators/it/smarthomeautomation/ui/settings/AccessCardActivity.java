@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,6 +34,7 @@ public class AccessCardActivity extends AppCompatActivity {
     ArrayAdapter adapter;
     ArrayList<String> arrayList;
     ArrayList<String> keylist;
+    FirebaseUser currentFirebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class AccessCardActivity extends AppCompatActivity {
         accessET = findViewById(R.id.accessCard_tb);
         accessBtn = findViewById(R.id.accessBtn);
         accessList = findViewById(R.id.access_listview);
+       currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
 
         arrayList = new ArrayList<>();
@@ -63,7 +67,7 @@ public class AccessCardActivity extends AppCompatActivity {
                 alert.setPositiveButton(R.string.alert_positive_btn, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        FirebaseDatabase.getInstance().getReference().child("AccessCards").child(keylist.get(i)).removeValue();
+                        FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser.getUid()).child("AccessCards").child(keylist.get(i)).removeValue();
                         gettingData();
                         adapter.notifyDataSetChanged();
                     }
@@ -94,11 +98,11 @@ public class AccessCardActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), R.string.access_card_exists,Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    FirebaseDatabase.getInstance().getReference().child("AccessCards").child(accessET.getText().toString().trim()).setValue(accessET.getText().toString().trim());
+                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser.getUid()).child("AccessCards").child(accessET.getText().toString().trim()).setValue(accessET.getText().toString().trim());
                    gettingData();
                     adapter.notifyDataSetChanged();
                 }
-
+                    accessET.setText("");
             }
         });
     }
@@ -107,7 +111,7 @@ public class AccessCardActivity extends AppCompatActivity {
         adapter.clear();
         keylist.clear();
         arrayList.clear();
-        FirebaseDatabase.getInstance().getReference().child("AccessCards").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser.getUid()).child("AccessCards").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 countcards = (int)snapshot.getChildrenCount();

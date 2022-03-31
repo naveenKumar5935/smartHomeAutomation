@@ -164,7 +164,7 @@ public class RoomFragment extends Fragment {
 
                 if(device.getType().equals("LIGHT")){
                     if(isChecked){
-                        device.sendControlData("1:000000");
+                        device.sendControlData("1:323232");
                         icon.setImageDrawable(getDrawable("LIGHTON"));
                     }
                     else{
