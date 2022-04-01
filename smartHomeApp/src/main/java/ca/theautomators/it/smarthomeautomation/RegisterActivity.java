@@ -36,6 +36,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private Boolean connection=false;
     CheckBox rememberMe;
-
+    FirebaseUser currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
         googleSignUpButton = findViewById(R.id.googleSignUpButton);
         auth = FirebaseAuth.getInstance();
         rememberMe = findViewById(R.id.registerRememberMe);
+        currentUser = auth.getCurrentUser();
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,8 +190,8 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String accessCodeStored = snapshot.child("UserAccessCode").child("AccessCode").getValue().toString();
-                if(accessCodeStored.matches(code)){
+//                String accessCodeStored = snapshot.child("UserAccessCode").child("AccessCode").getValue().toString();
+//                if(accessCodeStored.matches(code)){
 
                     if(email==null){
                         googleSignInRequest();
@@ -211,9 +213,9 @@ public class RegisterActivity extends AppCompatActivity {
                     });
 
 
-                }else {
-                    Toast.makeText(RegisterActivity.this, R.string.invalid_access_code,Toast.LENGTH_SHORT).show();
-                }
+//                }else {
+//                    Toast.makeText(RegisterActivity.this, R.string.invalid_access_code,Toast.LENGTH_SHORT).show();
+//                }
             }
 
             @Override
@@ -233,7 +235,8 @@ public class RegisterActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             String getphone = phone.getText().toString();
                             String getname = fullname.getText().toString();
-                            User user = new User(email,password,getname,getphone);
+                            String code = accessCode.getText().toString().trim();
+                            User user = new User(email,password,getname,getphone,code);
                             FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid())
                                     .setValue(user)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {

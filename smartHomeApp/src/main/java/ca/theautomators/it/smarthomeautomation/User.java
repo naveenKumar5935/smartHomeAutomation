@@ -11,17 +11,20 @@ public class User {
 
     String email, password, fullName, phone, code, devices;
 
-    public User(String email, String password, String fullName, String phone){
+    public User(String email, String password, String fullName, String phone, String code){
         this.email = email;
         this.password = password;
         this.fullName = fullName;
         this.phone = phone;
-        this.code="";
+        this.code=code;
         this.devices="";
     }
 
     public String getCode() {
         return code;
+    }
+    public void setCode(String code){
+        this.code = code;
     }
 
     public String getDevices() {
