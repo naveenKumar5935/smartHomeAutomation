@@ -45,7 +45,8 @@
         <activity
             android:name=".SplashScreenActivity"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="sensor">
+            android:screenOrientation="sensor"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
