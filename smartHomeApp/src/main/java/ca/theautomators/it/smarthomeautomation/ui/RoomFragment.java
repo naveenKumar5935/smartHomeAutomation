@@ -7,15 +7,18 @@
 package ca.theautomators.it.smarthomeautomation.ui;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +40,7 @@ import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.Room;
 import ca.theautomators.it.smarthomeautomation.RoomState;
+import top.defaults.colorpicker.ColorPickerPopup;
 
 public class RoomFragment extends Fragment {
 
@@ -49,6 +53,7 @@ public class RoomFragment extends Fragment {
     private boolean smokeDetected;
     private RoomState rS;
     FirebaseConnect fC;
+    private char hexValues[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -148,6 +153,20 @@ public class RoomFragment extends Fragment {
 
     private LinearLayout buildController(Device device){
 
+        final String[] currentVal = {"1:" + rS.getHex(device)};
+
+        device.getSensorData().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                currentVal[0] = "1:" + snapshot.getValue().toString().split(":")[1];
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         LinearLayout row = new LinearLayout(getContext());
         row.setOrientation(LinearLayout.HORIZONTAL);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(170, 170);
@@ -157,6 +176,9 @@ public class RoomFragment extends Fragment {
         icon.setImageDrawable(getDrawable(device.getType()));
         icon.setLayoutParams(params);
 
+        SeekBar intensity = new SeekBar(getContext());
+        Button colour = new Button(getContext());
+
         SwitchCompat control = new SwitchCompat(getContext());
         control.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -164,11 +186,19 @@ public class RoomFragment extends Fragment {
 
                 if(device.getType().equals("LIGHT")){
                     if(isChecked){
-                        device.sendControlData("1:323232");
+                        //TODO: read from sharedpref to get hex val
+                        String hex = rS.getHex(device);
+                        device.sendControlData("1:" + hex);
+                        intensity.setEnabled(true);
+                        colour.setClickable(true);
+                        intensity.setProgress(getIntensity(hex));
+                        colour.setBackgroundColor(Color.parseColor("#" + rS.getHex(device)));
                         icon.setImageDrawable(getDrawable("LIGHTON"));
                     }
                     else{
                         device.sendControlData("0:000000");
+                        intensity.setEnabled(false);
+                        colour.setClickable(false);
                         icon.setImageDrawable(getDrawable("LIGHT"));
                     }
                 }
@@ -176,7 +206,7 @@ public class RoomFragment extends Fragment {
                     if(isChecked && !smokeDetected){
                         device.sendControlData("1:0");
                     }
-                    else if(isChecked && smokeDetected){
+                    else if(isChecked){
                         device.sendControlData("1:1");
                     }
                     else{
@@ -217,10 +247,86 @@ public class RoomFragment extends Fragment {
         control.setText(device.getType());
         controls.add(control);
 
-        row.addView(icon);
-        row.addView(control);
 
-        return row;
+        if(device.getType().equals("LIGHT")){
+            //Create slider and colour picker
+            LinearLayout vert = new LinearLayout(getContext());
+            vert.setOrientation(LinearLayout.VERTICAL);
+
+            intensity.setMax(255);
+
+            String currentHex = currentVal[0].split(":")[1];
+            intensity.setProgress(getIntensity(currentHex));
+            if(!control.isChecked())
+                intensity.setEnabled(false);
+
+            intensity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                    String intensityDelta = colourIntensity(rS.getHex(device), progress);
+                    colour.setBackgroundColor(Color.parseColor("#" + intensityDelta));
+
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    if(control.isChecked()){
+
+                        String intensityDelta = colourIntensity(rS.getHex(device), seekBar.getProgress());
+                        device.sendControlData("1:" + intensityDelta);
+                        colour.setBackgroundColor(Color.parseColor("#" + intensityDelta));
+                        rS.saveHex(device, intensityDelta);
+                    }
+
+                }
+            });
+
+            colour.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new ColorPickerPopup.Builder(getContext())
+                            .initialColor(Color.parseColor("#" + currentHex))
+                    .enableBrightness(true)
+                    .okTitle("Choose")
+                    .cancelTitle("Cancel")
+                    .showIndicator(true)
+                    .showValue(true)
+                    .build()
+                    .show(v, new ColorPickerPopup.ColorPickerObserver() {
+                        @Override
+                        public void onColorPicked(int color) {
+
+                            if(control.isChecked()){
+                                String hex = String.format("%06X", (0xFFFFFF & color));
+                                device.sendControlData("1:" + hex);
+                                colour.setBackgroundColor(color);
+                                intensity.setProgress(getIntensity(hex));
+                                rS.saveHex(device, hex);
+                            }
+                        }
+                    });
+                }
+            });
+
+            row.addView(icon);
+            row.addView(control);
+            row.addView(colour);
+            vert.addView(row);
+            vert.addView(intensity);
+            return vert;
+        }
+        else {
+            row.addView(icon);
+            row.addView(control);
+            return row;
+        }
     }
 
     private void buildSensorReceiver(Device device){
@@ -243,13 +349,13 @@ public class RoomFragment extends Fragment {
                         roomData.scrollTo(0, 0);
 
                     if (device.getType().equals("LIGHT")) {
-                        data += "Lights: ";
+//                        data += "Lights: ";
 
                         if (dataRead.split(":")[0].equals("0")) {
-                            data += "OFF";
+//                            data += "OFF";
                             setControlState(false, "LIGHT");
                         } else {
-                            data += "ON";
+//                            data += "ON";
                             setControlState(true, "LIGHT");
                         }
                     } else if (device.getType().equals("SMOKE")) {
@@ -310,17 +416,18 @@ public class RoomFragment extends Fragment {
                         }
                     }
 
+                    if(!device.getType().equals("LIGHT")) {
+                        dataList.add(data);
 
-                    dataList.add(data);
+                        data = "";
 
-                    data = "";
+                        for (String line : dataList) {
+                            data += line;
+                        }
+                        roomData.setText(data);
 
-                    for (String line : dataList) {
-                        data += line;
+                        rS.saveRoomData(thisRoom.getTitle(), dataList);
                     }
-                    roomData.setText(data);
-
-                    rS.saveRoomData(thisRoom.getTitle(), dataList);
                 }
 
                 @Override
@@ -356,6 +463,8 @@ public class RoomFragment extends Fragment {
                     return ContextCompat.getDrawable(getContext(), R.drawable.lights_off_nobg);
                 case "LIGHTON":
                     return ContextCompat.getDrawable(getContext(), R.drawable.lights_on_nobg);
+                case "COLOUR":
+                    return ContextCompat.getDrawable(getContext(), R.drawable.colour_button);
                 default:
                     return null;
             }
@@ -381,4 +490,124 @@ public class RoomFragment extends Fragment {
 
         return formatter.format(date);
     }
+
+    public String colourIntensity(String currentHex, int intensity){
+
+        int currentIntensity = getIntensity(currentHex);
+        int delta;
+
+        if(intensity > currentIntensity) {
+            delta = intensity - currentIntensity;
+
+            for(int i = 0; i < delta; i++)
+                currentHex = colourIntensityWorker(currentHex, true);
+        }
+        else {
+            delta = currentIntensity - intensity;
+            for(int i = 0; i < delta; i++)
+                currentHex = colourIntensityWorker(currentHex, false);
+        }
+
+        return currentHex;
+    }
+
+    public int[] hexToIntArray(String hex){
+
+        int[] result = new int[6];
+
+        for(int i = 0; i < hex.toCharArray().length; i++){
+
+            if(Character.isDigit(hex.charAt(i))){
+                result[i] = Character.getNumericValue(hex.charAt(i));
+            }
+            else{
+                switch(hex.charAt(i)){
+                    case 'A':
+                        result[i] = 10;
+                        break;
+                    case 'B':
+                        result[i] = 11;
+                        break;
+                    case 'C':
+                        result[i] = 12;
+                        break;
+                    case 'D':
+                        result[i] = 13;
+                        break;
+                    case 'E':
+                        result[i] = 14;
+                        break;
+                    case 'F':
+                        result[i] = 15;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public String colourIntensityWorker(String currentHex, boolean increase){
+
+        currentHex = currentHex.toUpperCase();
+        String result = "";
+
+        if(currentHex.length() != 6)
+            return "888888";
+
+        int[] convertedHex = hexToIntArray(currentHex);
+
+        if(increase){
+            for(int i = 1; i < convertedHex.length; i += 2){
+
+                if(convertedHex[i] < 15){
+                    convertedHex[i]++;
+                }
+                else{
+                    if(convertedHex[i-1] == 15){
+                        break;
+                    }
+                    convertedHex[i-1]++;
+                    convertedHex[i] = 0;
+                }
+            }
+        }
+        else{
+            for(int i = 1; i < convertedHex.length; i += 2){
+
+                if(convertedHex[i] > 0){
+                    convertedHex[i]--;
+                }
+                else{
+                    if(convertedHex[i-1] == 0){
+                        break;
+                    }
+                    convertedHex[i-1]--;
+                    convertedHex[i] = 15;
+                }
+            }
+        }
+
+        for(int i = 0; i < convertedHex.length; i++){
+            result += hexValues[convertedHex[i]];
+        }
+
+        return result;
+    }
+
+    public int getIntensity(String hex){
+
+        int[] convertedHex = hexToIntArray(hex);
+
+        int R = (convertedHex[0] * 16) + convertedHex[1];
+        int G = (convertedHex[2] * 16) + convertedHex[3];
+        int B = (convertedHex[4] * 16) + convertedHex[5];
+
+        if(R > G && R > B)
+            return R;
+        else if(G > R && G > B)
+            return G;
+        else
+            return B;
+    }
+
 }
