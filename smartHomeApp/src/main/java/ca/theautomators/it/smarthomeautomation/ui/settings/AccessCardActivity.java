@@ -1,8 +1,10 @@
 package ca.theautomators.it.smarthomeautomation.ui.settings;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,12 +25,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 
 public class AccessCardActivity extends AppCompatActivity {
 
     EditText accessET;
-    Button accessBtn;
+    Button accessBtn, scannerAccessBtn;
     ListView accessList;
     int countcards=0;
     ArrayAdapter adapter;
@@ -46,6 +49,7 @@ public class AccessCardActivity extends AppCompatActivity {
         accessET = findViewById(R.id.accessCard_tb);
         accessBtn = findViewById(R.id.accessBtn);
         accessList = findViewById(R.id.access_listview);
+        scannerAccessBtn = findViewById(R.id.accessScannerBtn);
        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
 
@@ -88,6 +92,52 @@ public class AccessCardActivity extends AppCompatActivity {
 
 
 
+        scannerAccessBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               showProgressDialog(true);
+
+                FirebaseDatabase.getInstance().getReference().child("Devices").child("100").child("DATA").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String rfidValue = snapshot.getValue().toString().split(":")[1];
+                            Log.e("rfidchange",rfidValue);
+                        if(!rfidValue.matches("00000")){
+
+                            AlertDialog.Builder alert = new AlertDialog.Builder(AccessCardActivity.this);
+                            alert.setIcon(android.R.drawable.ic_dialog_alert);
+                            alert.setTitle("Rfid Found");
+                            alert.setMessage(rfidValue);
+                            alert.setPositiveButton("Correct", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser.getUid()).child("AccessCards").child(rfidValue).setValue(rfidValue);
+                                    gettingData();
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                            alert.setNegativeButton(R.string.alert_negative_btn, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            alert.show();
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
+
+
         accessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,6 +155,18 @@ public class AccessCardActivity extends AppCompatActivity {
                     accessET.setText("");
             }
         });
+    }
+
+    public void showProgressDialog(boolean x){
+       ProgressDialog progressDialog = new ProgressDialog(AccessCardActivity.this);
+        progressDialog.setMessage("Searching for RFID card....");
+        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Dismiss", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                progressDialog.dismiss();
+            }
+        });
+
     }
 
     public void gettingData(){
