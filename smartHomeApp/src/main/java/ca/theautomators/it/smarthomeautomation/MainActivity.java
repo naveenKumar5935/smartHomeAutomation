@@ -32,6 +32,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -343,9 +345,10 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void gettingData(){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         arrayList = new ArrayList<>();
         arrayList.clear();
-        FirebaseDatabase.getInstance().getReference().child("AccessCards").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("AccessCards").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()){
@@ -397,11 +400,12 @@ public class MainActivity extends AppCompatActivity{
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String value = snapshot.getValue().toString().split(":")[1];
-                    String rfidState = snapshot.getValue().toString();
+                    String rfidState = snapshot.getValue().toString().split(":")[0];
 
                     Log.e("rfid", value);
+                    Log.e("rfidstate",rfidState);
                     if (rfidChange) {
-                        if(rfidState.matches("0.0") || rfidState.matches("1.0")){
+                        if(rfidState.matches("0") || value.matches("00000")){
                             return;
                         }
 

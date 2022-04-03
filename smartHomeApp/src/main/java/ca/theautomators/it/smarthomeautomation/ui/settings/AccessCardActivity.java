@@ -38,6 +38,7 @@ public class AccessCardActivity extends AppCompatActivity {
     ArrayList<String> arrayList;
     ArrayList<String> keylist;
     FirebaseUser currentFirebaseUser;
+    String matchrfid="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,15 @@ public class AccessCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                showProgressDialog(true);
+                ProgressDialog progressDialog = new ProgressDialog(AccessCardActivity.this);
+                progressDialog.setMessage("Searching for RFID card....");
+                progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Dismiss", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                       // progressDialog.dismiss();
+                    }
+                });
+                progressDialog.show();
 
                 FirebaseDatabase.getInstance().getReference().child("Devices").child("100").child("DATA").addValueEventListener(new ValueEventListener() {
                     @Override
@@ -104,25 +114,7 @@ public class AccessCardActivity extends AppCompatActivity {
                             Log.e("rfidchange",rfidValue);
                         if(!rfidValue.matches("00000")){
 
-                            AlertDialog.Builder alert = new AlertDialog.Builder(AccessCardActivity.this);
-                            alert.setIcon(android.R.drawable.ic_dialog_alert);
-                            alert.setTitle("Rfid Found");
-                            alert.setMessage(rfidValue);
-                            alert.setPositiveButton("Correct", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser.getUid()).child("AccessCards").child(rfidValue).setValue(rfidValue);
-                                    gettingData();
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
-                            alert.setNegativeButton(R.string.alert_negative_btn, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            alert.show();
+                            rfidAlertVerify(rfidValue);
 
                         }
 
@@ -158,14 +150,35 @@ public class AccessCardActivity extends AppCompatActivity {
     }
 
     public void showProgressDialog(boolean x){
-       ProgressDialog progressDialog = new ProgressDialog(AccessCardActivity.this);
-        progressDialog.setMessage("Searching for RFID card....");
-        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Dismiss", new DialogInterface.OnClickListener() {
+
+
+    }
+
+    public void rfidAlertVerify(String rfidValue){
+
+        if(matchrfid.matches(rfidValue)){
+            return;
+        }
+        matchrfid=rfidValue;
+        AlertDialog.Builder alert = new AlertDialog.Builder(AccessCardActivity.this);
+        alert.setIcon(android.R.drawable.ic_dialog_alert);
+        alert.setTitle("Rfid Found");
+        alert.setMessage(rfidValue);
+        alert.setPositiveButton("Correct", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                progressDialog.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser.getUid()).child("AccessCards").child(rfidValue).setValue(rfidValue);
+                gettingData();
+                adapter.notifyDataSetChanged();
             }
         });
+        alert.setNegativeButton(R.string.alert_negative_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alert.show();
 
     }
 
