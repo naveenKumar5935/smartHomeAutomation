@@ -67,7 +67,7 @@ public class SettingsFragment extends Fragment {
     GoogleSignInAccount gUser;
     FloatingActionButton fab;
     ImageView profileImg;
-    Button bgButton;
+    Button bgButton, automationBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -87,6 +87,7 @@ public class SettingsFragment extends Fragment {
 
         logoutBtn = view.findViewById(R.id.settingLogoutBtn);
         accessCardBtn = view.findViewById(R.id.accessCardButton);
+        automationBtn = view.findViewById(R.id.automationBtn);
         auth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         profileImg = view.findViewById(R.id.settingProfileImg);
@@ -124,6 +125,14 @@ public class SettingsFragment extends Fragment {
             Intent intent = new Intent(getActivity().getApplicationContext(),AccessCardActivity.class);
             getActivity().startActivity(intent);
 
+            }
+        });
+
+        automationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),Automation.class);
+                startActivity(intent);
             }
         });
 
