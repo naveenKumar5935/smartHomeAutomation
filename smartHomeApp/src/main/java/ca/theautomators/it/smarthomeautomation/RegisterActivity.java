@@ -8,8 +8,10 @@
 package ca.theautomators.it.smarthomeautomation;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -244,6 +246,10 @@ public class RegisterActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
                                                 Toast.makeText(RegisterActivity.this, R.string.successful_signedup,Toast.LENGTH_SHORT).show();
+
+                                                SharedPreferences currentUser = RegisterActivity.this.getSharedPreferences("current_user", Context.MODE_PRIVATE);
+                                                SharedPreferences.Editor editor = currentUser.edit();
+                                                editor.putString("current_user",auth.getCurrentUser().getUid()).apply();
 
                                                 if(rememberMe.isChecked()){
                                                     Paper.book().write("useremail",email);

@@ -6,7 +6,9 @@
  */
 package ca.theautomators.it.smarthomeautomation;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -46,7 +48,10 @@ public class ManageDeviceActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        FirebaseConnect fC = FirebaseConnect.getInstance();
+        SharedPreferences currentUser = ManageDeviceActivity.this.getSharedPreferences("current_user", Context.MODE_PRIVATE);
+        String userID = currentUser.getString("current_user", "no_user");
+        FirebaseConnect fC = FirebaseConnect.getInstance(userID);
+
         RoomState rS = RoomState.getInstance(null);
 
         setTitle(getString(R.string.device_manager_title));
@@ -74,7 +79,7 @@ public class ManageDeviceActivity extends AppCompatActivity {
             identifiers = fC.getIdentifiers();
 
 
-            if(FirebaseConnect.getInstance().getFirebaseConnectivity()){
+            if(FirebaseConnect.getInstance(null).getFirebaseConnectivity()){
                 rS.saveIdentifiers(identifiers);
             }
         }

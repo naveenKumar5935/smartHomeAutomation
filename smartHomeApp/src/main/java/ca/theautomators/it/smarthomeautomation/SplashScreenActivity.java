@@ -10,7 +10,9 @@ package ca.theautomators.it.smarthomeautomation;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,7 +34,9 @@ public class SplashScreenActivity extends Activity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        FirebaseConnect fC = FirebaseConnect.getInstance();
+        SharedPreferences currentUser = SplashScreenActivity.this.getSharedPreferences("current_user", Context.MODE_PRIVATE);
+        String userID = currentUser.getString("current_user", "no_user");
+        FirebaseConnect fC = FirebaseConnect.getInstance(userID);
         createAlarmNotificationChannel();
 
         handler=new Handler();

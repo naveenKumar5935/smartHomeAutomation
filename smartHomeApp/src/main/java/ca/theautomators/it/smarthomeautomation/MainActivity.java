@@ -11,6 +11,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -90,7 +91,11 @@ public class MainActivity extends AppCompatActivity{
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-        FirebaseConnect fC = FirebaseConnect.getInstance();
+        SharedPreferences currentUser = MainActivity.this.getSharedPreferences("current_user", Context.MODE_PRIVATE);
+        String userID = currentUser.getString("current_user", "no_user");
+        Toast.makeText(MainActivity.this, userID,Toast.LENGTH_SHORT).show();
+        FirebaseConnect fC = FirebaseConnect.getInstance(userID);
+
         String[] identifiers = fC.getIdentifiers();
         final String[] notificationIdentifier = {""};
         final Context tempContext = this;

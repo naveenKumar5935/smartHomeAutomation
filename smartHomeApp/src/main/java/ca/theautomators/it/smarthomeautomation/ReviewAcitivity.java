@@ -7,6 +7,8 @@
 package ca.theautomators.it.smarthomeautomation;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -55,7 +57,10 @@ public class ReviewAcitivity extends AppCompatActivity {
         EditText phonenumber = findViewById(R.id.Phoneno);
         EditText email = findViewById(R.id.email);
 
-        firebaseConnect = FirebaseConnect.getInstance();
+        SharedPreferences currentUser = ReviewAcitivity.this.getSharedPreferences("current_user", Context.MODE_PRIVATE);
+        String userID = currentUser.getString("current_user", "no_user");
+
+        firebaseConnect = FirebaseConnect.getInstance(userID);
 
         mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override

@@ -20,7 +20,7 @@ public class Device {
     //This class uses a dependency injection, which is a Creational design pattern
     public Device(String identifier){
 
-        fC = FirebaseConnect.getInstance();
+        fC = FirebaseConnect.getInstance(null);
         this.identifier = identifier;
 
         if(fC.getFirebaseConnectivity()){

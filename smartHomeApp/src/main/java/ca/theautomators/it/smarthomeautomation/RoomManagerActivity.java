@@ -6,8 +6,10 @@
  */
 package ca.theautomators.it.smarthomeautomation;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -53,7 +55,9 @@ public class RoomManagerActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        FirebaseConnect fC = FirebaseConnect.getInstance();
+        SharedPreferences currentUser = RoomManagerActivity.this.getSharedPreferences("current_user", Context.MODE_PRIVATE);
+        String userID = currentUser.getString("current_user", "no_user");
+        FirebaseConnect fC = FirebaseConnect.getInstance(userID);
 
         roomState = RoomState.getInstance(null);
 
@@ -178,7 +182,7 @@ public class RoomManagerActivity extends AppCompatActivity {
                     AlertDialog.Builder option = new AlertDialog.Builder(RoomManagerActivity.this);
                     AlertDialog.Builder alert = new AlertDialog.Builder(RoomManagerActivity.this);
 
-                    if (FirebaseConnect.getInstance().getFirebaseConnectivity()) {
+                    if (FirebaseConnect.getInstance(null).getFirebaseConnectivity()) {
 
                         option.setIcon(R.drawable.home);
                         option.setTitle(R.string.room_saved);

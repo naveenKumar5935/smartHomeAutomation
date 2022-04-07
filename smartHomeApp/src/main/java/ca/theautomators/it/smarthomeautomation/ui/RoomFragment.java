@@ -70,7 +70,7 @@ public class RoomFragment extends Fragment {
         dataList = new ArrayList<>();
 
         rS = RoomState.getInstance(null);
-        fC = FirebaseConnect.getInstance();
+        fC = FirebaseConnect.getInstance(null);
 
 
         title = "";
@@ -155,7 +155,7 @@ public class RoomFragment extends Fragment {
 
                 if (!(dev.getType().equals("SERVO"))) {
 
-                    if (FirebaseConnect.getInstance().getFirebaseConnectivity()) {
+                    if (FirebaseConnect.getInstance(null).getFirebaseConnectivity()) {
                         buildSensorReceiver(dev);
                     }
 

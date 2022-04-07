@@ -8,8 +8,10 @@
 package ca.theautomators.it.smarthomeautomation;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -32,19 +34,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         rememberMe = findViewById(R.id.loginRememberMe);
         googleSignInButton = findViewById(R.id.googleSignInButton);
         auth = FirebaseAuth.getInstance();
+
 
 
         Paper.init(this);
@@ -240,7 +240,13 @@ public class LoginActivity extends AppCompatActivity {
         auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Toast.makeText(LoginActivity.this, R.string.successlogin_toast,Toast.LENGTH_SHORT).show();
+
+                SharedPreferences currentUser = LoginActivity.this.getSharedPreferences("current_user",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = currentUser.edit();
+                editor.putString("current_user", authResult.getUser().getUid());
+                editor.apply();
+
+//                Toast.makeText(LoginActivity.this, R.string.successlogin_toast,Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                 startActivity(intent);
 

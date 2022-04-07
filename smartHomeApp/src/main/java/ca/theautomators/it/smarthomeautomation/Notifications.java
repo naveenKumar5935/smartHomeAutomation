@@ -103,10 +103,10 @@ public class Notifications {
     private void buildMotionnotification(){
         value = value.split(":")[1];
 
-        if(Integer.valueOf(value)  == 1){
-            builder.setContentText("Motion Detected!");
-            triggerNotification();
-        }
+//        if(Integer.valueOf(value)  == 1){
+//            builder.setContentText("Motion Detected!");
+//            triggerNotification();
+//        }
 
     }
 
