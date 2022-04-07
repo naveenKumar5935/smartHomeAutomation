@@ -147,11 +147,14 @@ public class RoomFragment extends Fragment {
                 if(dev.getType().equals("PIR"))
                     pirIdentifier = dev.getIdentifier();
 
-                if (!(dev.getType().equals("HUMID") || dev.getType().equals("TEMP"))) {
+//                if (!(dev.getType().equals("HUMID") || dev.getType().equals("TEMP"))) {
+//
+//                    deviceControllers.addView(buildController(dev));
+//
+//                }
 
+                if(dev.getType().equals("SERVO") || dev.getType().equals("LIGHT"))
                     deviceControllers.addView(buildController(dev));
-
-                }
 
                 if (!(dev.getType().equals("SERVO"))) {
 
@@ -218,34 +221,34 @@ public class RoomFragment extends Fragment {
                         icon.setImageDrawable(getDrawable("LIGHT"));
                     }
                 }
-                else if(device.getType().equals("SMOKE")){
-                    if(isChecked && !smokeDetected){
-                        device.sendControlData("1:0");
-                    }
-                    else if(isChecked){
-                        device.sendControlData("1:1");
-                    }
-                    else{
-                        device.sendControlData("0:0");
-                        smokeDetected = false;
-                    }
-                }
-                else if(device.getType().equals("RFID")){
-                    if(isChecked){
-                        device.sendControlData("1:0");
-                    }
-                    else{
-                        device.sendControlData("0:0");
-                    }
-                }
-                else if(device.getType().equals("PIR")){
-                    if(isChecked){
-                        device.sendControlData("1:0");
-                    }
-                    else{
-                        device.sendControlData("0:0");
-                    }
-                }
+//                else if(device.getType().equals("SMOKE")){
+//                    if(isChecked && !smokeDetected){
+//                        device.sendControlData("1:0");
+//                    }
+//                    else if(isChecked){
+//                        device.sendControlData("1:1");
+//                    }
+//                    else{
+//                        device.sendControlData("0:0");
+//                        smokeDetected = false;
+//                    }
+//                }
+//                else if(device.getType().equals("RFID")){
+//                    if(isChecked){
+//                        device.sendControlData("1:0");
+//                    }
+//                    else{
+//                        device.sendControlData("0:0");
+//                    }
+//                }
+//                else if(device.getType().equals("PIR")){
+//                    if(isChecked){
+//                        device.sendControlData("1:0");
+//                    }
+//                    else{
+//                        device.sendControlData("0:0");
+//                    }
+//                }
                 else if(device.getType().equals("SERVO")){
                     if(isChecked){
                         device.sendControlData("1:0");
