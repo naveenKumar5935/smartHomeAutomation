@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FirebaseConnect {
@@ -126,6 +127,14 @@ public class FirebaseConnect {
             return null;
         }
 
+    }
+
+    public void linkLightsToMotion(String pirIdentifier, ArrayList<String> lightIdentifierList){
+
+        for(int i = 0; i < lightIdentifierList.size(); i++){
+
+            deviceRef.child(pirIdentifier).child("LIGHTS").child("LIGHT" + i).setValue(lightIdentifierList.get(i));
+        }
     }
 
     public void loadNumDevices(){

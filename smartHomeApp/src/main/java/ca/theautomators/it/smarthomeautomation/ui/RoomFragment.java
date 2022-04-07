@@ -124,16 +124,29 @@ public class RoomFragment extends Fragment {
             roomData.setText(R.string.no_sensors);
         }
 
+
+
+
         return root;
     }
 
     private void buildRoom(){
+
+        ArrayList<String> lightList = new ArrayList<>();
+        String pirIdentifier = null;
 
         for(String device : thisRoom.getDeviceIdentifierList()){
 
             Device dev = new Device(device);
 
             if(dev.getType() != null){
+
+                if(dev.getType().equals("LIGHT"))
+                    lightList.add(dev.getIdentifier());
+
+                if(dev.getType().equals("PIR"))
+                    pirIdentifier = dev.getIdentifier();
+
                 if (!(dev.getType().equals("HUMID") || dev.getType().equals("TEMP"))) {
 
                     deviceControllers.addView(buildController(dev));
@@ -149,6 +162,9 @@ public class RoomFragment extends Fragment {
                 }
             }
         }
+
+        if(lightList.size() > 0 && pirIdentifier != null)
+            fC.linkLightsToMotion(pirIdentifier, lightList);
     }
 
     private LinearLayout buildController(Device device){
