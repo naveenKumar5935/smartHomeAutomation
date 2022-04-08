@@ -70,7 +70,7 @@ public class RoomFragment extends Fragment {
         dataList = new ArrayList<>();
 
         rS = RoomState.getInstance(null);
-        fC = FirebaseConnect.getInstance();
+        fC = FirebaseConnect.getInstance(null);
 
 
         title = "";
@@ -124,31 +124,50 @@ public class RoomFragment extends Fragment {
             roomData.setText(R.string.no_sensors);
         }
 
+
+
+
         return root;
     }
 
     private void buildRoom(){
+
+        ArrayList<String> lightList = new ArrayList<>();
+        String pirIdentifier = null;
 
         for(String device : thisRoom.getDeviceIdentifierList()){
 
             Device dev = new Device(device);
 
             if(dev.getType() != null){
-                if (!(dev.getType().equals("HUMID") || dev.getType().equals("TEMP"))) {
 
+                if(dev.getType().equals("LIGHT"))
+                    lightList.add(dev.getIdentifier());
+
+                if(dev.getType().equals("PIR"))
+                    pirIdentifier = dev.getIdentifier();
+
+//                if (!(dev.getType().equals("HUMID") || dev.getType().equals("TEMP"))) {
+//
+//                    deviceControllers.addView(buildController(dev));
+//
+//                }
+
+                if(dev.getType().equals("SERVO") || dev.getType().equals("LIGHT"))
                     deviceControllers.addView(buildController(dev));
-
-                }
 
                 if (!(dev.getType().equals("SERVO"))) {
 
-                    if (FirebaseConnect.getInstance().getFirebaseConnectivity()) {
+                    if (FirebaseConnect.getInstance(null).getFirebaseConnectivity()) {
                         buildSensorReceiver(dev);
                     }
 
                 }
             }
         }
+
+        if(lightList.size() > 0 && pirIdentifier != null)
+            fC.linkLightsToMotion(pirIdentifier, lightList);
     }
 
     private LinearLayout buildController(Device device){
@@ -202,34 +221,34 @@ public class RoomFragment extends Fragment {
                         icon.setImageDrawable(getDrawable("LIGHT"));
                     }
                 }
-                else if(device.getType().equals("SMOKE")){
-                    if(isChecked && !smokeDetected){
-                        device.sendControlData("1:0");
-                    }
-                    else if(isChecked){
-                        device.sendControlData("1:1");
-                    }
-                    else{
-                        device.sendControlData("0:0");
-                        smokeDetected = false;
-                    }
-                }
-                else if(device.getType().equals("RFID")){
-                    if(isChecked){
-                        device.sendControlData("1:0");
-                    }
-                    else{
-                        device.sendControlData("0:0");
-                    }
-                }
-                else if(device.getType().equals("PIR")){
-                    if(isChecked){
-                        device.sendControlData("1:0");
-                    }
-                    else{
-                        device.sendControlData("0:0");
-                    }
-                }
+//                else if(device.getType().equals("SMOKE")){
+//                    if(isChecked && !smokeDetected){
+//                        device.sendControlData("1:0");
+//                    }
+//                    else if(isChecked){
+//                        device.sendControlData("1:1");
+//                    }
+//                    else{
+//                        device.sendControlData("0:0");
+//                        smokeDetected = false;
+//                    }
+//                }
+//                else if(device.getType().equals("RFID")){
+//                    if(isChecked){
+//                        device.sendControlData("1:0");
+//                    }
+//                    else{
+//                        device.sendControlData("0:0");
+//                    }
+//                }
+//                else if(device.getType().equals("PIR")){
+//                    if(isChecked){
+//                        device.sendControlData("1:0");
+//                    }
+//                    else{
+//                        device.sendControlData("0:0");
+//                    }
+//                }
                 else if(device.getType().equals("SERVO")){
                     if(isChecked){
                         device.sendControlData("1:0");

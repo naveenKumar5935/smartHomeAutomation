@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FirebaseConnect {
@@ -32,13 +33,18 @@ public class FirebaseConnect {
     private String[] identifiers;
     private String[] deviceTypes;
     private boolean firebaseConnectivity;
+    private String currentUser;
 
     private static FirebaseConnect INSTANCE= null;
 
     //This class uses a Singleton style Creational design pattern
-    private FirebaseConnect(){
+    private FirebaseConnect(String currentUser){
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        if(currentUser != null)
+            this.currentUser = currentUser;
+        else
+            System.out.println("*****************NO USER*********************");
 
         DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
         connectedRef.addValueEventListener(new ValueEventListener() {
@@ -67,18 +73,20 @@ public class FirebaseConnect {
 
     private void start(){
 
-        deviceRef = FirebaseDatabase.getInstance().getReference().child("Devices");
+        deviceRef = FirebaseDatabase.getInstance().getReference().child("/Users/" + currentUser + "/devices");
         loadNumDevices();
     }
 
 
-    public static FirebaseConnect getInstance(){
+    public static FirebaseConnect getInstance(String currentUser){
+
+        System.out.println("**********Current User**********: " + currentUser);
 
         if(INSTANCE == null){
 
             synchronized (FirebaseConnect.class){
 
-                INSTANCE = new FirebaseConnect();
+                INSTANCE = new FirebaseConnect(currentUser);
             }
         }
 
@@ -125,7 +133,18 @@ public class FirebaseConnect {
         else{
             return null;
         }
+    }
 
+    public DatabaseReference getUserRef(){
+        return deviceRef;
+    }
+
+    public void linkLightsToMotion(String pirIdentifier, ArrayList<String> lightIdentifierList){
+
+        for(int i = 0; i < lightIdentifierList.size(); i++){
+
+            deviceRef.child(pirIdentifier).child("LIGHTS").child("LIGHT" + i).setValue(lightIdentifierList.get(i));
+        }
     }
 
     public void loadNumDevices(){

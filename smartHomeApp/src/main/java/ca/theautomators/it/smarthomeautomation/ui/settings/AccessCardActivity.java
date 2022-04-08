@@ -25,7 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 
 public class AccessCardActivity extends AppCompatActivity {
@@ -51,7 +50,7 @@ public class AccessCardActivity extends AppCompatActivity {
         accessBtn = findViewById(R.id.accessBtn);
         accessList = findViewById(R.id.access_listview);
         scannerAccessBtn = findViewById(R.id.accessScannerBtn);
-       currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
         arrayList = new ArrayList<>();
@@ -108,7 +107,7 @@ public class AccessCardActivity extends AppCompatActivity {
                 });
                 progressDialog.show();
 
-                FirebaseDatabase.getInstance().getReference().child("Devices").child("100").child("DATA").addValueEventListener(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser.getUid()).child("devices").child("100").child("DATA").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String rfidValue = snapshot.getValue().toString().split(":")[1];

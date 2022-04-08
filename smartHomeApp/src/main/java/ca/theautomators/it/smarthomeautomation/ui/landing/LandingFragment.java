@@ -54,7 +54,7 @@ public class LandingFragment extends Fragment{
         root = inflater.inflate(R.layout.fragment_landing, container, false);
 
         RoomState rS = RoomState.getInstance(null);
-        fC = FirebaseConnect.getInstance();
+        fC = FirebaseConnect.getInstance(null);
         buttons = new ArrayList<>();
         buttonList = root.findViewById(R.id.landing_button_list);
 
