@@ -3,8 +3,13 @@ package ca.theautomators.it.smarthomeautomation.ui.settings;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -12,13 +17,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import ca.theautomators.it.smarthomeautomation.R;
+import io.paperdb.Paper;
 
 public class Automation extends AppCompatActivity {
-    Switch motionSwitch, rfidSwitch;
+    Switch motionSwitch, rfidSwitch, rfidNotify, motionNotify;
+    ImageView alarmIndicate;
+    Button alarmReset;
+    DatabaseReference smokeAlarmDataReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +37,12 @@ public class Automation extends AppCompatActivity {
 
         motionSwitch = findViewById(R.id.motionSwitch);
         rfidSwitch = findViewById(R.id.rfidSwitch);
+        motionNotify = findViewById(R.id.motionNotificationSwitch);
+        rfidNotify = findViewById(R.id.rfidNotificationSwitch);
+        alarmIndicate = findViewById(R.id.alarmIndicate);
+        alarmReset = findViewById(R.id.alarmResetBtn);
+
+        smokeAlarmDataReference = FirebaseDatabase.getInstance().getReference().child("Devices").child("103").child("DATA");
 
         FirebaseDatabase.getInstance().getReference().child("Devices").addValueEventListener(new ValueEventListener() {
             @Override
@@ -44,6 +60,37 @@ public class Automation extends AppCompatActivity {
                     motionSwitch.setChecked(false);
                 }else {
                     motionSwitch.setChecked(true);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        if(Paper.book().read("rfidNotify","").equals("true")){
+            rfidNotify.setChecked(true);
+        }else {
+            rfidNotify.setChecked(false);
+        }
+
+        if(Paper.book().read("motionNotify","").equals("true")){
+            motionNotify.setChecked(true);
+        }else {
+            motionNotify.setChecked(false);
+        }
+
+        smokeAlarmDataReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String smokeStatus = snapshot.getValue().toString().split(":")[0];
+
+                if(smokeStatus.matches("1")){
+                    alarmIndicate.setBackgroundResource(R.drawable.greenlight);
+                }else {
+                    alarmIndicate.setBackgroundResource(R.drawable.redlight);
                 }
 
             }
@@ -91,6 +138,59 @@ public class Automation extends AppCompatActivity {
                 });
             }
         });
+
+        rfidNotify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    Paper.book().write("rfidNotify","true");
+                }else {
+                    Paper.book().write("rfidNotify","false");
+                }
+            }
+        });
+
+        motionNotify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    Paper.book().write("motionNotify","true");
+                }else {
+                    Paper.book().write("motionNotify","false");
+                }
+            }
+        });
+
+        alarmReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                smokeAlarmDataReference.setValue("0:0").addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        ProgressDialog progressDialog = new ProgressDialog(Automation.this);
+                        progressDialog.setMessage("Resetting the alarm..");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+
+                        Runnable progressRunnable = new Runnable() {
+
+                            @Override
+                            public void run() {
+                                progressDialog.cancel();
+
+                             //   smokeAlarmDataReference.setValue("1:0");
+
+                            }
+                        };
+
+                        Handler pdCanceller = new Handler();
+                        pdCanceller.postDelayed(progressRunnable, 5000);
+
+                    }
+                });
+            }
+        });
+
 
 
 

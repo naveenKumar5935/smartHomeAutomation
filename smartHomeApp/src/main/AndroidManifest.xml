@@ -17,9 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartHomeAutomation"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".ui.settings.Automation"
-            android:exported="false" />
+
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -35,6 +33,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="YOUR_API_KEY" />
 
+        <activity
+            android:name=".ui.settings.Automation"
+            android:exported="false" />
         <activity
             android:name=".ui.settings.AccessCardActivity"
             android:exported="false"

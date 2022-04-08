@@ -13,6 +13,8 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import io.paperdb.Paper;
+
 @IgnoreExtraProperties
 public class Notifications {
 
@@ -79,7 +81,9 @@ public class Notifications {
     private void buildRFIDnotification(){
 
             builder.setContentText(value);
+        if(Paper.book().read("rfidNotify","").equals("true")){
             triggerNotification();
+        }
 
     }
 
@@ -105,7 +109,10 @@ public class Notifications {
 
         if(Integer.valueOf(value)  == 1){
             builder.setContentText("Motion Detected!");
-            triggerNotification();
+            if(Paper.book().read("motionNotify","").equals("true")){
+                triggerNotification();
+            }
+
         }
 
     }

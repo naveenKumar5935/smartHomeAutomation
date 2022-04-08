@@ -153,7 +153,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this,R.string.enter_access,Toast.LENGTH_SHORT).show();
                 }else {
                     if(connection){
-                        getAndMatchAccessCode(accessCodeEntered,null,null);
+                       // getAndMatchAccessCode(accessCodeEntered,null,null);
+                        googleSignInRequest();
                     }else {
                         Toast.makeText(getApplicationContext(),R.string.check_connection,Toast.LENGTH_SHORT).show();
 
@@ -302,13 +303,13 @@ public class RegisterActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Log.i("name",account.getDisplayName());
+            Log.e("name",account.getDisplayName());
 
             // Signed in successfully, show authenticated UI.
             FirebaseSignUpWithGoogle();
         } catch (ApiException e) {
-
-            FirebaseSignUpWithGoogle();
+                Log.e("exception",e.toString());
+        //    FirebaseSignUpWithGoogle();
         }
     }
 
@@ -319,9 +320,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(RegisterActivity.this);
-                String email = gUser.getEmail();
+              //  String email = gUser.getEmail();
 
-                if (snapshot.child("googleUsers").child(gUser.getId()).exists()) {
+                if (snapshot.child("Users").child(gUser.getId()).exists()) {
                     Toast.makeText(RegisterActivity.this, R.string.already_signed_up, Toast.LENGTH_SHORT).show();
                     return;
 
@@ -332,7 +333,7 @@ public class RegisterActivity extends AppCompatActivity {
                     userdatamap.put("email", email);
                     userdatamap.put("name", gUser.getGivenName());
 
-                    FirebaseDatabase.getInstance().getReference("googleUsers").child(gUser.getId()).setValue(userdatamap);
+                    FirebaseDatabase.getInstance().getReference("Users").child(gUser.getId()).setValue(userdatamap);
                     Toast.makeText(RegisterActivity.this, R.string.success,Toast.LENGTH_SHORT).show();
 
                 }

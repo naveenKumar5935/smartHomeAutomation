@@ -99,10 +99,11 @@ public class AccessCardActivity extends AppCompatActivity {
                showProgressDialog(true);
                 ProgressDialog progressDialog = new ProgressDialog(AccessCardActivity.this);
                 progressDialog.setMessage("Searching for RFID card....");
+                progressDialog.setCancelable(false);
                 progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Dismiss", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                       // progressDialog.dismiss();
+                        progressDialog.dismiss();
                     }
                 });
                 progressDialog.show();
