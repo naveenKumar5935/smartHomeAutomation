@@ -244,6 +244,7 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences currentUser = LoginActivity.this.getSharedPreferences("current_user",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = currentUser.edit();
                 editor.putString("current_user", authResult.getUser().getUid());
+                Paper.book().write("current_user",authResult.getUser().getUid());
                 editor.apply();
 
 //                Toast.makeText(LoginActivity.this, R.string.successlogin_toast,Toast.LENGTH_SHORT).show();

@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +31,8 @@ public class Automation extends AppCompatActivity {
     ImageView alarmIndicate;
     Button alarmReset;
     DatabaseReference smokeAlarmDataReference;
+    String currentUser;
+    FirebaseUser currentFirebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +45,11 @@ public class Automation extends AppCompatActivity {
         rfidNotify = findViewById(R.id.rfidNotificationSwitch);
         alarmIndicate = findViewById(R.id.alarmIndicate);
         alarmReset = findViewById(R.id.alarmResetBtn);
+        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        smokeAlarmDataReference = FirebaseDatabase.getInstance().getReference().child("Devices").child("103").child("DATA");
+        smokeAlarmDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser).child("Devices").child("103").child("DATA");
 
-        FirebaseDatabase.getInstance().getReference().child("Devices").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child("Devices").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
              String rfidState = snapshot.child("100").child("DATA").getValue().toString().split(":")[0];
@@ -111,7 +116,7 @@ public class Automation extends AppCompatActivity {
                     value="0:00000";
                 }
 
-                FirebaseDatabase.getInstance().getReference().child("Devices").child("100").child("DATA").setValue(value).addOnCompleteListener(new OnCompleteListener<Void>() {
+                FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser).child("Devices").child("100").child("DATA").setValue(value).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(Automation.this, "Rfid is OFF", Toast.LENGTH_SHORT).show();
@@ -130,7 +135,7 @@ public class Automation extends AppCompatActivity {
                     value="0:0";
                 }
 
-                FirebaseDatabase.getInstance().getReference().child("Devices").child("101").child("DATA").setValue(value).addOnCompleteListener(new OnCompleteListener<Void>() {
+                FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser).child("Devices").child("101").child("DATA").setValue(value).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         
