@@ -32,7 +32,7 @@ public class Automation extends AppCompatActivity {
     Button alarmReset;
     DatabaseReference smokeAlarmDataReference;
     String currentUser;
-    FirebaseUser currentFirebaseUser;
+    String currentFirebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +45,20 @@ public class Automation extends AppCompatActivity {
         rfidNotify = findViewById(R.id.rfidNotificationSwitch);
         alarmIndicate = findViewById(R.id.alarmIndicate);
         alarmReset = findViewById(R.id.alarmResetBtn);
-        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentFirebaseUser = FirebaseAuth.getInstance().getUid();
 
-        smokeAlarmDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser).child("Devices").child("103").child("DATA");
+        smokeAlarmDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser).child("Devices").child("103").child("DATA");
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child("Devices").addValueEventListener(new ValueEventListener() {
+
+
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser).child("Devices").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){
+                    Toast.makeText(Automation.this, "Please Check your hardware", Toast.LENGTH_LONG).show();
+                    return;
+                }
              String rfidState = snapshot.child("100").child("DATA").getValue().toString().split(":")[0];
                 String motionState = snapshot.child("101").child("DATA").getValue().toString().split(":")[0];
 
@@ -90,6 +97,10 @@ public class Automation extends AppCompatActivity {
         smokeAlarmDataReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){
+                    Toast.makeText(Automation.this, "Please Check your hardware", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 String smokeStatus = snapshot.getValue().toString().split(":")[0];
 
                 if(smokeStatus.matches("1")){
