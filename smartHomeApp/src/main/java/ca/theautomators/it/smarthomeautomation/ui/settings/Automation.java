@@ -1,6 +1,7 @@
 package ca.theautomators.it.smarthomeautomation.ui.settings;
 
 import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -36,6 +37,8 @@ public class Automation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_automation);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         motionSwitch = findViewById(R.id.motionSwitch);
         rfidSwitch = findViewById(R.id.rfidSwitch);
@@ -204,9 +207,6 @@ public class Automation extends AppCompatActivity {
                 });
             }
         });
-
-
-
 
     }
 }

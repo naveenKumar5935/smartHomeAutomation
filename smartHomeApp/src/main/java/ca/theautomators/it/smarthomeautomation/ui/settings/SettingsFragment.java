@@ -36,10 +36,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -132,22 +128,25 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("devices").child("101").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            Intent intent = new Intent(getActivity(),Automation.class);
-                            startActivity(intent);
-                        }else {
-                            Toast.makeText(getActivity(), "Check your devices", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                Intent intent = new Intent(getActivity().getApplicationContext(),Automation.class);
+                startActivity(intent);
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+//                FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("devices").child("101").addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        if(snapshot.exists()){
+//                            Intent intent = new Intent(getActivity().getApplicationContext(),Automation.class);
+//                            startActivity(intent);
+//                        }else {
+//                            Toast.makeText(getActivity(), "Check your devices", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
 
 
             }
