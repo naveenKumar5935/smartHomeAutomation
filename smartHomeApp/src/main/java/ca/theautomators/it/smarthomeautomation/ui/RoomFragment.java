@@ -166,8 +166,9 @@ public class RoomFragment extends Fragment {
             }
         }
 
-        if(lightList.size() > 0 && pirIdentifier != null)
+        if(pirIdentifier != null)
             fC.linkLightsToMotion(pirIdentifier, lightList);
+
     }
 
     private LinearLayout buildController(Device device){
@@ -204,18 +205,17 @@ public class RoomFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(device.getType().equals("LIGHT")){
+                    String hex = rS.getHex(device);
                     if(isChecked){
-                        //TODO: read from sharedpref to get hex val
-                        String hex = rS.getHex(device);
                         device.sendControlData("1:" + hex);
                         intensity.setEnabled(true);
                         colour.setClickable(true);
                         intensity.setProgress(getIntensity(hex));
-                        colour.setBackgroundColor(Color.parseColor("#" + rS.getHex(device)));
+                        colour.setBackgroundColor(Color.parseColor("#" + hex));
                         icon.setImageDrawable(getDrawable("LIGHTON"));
                     }
                     else{
-                        device.sendControlData("0:000000");
+                        device.sendControlData("0:" + hex);
                         intensity.setEnabled(false);
                         colour.setClickable(false);
                         icon.setImageDrawable(getDrawable("LIGHT"));

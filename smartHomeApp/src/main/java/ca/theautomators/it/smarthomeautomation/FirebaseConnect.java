@@ -141,10 +141,14 @@ public class FirebaseConnect {
 
     public void linkLightsToMotion(String pirIdentifier, ArrayList<String> lightIdentifierList){
 
-        for(int i = 0; i < lightIdentifierList.size(); i++){
+        if(!lightIdentifierList.isEmpty()) {
+            for (int i = 0; i < lightIdentifierList.size(); i++) {
 
-            deviceRef.child(pirIdentifier).child("LIGHTS").child("LIGHT" + i).setValue(lightIdentifierList.get(i));
+                deviceRef.child(pirIdentifier).child("LIGHTS").child("LIGHT" + i).setValue(lightIdentifierList.get(i));
+            }
         }
+        else
+            deviceRef.child(pirIdentifier).child("LIGHTS").setValue("");
     }
 
     public void loadNumDevices(){

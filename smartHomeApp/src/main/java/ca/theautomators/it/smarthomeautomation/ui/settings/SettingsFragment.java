@@ -10,7 +10,6 @@ import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,9 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -57,7 +54,6 @@ import com.squareup.picasso.Picasso;
 import ca.theautomators.it.smarthomeautomation.LoginActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.RoomManagerActivity;
-
 import io.paperdb.Paper;
 
 
@@ -136,7 +132,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("Devices").child("101").addValueEventListener(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("devices").child("101").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
