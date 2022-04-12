@@ -272,7 +272,7 @@ public class RoomFragment extends Fragment {
             LinearLayout vert = new LinearLayout(getContext());
             vert.setOrientation(LinearLayout.VERTICAL);
 
-            intensity.setMax(255);
+//            intensity.setMax(255);
 
             String currentHex = currentVal[0].split(":")[1];
             intensity.setProgress(getIntensity(currentHex));
@@ -283,8 +283,9 @@ public class RoomFragment extends Fragment {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                    String intensityDelta = colourIntensity(rS.getHex(device), progress);
-                    colour.setBackgroundColor(Color.parseColor("#" + intensityDelta));
+//                    String intensityDelta = colourIntensity(rS.getHex(device), progress);
+//                    colour.setBackgroundColor(Color.parseColor("#" + intensityDelta));
+                    device.setLightIntensity(progress);
 
                 }
 
@@ -296,16 +297,19 @@ public class RoomFragment extends Fragment {
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
 
-                    if(control.isChecked()){
-
-                        String intensityDelta = colourIntensity(rS.getHex(device), seekBar.getProgress());
-                        device.sendControlData("1:" + intensityDelta);
-                        colour.setBackgroundColor(Color.parseColor("#" + intensityDelta));
-                        rS.saveHex(device, intensityDelta);
-                    }
+//                    if(control.isChecked()){
+//
+//                        String intensityDelta = colourIntensity(rS.getHex(device), seekBar.getProgress());
+//                        device.sendControlData("1:" + intensityDelta);
+//                        colour.setBackgroundColor(Color.parseColor("#" + intensityDelta));
+//                        rS.saveHex(device, intensityDelta);
+//                    }
 
                 }
             });
+
+            if(!control.isChecked())
+                colour.setClickable(false);
 
             colour.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -327,6 +331,7 @@ public class RoomFragment extends Fragment {
                                 device.sendControlData("1:" + hex);
                                 colour.setBackgroundColor(color);
                                 intensity.setProgress(getIntensity(hex));
+                                device.setLightIntensity(intensity.getProgress());
                                 rS.saveHex(device, hex);
                             }
                         }
@@ -615,6 +620,8 @@ public class RoomFragment extends Fragment {
 
     public int getIntensity(String hex){
 
+        double intensity = 0;
+
         int[] convertedHex = hexToIntArray(hex);
 
         int R = (convertedHex[0] * 16) + convertedHex[1];
@@ -622,11 +629,13 @@ public class RoomFragment extends Fragment {
         int B = (convertedHex[4] * 16) + convertedHex[5];
 
         if(R > G && R > B)
-            return R;
+            intensity = R;
         else if(G > R && G > B)
-            return G;
+            intensity = G;
         else
-            return B;
+            intensity = B;
+
+        return (int)((intensity / 255) * 100);
     }
 
 }

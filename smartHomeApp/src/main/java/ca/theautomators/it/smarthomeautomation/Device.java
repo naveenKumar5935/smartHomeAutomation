@@ -42,6 +42,11 @@ public class Device {
         fC.sendControlData(controlData, identifier);
     }
 
+    public void setLightIntensity(int intensity){
+
+        fC.setLightIntensity(intensity, identifier);
+    }
+
     public String getType(){
 
         return type;

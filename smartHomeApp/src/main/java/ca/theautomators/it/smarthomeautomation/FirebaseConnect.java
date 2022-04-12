@@ -125,6 +125,15 @@ public class FirebaseConnect {
         deviceRef.child(identifier).child("DATA").setValue(data);
     }
 
+    public void setLightIntensity(int intensity, String identifier){
+
+        deviceRef.child(identifier).child("INTENSITY").setValue(intensity);
+        deviceRef.child(identifier).child("INTENSITY").setValue(intensity);
+        deviceRef.child(identifier).child("INTENSITY").setValue(intensity);
+        deviceRef.child(identifier).child("INTENSITY").setValue(intensity);
+        deviceRef.child(identifier).child("INTENSITY").setValue(intensity);
+    }
+
     public DatabaseReference getSensorDataRef(String identifier){
 
         if(getFirebaseConnectivity()){
