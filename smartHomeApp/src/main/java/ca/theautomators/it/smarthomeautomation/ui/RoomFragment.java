@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class RoomFragment extends Fragment {
     private boolean smokeDetected;
     private RoomState rS;
     FirebaseConnect fC;
-    private char hexValues[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+    private final char[] hexValues = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +64,15 @@ public class RoomFragment extends Fragment {
 
             container.removeAllViews();
         }
+
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//
+//            }
+//        };
+//
+//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         root = inflater.inflate(R.layout.fragment_room, container, false);
 
@@ -125,7 +135,20 @@ public class RoomFragment extends Fragment {
         }
 
 
+        root.setFocusableInTouchMode(true);
+        root.requestFocus();
+        root.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
 
+                if(keyCode == KeyEvent.KEYCODE_BACK) {
+                    ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_home);
+                    return true;
+                }
+
+                return false;
+            }
+        });
 
         return root;
     }
@@ -199,6 +222,11 @@ public class RoomFragment extends Fragment {
         SeekBar intensity = new SeekBar(getContext());
         Button colour = new Button(getContext());
 
+        LinearLayout.LayoutParams colourParams = new LinearLayout.LayoutParams(150, 150);
+        colourParams.setMargins(50, 0, 30, 0);
+
+        colour.setLayoutParams(colourParams);
+
         SwitchCompat control = new SwitchCompat(getContext());
         control.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -218,6 +246,7 @@ public class RoomFragment extends Fragment {
                         device.sendControlData("0:" + hex);
                         intensity.setEnabled(false);
                         colour.setClickable(false);
+                        colour.setBackgroundColor(0x000000);
                         icon.setImageDrawable(getDrawable("LIGHT"));
                     }
                 }
@@ -272,8 +301,6 @@ public class RoomFragment extends Fragment {
             LinearLayout vert = new LinearLayout(getContext());
             vert.setOrientation(LinearLayout.VERTICAL);
 
-//            intensity.setMax(255);
-
             String currentHex = currentVal[0].split(":")[1];
             intensity.setProgress(getIntensity(currentHex));
             if(!control.isChecked())
@@ -308,9 +335,10 @@ public class RoomFragment extends Fragment {
                 }
             });
 
-            if(!control.isChecked())
+            if(!control.isChecked()) {
                 colour.setClickable(false);
-
+                colour.setBackgroundColor(0x000000);
+            }
             colour.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -387,7 +415,7 @@ public class RoomFragment extends Fragment {
                         if (dataRead.equals("0:0")) {
                             data += "Smoke detector: OFF";
                             setControlState(false, "SMOKE");
-                        } else if (dataRead.split(":")[0].equals("1")) {
+                        } else if (dataRead.split(":")[0].equals("1") && dataRead.split(":")[1].equals("0")) {
                             data += "Smoke detector: ON";
                             setControlState(true, "SMOKE");
                         } else if (dataRead.split(":")[1].equals("1")) {
@@ -403,7 +431,7 @@ public class RoomFragment extends Fragment {
                         } else if (dataRead.split(":")[0].equals("1") && dataRead.split(":")[1].equals("0")) {
                             data += "RFID: ON";
                             setControlState(true, "RFID");
-                        } else if (dataRead.split(":")[0].equals("1") && !dataRead.split(":")[1].equals("0")) {
+                        } else if (dataRead.split(":")[0].equals("1") && !dataRead.split(":")[1].equals("00000")) {
                             data += "RFID scanned: " + dataRead.split(":")[1];
                         }
                     } else if (device.getType().equals("PIR")) {
@@ -415,7 +443,7 @@ public class RoomFragment extends Fragment {
                             data += "Motion Detector: ON";
                             setControlState(true, "PIR");
                         } else if (dataRead.equals("1:1")) {
-                            data += "Motion detected in: " + title + "!";
+                            data += "Motion detected in: " + title;
                         }
                     } else if (device.getType().equals("TEMP") || device.getType().equals("HUMID")) {
                         String[] tempArr = dataRead.split(":");
@@ -427,9 +455,10 @@ public class RoomFragment extends Fragment {
                         data += temp;
                     }
 
-                    data += " - " + getCurrentTime() + "\n";
+                    if(!data.isEmpty())
+                        data += " - " + getCurrentTime() + "\n";
 
-                    if(dataList.size() == 0){
+                    if(dataList.size() == 0 && !data.isEmpty()){
                         dataList.add(data);
                     }
 
@@ -440,7 +469,7 @@ public class RoomFragment extends Fragment {
                         }
                     }
 
-                    if(!device.getType().equals("LIGHT")) {
+                    if(!device.getType().equals("LIGHT") && !data.isEmpty()) {
                         dataList.add(data);
 
                         data = "";
@@ -637,5 +666,6 @@ public class RoomFragment extends Fragment {
 
         return (int)((intensity / 255) * 100);
     }
+
 
 }

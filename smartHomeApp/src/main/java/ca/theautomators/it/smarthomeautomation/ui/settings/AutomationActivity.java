@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import ca.theautomators.it.smarthomeautomation.R;
 import io.paperdb.Paper;
 
-public class Automation extends AppCompatActivity {
+public class AutomationActivity extends AppCompatActivity {
     Switch motionSwitch, rfidSwitch, rfidNotify, motionNotify;
     ImageView alarmIndicate;
     Button alarmReset;
@@ -37,6 +37,7 @@ public class Automation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_automation);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -57,7 +58,7 @@ public class Automation extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()){
-                    Toast.makeText(Automation.this, "Please Check your hardware", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AutomationActivity.this, "Please Check your hardware", Toast.LENGTH_LONG).show();
                     return;
                 }
              String rfidState = snapshot.child("100").child("DATA").getValue().toString().split(":")[0];
@@ -99,7 +100,7 @@ public class Automation extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()){
-                    Toast.makeText(Automation.this, "Please Check your hardware", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AutomationActivity.this, "Please Check your hardware", Toast.LENGTH_LONG).show();
                     return;
                 }
                 String smokeStatus = snapshot.getValue().toString().split(":")[0];
@@ -131,7 +132,7 @@ public class Automation extends AppCompatActivity {
                 FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser).child("devices").child("100").child("DATA").setValue(value).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(Automation.this, "Rfid is OFF", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AutomationActivity.this, "Rfid is OFF", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -184,7 +185,7 @@ public class Automation extends AppCompatActivity {
                 smokeAlarmDataReference.setValue("0:0").addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        ProgressDialog progressDialog = new ProgressDialog(Automation.this);
+                        ProgressDialog progressDialog = new ProgressDialog(AutomationActivity.this);
                         progressDialog.setMessage("Resetting the alarm..");
                         progressDialog.setCancelable(false);
                         progressDialog.show();

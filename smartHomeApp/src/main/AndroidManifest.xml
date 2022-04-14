@@ -34,8 +34,10 @@
             android:value="YOUR_API_KEY" />
 
         <activity
-            android:name=".ui.settings.Automation"
+            android:name=".ui.settings.AutomationActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.settings.AccessCardActivity"
             android:exported="false"

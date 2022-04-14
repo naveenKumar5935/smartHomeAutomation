@@ -448,7 +448,9 @@ public class RoomManagerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
+//        startActivity(intent);
+
+        finish();
     }
 }

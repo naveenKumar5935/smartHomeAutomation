@@ -6,13 +6,17 @@
  */
 package ca.theautomators.it.smarthomeautomation;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.TaskStackBuilder;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import ca.theautomators.it.smarthomeautomation.ui.settings.AutomationActivity;
 import io.paperdb.Paper;
 
 @IgnoreExtraProperties
@@ -90,8 +94,16 @@ public class Notifications {
     private void buildSmokeAlarmnotification(){
         value = value.split(":")[1];
 
-        if(Integer.valueOf(value)  ==1 ){
+        if(Integer.valueOf(value)  == 1 ){
             builder.setContentText("Smoke Detected!");
+            Intent intent = new Intent(context, AutomationActivity.class);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+            stackBuilder.addNextIntentWithParentStack(intent);
+            PendingIntent pendingIntent =
+                    stackBuilder.getPendingIntent(0,
+                            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+            builder.setContentIntent(pendingIntent);
+            builder.setColor(0xFF0000);
             triggerNotification();
         }
     }

@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import com.squareup.picasso.Picasso;
 
 import ca.theautomators.it.smarthomeautomation.LoginActivity;
+import ca.theautomators.it.smarthomeautomation.MainActivity;
 import ca.theautomators.it.smarthomeautomation.R;
 import ca.theautomators.it.smarthomeautomation.RoomManagerActivity;
 import io.paperdb.Paper;
@@ -128,7 +130,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getActivity().getApplicationContext(),Automation.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), AutomationActivity.class);
                 startActivity(intent);
 
 //                FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("devices").child("101").addValueEventListener(new ValueEventListener() {
@@ -214,6 +216,21 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RoomManagerActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if(keyCode == KeyEvent.KEYCODE_BACK) {
+                    ((MainActivity)getActivity()).fragmentSwitch(R.id.nav_home);
+                    return true;
+                }
+
+                return false;
             }
         });
 

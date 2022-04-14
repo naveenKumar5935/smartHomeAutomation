@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/ScreenBackground"
-    tools:context=".ui.settings.Automation">
+    tools:context=".ui.settings.AutomationActivity">
 
     <TextView
         android:id="@+id/textView9"
