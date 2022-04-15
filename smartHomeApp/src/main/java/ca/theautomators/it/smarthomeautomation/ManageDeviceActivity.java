@@ -34,6 +34,8 @@ public class ManageDeviceActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private ArrayList<String> roomNames;
     private ArrayList<Room> rooms;
+    private FirebaseConnect fC;
+    private boolean loaded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,16 @@ public class ManageDeviceActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        fC = FirebaseConnect.getInstance(null);
+        loaded = fC.devicesloaded();
+
+//        if(!loaded){
+//            AsyncLoader loader = new AsyncLoader();
+//            loader.execute();
+//        }
+
+
 
         Paper.init(this);
         if(Paper.book().read("orientationSwitch","").matches("selected")){
@@ -87,9 +99,11 @@ public class ManageDeviceActivity extends AppCompatActivity {
         devices = new ArrayList<>();
 
         //Creates array list of devices using identifiers
-        for (String identifier : identifiers) {
+        if(identifiers != null){
+            for (String identifier : identifiers) {
 
-            devices.add(new Device(identifier));
+                devices.add(new Device(identifier));
+            }
         }
 
         linearLayout = findViewById(R.id.devicemanager);
@@ -100,6 +114,10 @@ public class ManageDeviceActivity extends AppCompatActivity {
 
         Button save = findViewById(R.id.savebutton);
 
+        if(!loaded) {
+            save.setEnabled(false);
+            save.setBackgroundColor(0x000000);
+        }
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,4 +226,46 @@ public class ManageDeviceActivity extends AppCompatActivity {
         }
     }
 
+//    public class AsyncLoader extends AsyncTask<Void, Void, Void> {
+//
+//        ProgressDialog progressDialog;
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//
+//
+//            while(!loaded)
+//                loaded = fC.isDevicesLoaded();
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPreExecute(){
+//            loaded = fC.isDevicesLoaded();
+//
+//            progressDialog = new ProgressDialog(ManageDeviceActivity.this);
+//            progressDialog.setMessage("Searching for devices....");
+//            progressDialog.setCancelable(false);
+//
+//            progressDialog.show();
+//
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void unused) {
+//
+//            if(loaded){
+//                progressDialog.dismiss();
+//                finish();
+//                startActivity(getIntent());
+//            }
+//
+//        }
+//
+//
+//    }
+
+
 }
+

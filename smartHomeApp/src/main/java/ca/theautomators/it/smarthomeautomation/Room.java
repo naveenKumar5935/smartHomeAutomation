@@ -41,7 +41,11 @@ public class Room {
     }
 
     public ArrayList<String> getDeviceIdentifierList() {
-        return devices;
+
+        if(!devices.isEmpty())
+            return devices;
+        else
+            return null;
     }
 
     public void setData(String type, String data){

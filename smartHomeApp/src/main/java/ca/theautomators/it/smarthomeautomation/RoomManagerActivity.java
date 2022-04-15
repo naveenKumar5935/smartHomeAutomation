@@ -182,7 +182,7 @@ public class RoomManagerActivity extends AppCompatActivity {
                     AlertDialog.Builder option = new AlertDialog.Builder(RoomManagerActivity.this);
                     AlertDialog.Builder alert = new AlertDialog.Builder(RoomManagerActivity.this);
 
-                    if (FirebaseConnect.getInstance(null).getFirebaseConnectivity()) {
+                    if (fC.getFirebaseConnectivity() && fC.devicesloaded()) {
 
                         option.setIcon(R.drawable.home);
                         option.setTitle(R.string.room_saved);
@@ -255,7 +255,81 @@ public class RoomManagerActivity extends AppCompatActivity {
                         });
 
                         option.show();
-                    } else {
+                    }
+                    else if (fC.getFirebaseConnectivity() && !fC.devicesloaded()){
+
+                        option.setIcon(R.drawable.home);
+                        option.setTitle("Devices not detected");
+                        option.setMessage("Please make sure hardware is powered on and linking has completed");
+                        option.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseConnect.resetFirebaseInstance();
+                                finish();
+                                startActivity(getIntent());
+                            }
+                        });
+                        option.setNegativeButton("Try Later", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                alert.setIcon(R.drawable.home);
+                                alert.setTitle(R.string.dont_forget);
+                                alert.setMessage(R.string.save_sensors_any_time_instructions);
+                                alert.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ArrayList<Room> rooms = roomState.loadBuiltRooms();
+                                        ArrayList<Room> toRemove = new ArrayList<>();
+
+                                        if (rooms.size() > 0) {
+                                            for (Room room : rooms) {
+                                                if (!roomNames.contains(room.getTitle())) {
+                                                    toRemove.add(room);
+                                                }
+                                            }
+
+                                            //check from rooms that need to be added
+                                            for (int i = 0; i < roomNames.size(); i++) {
+
+                                                boolean found = false;
+
+                                                for (int j = 0; j < rooms.size(); j++) {
+
+                                                    if(rooms.get(j).getTitle() != null){
+                                                        if (rooms.get(j).getTitle().equals(roomNames.get(i))) {
+                                                            found = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+
+                                                if (!found) {
+                                                    rooms.add(new Room(roomNames.get(i)));
+                                                }
+                                            }
+
+                                        } else {
+                                            for (String roomName : roomNames) {
+
+                                                rooms.add(new Room(roomName));
+                                            }
+                                        }
+
+                                        rooms.removeAll(toRemove);
+                                        roomState.saveBuiltRooms(rooms);
+
+                                        Intent intent = new Intent(RoomManagerActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                                alert.show();
+                            }
+                        });
+
+                        option.show();
+                    }
+                    else {
                         option.setIcon(android.R.drawable.ic_dialog_alert);
                         option.setTitle(R.string.no_sensors_found);
                         option.setMessage(R.string.double_check_sensors);

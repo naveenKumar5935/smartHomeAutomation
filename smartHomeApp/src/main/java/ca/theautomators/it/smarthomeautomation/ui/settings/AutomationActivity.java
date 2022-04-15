@@ -61,19 +61,21 @@ public class AutomationActivity extends AppCompatActivity {
                     Toast.makeText(AutomationActivity.this, "Please Check your hardware", Toast.LENGTH_LONG).show();
                     return;
                 }
-             String rfidState = snapshot.child("100").child("DATA").getValue().toString().split(":")[0];
-                String motionState = snapshot.child("101").child("DATA").getValue().toString().split(":")[0];
+                if(snapshot.hasChildren()) {
+                    String rfidState = snapshot.child("100").child("DATA").getValue().toString().split(":")[0];
+                    String motionState = snapshot.child("101").child("DATA").getValue().toString().split(":")[0];
 
-                if(rfidState.matches("0")){
-                    rfidSwitch.setChecked(false);
-                }else {
-                    rfidSwitch.setChecked(true);
-                }
+                    if (rfidState.matches("0")) {
+                        rfidSwitch.setChecked(false);
+                    } else {
+                        rfidSwitch.setChecked(true);
+                    }
 
-                if(motionState.matches("0")){
-                    motionSwitch.setChecked(false);
-                }else {
-                    motionSwitch.setChecked(true);
+                    if (motionState.matches("0")) {
+                        motionSwitch.setChecked(false);
+                    } else {
+                        motionSwitch.setChecked(true);
+                    }
                 }
 
             }

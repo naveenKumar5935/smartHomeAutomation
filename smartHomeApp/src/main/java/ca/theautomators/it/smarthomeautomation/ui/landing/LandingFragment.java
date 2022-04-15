@@ -100,7 +100,7 @@ public class LandingFragment extends Fragment{
 
             ArrayList<Device> devices = new ArrayList<>();
 
-            if(rooms.get(i).getDeviceIdentifierList().size() > 0){
+            if(rooms.get(i).getDeviceIdentifierList() != null && rooms.get(i).getDeviceIdentifierList().size() > 0){
 
                 for(String device : rooms.get(i).getDeviceIdentifierList()){
 

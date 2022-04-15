@@ -232,15 +232,17 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
 
         StringBuilder identifierMerge = new StringBuilder();
 
-        for(int i = 0; i < identifiers.length; i++){
+        if(identifiers != null){
+            for (int i = 0; i < identifiers.length; i++) {
 
-            if(i == identifiers.length -1){
+                if (i == identifiers.length - 1) {
 
-                identifierMerge.append(identifiers[i]);
-                break;
+                    identifierMerge.append(identifiers[i]);
+                    break;
+                }
+
+                identifierMerge.append(identifiers[i]).append(":");
             }
-
-            identifierMerge.append(identifiers[i]).append(":");
         }
 
         SharedPreferences.Editor editor = state.edit();
@@ -263,9 +265,11 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
             String builtRoom = rooms.get(i).getTitle();
             ArrayList<String> identifierList = rooms.get(i).getDeviceIdentifierList();
 
-            for(int j = 0; j < identifierList.size(); j++){
+            if(identifierList != null){
+                for (int j = 0; j < identifierList.size(); j++) {
 
-                builtRoom += ":" + identifierList.get(j);
+                    builtRoom += ":" + identifierList.get(j);
+                }
             }
 
             editor.putString("builtRoom_" + i, builtRoom);

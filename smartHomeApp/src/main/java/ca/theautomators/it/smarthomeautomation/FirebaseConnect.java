@@ -26,13 +26,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FirebaseConnect {
+public class FirebaseConnect{
 
     private DatabaseReference deviceRef;
     private int numDevices;
     private String[] identifiers;
     private String[] deviceTypes;
-    private boolean firebaseConnectivity;
+    private boolean firebaseConnectivity, devicesLoaded;
     private String currentUser;
 
     private static FirebaseConnect INSTANCE= null;
@@ -40,7 +40,11 @@ public class FirebaseConnect {
     //This class uses a Singleton style Creational design pattern
     private FirebaseConnect(String currentUser){
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        devicesLoaded = false;
+
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(false);
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         if(currentUser != null)
             this.currentUser = currentUser;
         else
@@ -71,7 +75,7 @@ public class FirebaseConnect {
         });
     }
 
-    private void start(){
+    public void start(){
 
         deviceRef = FirebaseDatabase.getInstance().getReference().child("/Users/" + currentUser + "/devices");
         loadNumDevices();
@@ -93,13 +97,21 @@ public class FirebaseConnect {
         return(INSTANCE);
     }
 
+    public static void resetFirebaseInstance(){
+
+        INSTANCE = null;
+    }
+
     public boolean getFirebaseConnectivity(){
 
         return firebaseConnectivity;
     }
 
+    public boolean devicesloaded() {
+        return devicesLoaded;
+    }
 
-    public void setUserFeedback(String name, String email, String phone, String feedback, float rating,String modelNo){
+    public void setUserFeedback(String name, String email, String phone, String feedback, float rating, String modelNo){
 
         HashMap<String, Object> userFeedback = new HashMap<>();
         userFeedback.put("name",name);
@@ -167,6 +179,7 @@ public class FirebaseConnect {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isComplete()) {
                     numDevices = (int) task.getResult().getChildrenCount();
+                    devicesLoaded = numDevices > 0;
                     loadIdentifiers();
                 }
                 else
@@ -185,7 +198,8 @@ public class FirebaseConnect {
             deviceRef.child(identifiers[i]).child("TYPE").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    deviceTypes[finalI] = task.getResult().getValue().toString();
+                    if(task.getResult().getValue() != null)
+                        deviceTypes[finalI] = task.getResult().getValue().toString();
                 }
             });
         }
@@ -195,7 +209,7 @@ public class FirebaseConnect {
 
         int index = Integer.parseInt(identifier) - 100;
 
-        if(deviceTypes.length > 0){
+        if(deviceTypes.length - 1 > 0 && deviceTypes.length >= index){
             return deviceTypes[index];
         }
         else{
@@ -228,6 +242,5 @@ public class FirebaseConnect {
     public int getNumDevices(){
         return numDevices;
     }
-
 
 }
