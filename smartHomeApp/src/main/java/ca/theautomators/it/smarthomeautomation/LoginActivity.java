@@ -55,8 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText email, password;
     Button logInButton, signUpButton;
     CheckBox rememberMe;
-    GoogleSignInButton googleSignInButton;
-    private GoogleSignInClient mGoogleSignInClient;
+
     private FirebaseAuth auth;
     Boolean connection=false;
 
@@ -73,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
         logInButton = findViewById(R.id.loginButton);
         signUpButton = findViewById(R.id.loginSignupBtn);
         rememberMe = findViewById(R.id.loginRememberMe);
-        googleSignInButton = findViewById(R.id.googleSignInButton);
         auth = FirebaseAuth.getInstance();
 
 
@@ -87,22 +85,6 @@ public class LoginActivity extends AppCompatActivity {
         userEmail = Paper.book().read("useremail","");
         String userpassword="";
         userpassword = Paper.book().read("userpassword","");
-        String googleRememberMeCheck="";
-        googleRememberMeCheck=Paper.book().read("googleSignIn","");
-
-        if(googleRememberMeCheck.matches("checked")){
-            GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
-            if(gUser!=null){
-                if(connection){
-                    FirebaseSignInWithGoogle();
-                }else {
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-
-            }
-        }
 
         if(!TextUtils.isEmpty(userEmail)){
             if(connection){
@@ -129,23 +111,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        googleSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(rememberMe.isChecked()){
-                    Paper.book().write("googleSignIn","checked");
-                }else {
-                    Paper.book().write("googleSignIn","unchecked");
-                }
-
-                if(connection){
-                    googleSignInRequest();
-                }else {
-                    Toast.makeText(getApplicationContext(), R.string.check_connection,Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
 
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
@@ -257,70 +222,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void googleSignInRequest(){
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        signIn();
-    }
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
-            FirebaseSignInWithGoogle();
-        } catch (ApiException e) {
-        }
-    }
-
-
-    public void FirebaseSignInWithGoogle(){
-
-        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
-
-                if (snapshot.child("googleUsers").child(gUser.getId()).exists()) {
-                    Toast.makeText(LoginActivity.this, getString(R.string.wlcm_back) + gUser.getGivenName(), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    startActivity(intent);
-                    finish();
-
-                } else {
-
-                    Toast.makeText(LoginActivity.this, R.string.sign_up_toast,Toast.LENGTH_SHORT).show();
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
 
     @Override
     public void onBackPressed() {

@@ -9,6 +9,7 @@ package ca.theautomators.it.smarthomeautomation;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -67,7 +68,10 @@ public class Notifications {
 
     private void buildTempNotification(){
 
-        value = value.split(":")[0];
+        value = value.split(":")[1];
+        Log.e("value",value);
+        if(value.isEmpty())
+            return;
 
         if(Integer.valueOf(value) < 5){
             //send low temp notification
@@ -93,6 +97,8 @@ public class Notifications {
 
     private void buildSmokeAlarmnotification(){
         value = value.split(":")[1];
+        if(value.isEmpty())
+            return;
 
         if(Integer.valueOf(value)  == 1 ){
             builder.setContentText("Smoke Detected!");
@@ -109,6 +115,8 @@ public class Notifications {
     }
     private void buildHumidnotification(){
         value = value.split(":")[0];
+        if(value.isEmpty())
+            return;
 
         if(Integer.valueOf(value) < 10){
             builder.setContentText("Humidity Level Very Low");
@@ -118,6 +126,8 @@ public class Notifications {
 
     private void buildMotionnotification(){
         value = value.split(":")[1];
+        if(value.isEmpty())
+            return;
 
         if(Integer.valueOf(value)  == 1){
             builder.setContentText("Motion Detected!");

@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity{
 
         SharedPreferences currentUser = MainActivity.this.getSharedPreferences("current_user", Context.MODE_PRIVATE);
         String userID = currentUser.getString("current_user", "no_user");
-        Toast.makeText(MainActivity.this, userID,Toast.LENGTH_SHORT).show();
+
         FirebaseConnect fC = FirebaseConnect.getInstance(userID);
 
         String[] identifiers = fC.getIdentifiers();

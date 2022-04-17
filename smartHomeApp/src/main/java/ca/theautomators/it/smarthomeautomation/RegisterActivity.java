@@ -57,8 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText email,password,accessCode, fullname, phone,confirmPassword;
     private Button loginBtn, registerBtn;
     private FirebaseAuth auth;
-    private GoogleSignInButton googleSignUpButton;
-    private GoogleSignInClient mGoogleSignInClient;
     private Boolean connection=false;
     CheckBox rememberMe;
     FirebaseUser currentUser;
@@ -82,7 +80,6 @@ public class RegisterActivity extends AppCompatActivity {
         fullname = findViewById(R.id.register_fullname_et);
         phone = findViewById(R.id.register_phone_et);
         confirmPassword = findViewById(R.id.register_confirmpassword_et);
-        googleSignUpButton = findViewById(R.id.googleSignUpButton);
         auth = FirebaseAuth.getInstance();
         rememberMe = findViewById(R.id.registerRememberMe);
         currentUser = auth.getCurrentUser();
@@ -147,24 +144,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        googleSignUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String accessCodeEntered = accessCode.getText().toString().trim();
-                if(TextUtils.isEmpty(accessCodeEntered)){
-                    Toast.makeText(RegisterActivity.this,R.string.enter_access,Toast.LENGTH_SHORT).show();
-                }else {
-                    if(connection){
-                       // getAndMatchAccessCode(accessCodeEntered,null,null);
-                        googleSignInRequest();
-                    }else {
-                        Toast.makeText(getApplicationContext(),R.string.check_connection,Toast.LENGTH_SHORT).show();
-
-                    }
-
-                }
-            }
-        });
 
     }
 
@@ -193,11 +172,8 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                String accessCodeStored = snapshot.child("UserAccessCode").child("AccessCode").getValue().toString();
-//                if(accessCodeStored.matches(code)){
 
                     if(email==null){
-                        googleSignInRequest();
                         return;
                     }
 
@@ -216,9 +192,7 @@ public class RegisterActivity extends AppCompatActivity {
                     });
 
 
-//                }else {
-//                    Toast.makeText(RegisterActivity.this, R.string.invalid_access_code,Toast.LENGTH_SHORT).show();
-//                }
+
             }
 
             @Override
@@ -278,81 +252,6 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
-
-
-    private void googleSignInRequest(){
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        signIn();
-    }
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Log.e("name",account.getDisplayName());
-
-            // Signed in successfully, show authenticated UI.
-            FirebaseSignUpWithGoogle();
-        } catch (ApiException e) {
-                Log.e("exception",e.toString());
-        //    FirebaseSignUpWithGoogle();
-        }
-    }
-
-
-    public void FirebaseSignUpWithGoogle(){
-
-        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                GoogleSignInAccount gUser = GoogleSignIn.getLastSignedInAccount(RegisterActivity.this);
-              //  String email = gUser.getEmail();
-
-                if (snapshot.child("Users").child(gUser.getId()).exists()) {
-                    Toast.makeText(RegisterActivity.this, R.string.already_signed_up, Toast.LENGTH_SHORT).show();
-                    return;
-
-
-                } else {
-
-                    HashMap<String, Object> userdatamap = new HashMap<>();
-                    userdatamap.put("email", email);
-                    userdatamap.put("name", gUser.getGivenName());
-
-                    FirebaseDatabase.getInstance().getReference("Users").child(gUser.getId()).setValue(userdatamap);
-                    Toast.makeText(RegisterActivity.this, R.string.success,Toast.LENGTH_SHORT).show();
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
 
     @Override
     public void onBackPressed() {
