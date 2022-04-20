@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import ca.theautomators.it.smarthomeautomation.FirebaseConnect;
 import ca.theautomators.it.smarthomeautomation.R;
 import io.paperdb.Paper;
 
@@ -32,12 +33,15 @@ public class AutomationActivity extends AppCompatActivity {
     Button alarmReset;
     DatabaseReference smokeAlarmDataReference;
     String currentFirebaseUser;
+    FirebaseConnect fC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_automation);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        fC = FirebaseConnect.getInstance(null);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -181,35 +185,37 @@ public class AutomationActivity extends AppCompatActivity {
             }
         });
 
-        alarmReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                smokeAlarmDataReference.setValue("0:0").addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        ProgressDialog progressDialog = new ProgressDialog(AutomationActivity.this);
-                        progressDialog.setMessage("Resetting the alarm..");
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
+        if(fC.getFirebaseConnectivity()){
+            alarmReset.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    smokeAlarmDataReference.setValue("0:0").addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            ProgressDialog progressDialog = new ProgressDialog(AutomationActivity.this);
+                            progressDialog.setMessage("Resetting the alarm..");
+                            progressDialog.setCancelable(false);
+                            progressDialog.show();
 
-                        Runnable progressRunnable = new Runnable() {
+                            Runnable progressRunnable = new Runnable() {
 
-                            @Override
-                            public void run() {
-                                progressDialog.cancel();
+                                @Override
+                                public void run() {
+                                    progressDialog.cancel();
 
-                             //   smokeAlarmDataReference.setValue("1:0");
+                                    //   smokeAlarmDataReference.setValue("1:0");
 
-                            }
-                        };
+                                }
+                            };
 
-                        Handler pdCanceller = new Handler();
-                        pdCanceller.postDelayed(progressRunnable, 5000);
+                            Handler pdCanceller = new Handler();
+                            pdCanceller.postDelayed(progressRunnable, 5000);
 
-                    }
-                });
-            }
-        });
+                        }
+                    });
+                }
+            });
+        }
 
     }
 }
