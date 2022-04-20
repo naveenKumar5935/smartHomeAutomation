@@ -68,7 +68,7 @@ public class Notifications {
 
     private void buildTempNotification(){
 
-        value = value.split(":")[1];
+        value = value.split(":")[0];
         Log.e("value",value);
         if(value.isEmpty())
             return;

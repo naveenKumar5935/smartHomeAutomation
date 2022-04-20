@@ -6,6 +6,7 @@
  */
 package ca.theautomators.it.smarthomeautomation.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -65,14 +66,6 @@ public class RoomFragment extends Fragment {
             container.removeAllViews();
         }
 
-//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//
-//            }
-//        };
-//
-//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         root = inflater.inflate(R.layout.fragment_room, container, false);
 
@@ -170,22 +163,14 @@ public class RoomFragment extends Fragment {
                 if(dev.getType().equals("PIR"))
                     pirIdentifier = dev.getIdentifier();
 
-//                if (!(dev.getType().equals("HUMID") || dev.getType().equals("TEMP"))) {
-//
-//                    deviceControllers.addView(buildController(dev));
-//
-//                }
-
                 if(dev.getType().equals("SERVO") || dev.getType().equals("LIGHT"))
                     deviceControllers.addView(buildController(dev));
 
-                if (!(dev.getType().equals("SERVO"))) {
-
-                    if (FirebaseConnect.getInstance(null).getFirebaseConnectivity()) {
-                        buildSensorReceiver(dev);
-                    }
-
+                if (FirebaseConnect.getInstance(null).getFirebaseConnectivity()) {
+                    buildSensorReceiver(dev);
                 }
+
+
             }
         }
 
@@ -194,6 +179,7 @@ public class RoomFragment extends Fragment {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private LinearLayout buildController(Device device){
 
         final String[] currentVal = {"1:" + rS.getHex(device)};
@@ -250,34 +236,7 @@ public class RoomFragment extends Fragment {
                         icon.setImageDrawable(getDrawable("LIGHT"));
                     }
                 }
-//                else if(device.getType().equals("SMOKE")){
-//                    if(isChecked && !smokeDetected){
-//                        device.sendControlData("1:0");
-//                    }
-//                    else if(isChecked){
-//                        device.sendControlData("1:1");
-//                    }
-//                    else{
-//                        device.sendControlData("0:0");
-//                        smokeDetected = false;
-//                    }
-//                }
-//                else if(device.getType().equals("RFID")){
-//                    if(isChecked){
-//                        device.sendControlData("1:0");
-//                    }
-//                    else{
-//                        device.sendControlData("0:0");
-//                    }
-//                }
-//                else if(device.getType().equals("PIR")){
-//                    if(isChecked){
-//                        device.sendControlData("1:0");
-//                    }
-//                    else{
-//                        device.sendControlData("0:0");
-//                    }
-//                }
+
                 else if(device.getType().equals("SERVO")){
                     if(isChecked){
                         device.sendControlData("1:0");
@@ -292,7 +251,11 @@ public class RoomFragment extends Fragment {
         });
         control.setLayoutParams(params);
 
-        control.setText(device.getType());
+        if(device.getType().equals("LIGHT"))
+            control.setText("Light " + (Integer.parseInt(device.getIdentifier()) - 105));
+        else
+            control.setText("Door");
+
         controls.add(control);
 
 
@@ -310,8 +273,6 @@ public class RoomFragment extends Fragment {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-//                    String intensityDelta = colourIntensity(rS.getHex(device), progress);
-//                    colour.setBackgroundColor(Color.parseColor("#" + intensityDelta));
                     device.setLightIntensity(progress);
 
                 }
@@ -324,13 +285,6 @@ public class RoomFragment extends Fragment {
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
 
-//                    if(control.isChecked()){
-//
-//                        String intensityDelta = colourIntensity(rS.getHex(device), seekBar.getProgress());
-//                        device.sendControlData("1:" + intensityDelta);
-//                        colour.setBackgroundColor(Color.parseColor("#" + intensityDelta));
-//                        rS.saveHex(device, intensityDelta);
-//                    }
 
                 }
             });
@@ -395,64 +349,63 @@ public class RoomFragment extends Fragment {
                     TextView roomData = root.findViewById(R.id.room_data);
                     roomData.setMovementMethod(new ScrollingMovementMethod());
                     final int scrollAmount = roomData.getLayout().getLineTop(roomData.getLineCount()) - roomData.getHeight();
-                    if (scrollAmount > 0)
-                        roomData.scrollTo(0, scrollAmount);
-                    else
-                        roomData.scrollTo(0, 0);
+                    roomData.scrollTo(0, Math.max(scrollAmount, 0));
 
-                    if (device.getType().equals("LIGHT")) {
-//                        data += "Lights: ";
+                    switch (device.getType()) {
+                        case "LIGHT":
 
-                        if (dataRead.split(":")[0].equals("0")) {
-//                            data += "OFF";
-                            setControlState(false, "LIGHT");
-                        } else {
-//                            data += "ON";
-                            setControlState(true, "LIGHT");
-                        }
-                    } else if (device.getType().equals("SMOKE")) {
+                            setControlState(!dataRead.split(":")[0].equals("0"), "Light " + (Integer.parseInt(device.getIdentifier()) - 105));
 
-                        if (dataRead.equals("0:0")) {
-                            data += "Smoke detector: OFF";
-                            setControlState(false, "SMOKE");
-                        } else if (dataRead.split(":")[0].equals("1") && dataRead.split(":")[1].equals("0")) {
-                            data += "Smoke detector: ON";
-                            setControlState(true, "SMOKE");
-                        } else if (dataRead.split(":")[1].equals("1")) {
-                            data += "Smoke Alarm On!";
-                            smokeDetected = true;
-                            setControlState(true, "SMOKE");
-                        }
-                    } else if (device.getType().equals("RFID")) {
+                            break;
+                        case "SMOKE":
 
-                        if (dataRead.equals("0:0")) {
-                            data += "RFID: OFF (Locked)";
-                            setControlState(false, "RFID");
-                        } else if (dataRead.split(":")[0].equals("1") && dataRead.split(":")[1].equals("0")) {
-                            data += "RFID: ON";
-                            setControlState(true, "RFID");
-                        } else if (dataRead.split(":")[0].equals("1") && !dataRead.split(":")[1].equals("00000")) {
-                            data += "RFID scanned: " + dataRead.split(":")[1];
-                        }
-                    } else if (device.getType().equals("PIR")) {
+                            if (dataRead.equals("0:0")) {
+                                data += "Smoke detector: OFF";
+                            } else if (dataRead.split(":")[0].equals("1") && dataRead.split(":")[1].equals("0")) {
+                                data += "Smoke detector: ON";
+                            } else if (dataRead.split(":")[1].equals("1")) {
+                                data += "Smoke Alarm On!";
+                                smokeDetected = true;
+                            }
+                            break;
+                        case "RFID":
 
-                        if (dataRead.equals("0:0")) {
-                            data += "Motion Detector: OFF";
-                            setControlState(false, "PIR");
-                        } else if (dataRead.equals("1:0")) {
-                            data += "Motion Detector: ON";
-                            setControlState(true, "PIR");
-                        } else if (dataRead.equals("1:1")) {
-                            data += "Motion detected in: " + title;
-                        }
-                    } else if (device.getType().equals("TEMP") || device.getType().equals("HUMID")) {
-                        String[] tempArr = dataRead.split(":");
-                        String temp = device.getType().equals("TEMP") ? "Temperature: " : "Humidity: ";
-                        for (String string : tempArr) {
-                            temp += string;
-                        }
+                            if (dataRead.equals("0:0")) {
+                                data += "RFID: OFF (Locked)";
+                            } else if (dataRead.split(":")[0].equals("1") && dataRead.split(":")[1].equals("0")) {
+                                data += "RFID: ON";
+                            } else if (dataRead.split(":")[0].equals("1") && !dataRead.split(":")[1].equals("00000")) {
+                                data += "RFID scanned: " + dataRead.split(":")[1];
+                            }
+                            break;
+                        case "PIR":
 
-                        data += temp;
+                            switch (dataRead) {
+                                case "0:0":
+                                    data += "Motion Detector: OFF";
+                                    break;
+                                case "1:0":
+                                    data += "Motion Detector: ON";
+                                    break;
+                                case "1:1":
+                                    data += "Motion detected in: " + title;
+                                    break;
+                            }
+                            break;
+                        case "SERVO":
+
+                            setControlState(!dataRead.equals("0:0"), "Door");
+                            break;
+                        case "TEMP":
+                        case "HUMID":
+                            String[] tempArr = dataRead.split(":");
+                            String temp = device.getType().equals("TEMP") ? "Temperature: " : "Humidity: ";
+                            for (String string : tempArr) {
+                                temp += string;
+                            }
+
+                            data += temp;
+                            break;
                     }
 
                     if(!data.isEmpty())
@@ -544,25 +497,6 @@ public class RoomFragment extends Fragment {
         return formatter.format(date);
     }
 
-    public String colourIntensity(String currentHex, int intensity){
-
-        int currentIntensity = getIntensity(currentHex);
-        int delta;
-
-        if(intensity > currentIntensity) {
-            delta = intensity - currentIntensity;
-
-            for(int i = 0; i < delta; i++)
-                currentHex = colourIntensityWorker(currentHex, true);
-        }
-        else {
-            delta = currentIntensity - intensity;
-            for(int i = 0; i < delta; i++)
-                currentHex = colourIntensityWorker(currentHex, false);
-        }
-
-        return currentHex;
-    }
 
     public int[] hexToIntArray(String hex){
 
@@ -594,54 +528,6 @@ public class RoomFragment extends Fragment {
                         result[i] = 15;
                 }
             }
-        }
-
-        return result;
-    }
-
-    public String colourIntensityWorker(String currentHex, boolean increase){
-
-        currentHex = currentHex.toUpperCase();
-        String result = "";
-
-        if(currentHex.length() != 6)
-            return "888888";
-
-        int[] convertedHex = hexToIntArray(currentHex);
-
-        if(increase){
-            for(int i = 1; i < convertedHex.length; i += 2){
-
-                if(convertedHex[i] < 15){
-                    convertedHex[i]++;
-                }
-                else{
-                    if(convertedHex[i-1] == 15){
-                        break;
-                    }
-                    convertedHex[i-1]++;
-                    convertedHex[i] = 0;
-                }
-            }
-        }
-        else{
-            for(int i = 1; i < convertedHex.length; i += 2){
-
-                if(convertedHex[i] > 0){
-                    convertedHex[i]--;
-                }
-                else{
-                    if(convertedHex[i-1] == 0){
-                        break;
-                    }
-                    convertedHex[i-1]--;
-                    convertedHex[i] = 15;
-                }
-            }
-        }
-
-        for(int i = 0; i < convertedHex.length; i++){
-            result += hexValues[convertedHex[i]];
         }
 
         return result;
