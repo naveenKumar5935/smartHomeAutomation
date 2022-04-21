@@ -105,6 +105,7 @@ public class Notifications {
             Intent intent = new Intent(context, AutomationActivity.class);
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             stackBuilder.addNextIntentWithParentStack(intent);
+            stackBuilder.addParentStack(MainActivity.class);
             PendingIntent pendingIntent =
                     stackBuilder.getPendingIntent(0,
                             PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);

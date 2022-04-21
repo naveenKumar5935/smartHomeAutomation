@@ -218,4 +218,6 @@ public class AutomationActivity extends AppCompatActivity {
         }
 
     }
+
 }
+
