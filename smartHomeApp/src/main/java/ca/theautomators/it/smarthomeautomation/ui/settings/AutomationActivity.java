@@ -138,7 +138,7 @@ public class AutomationActivity extends AppCompatActivity {
                 FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser).child("devices").child("100").child("DATA").setValue(value).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(AutomationActivity.this, "Rfid is OFF", Toast.LENGTH_SHORT).show();
+                   //     Toast.makeText(AutomationActivity.this, "Rfid is OFF", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

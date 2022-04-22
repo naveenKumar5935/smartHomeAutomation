@@ -34,9 +34,13 @@ public class RoomState extends AsyncTask<Void, Void, Void> {
         if(context != null)
             this.context = context;
 
-        state = context.getSharedPreferences("room_state", Context.MODE_PRIVATE);
-        roomStateChanged = false;
-        stateSaved = state.getBoolean("stateSaved", false);
+        if(context != null) {
+            state = context.getSharedPreferences("room_state", Context.MODE_PRIVATE);
+
+            roomStateChanged = false;
+            stateSaved = state.getBoolean("stateSaved", false);
+
+        }
 
         loadState();
 
